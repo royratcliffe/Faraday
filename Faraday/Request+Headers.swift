@@ -1,4 +1,4 @@
-// Faraday DecodeJSON.swift
+// Faraday Request+Headers.swift
 //
 // Copyright © 2015, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -24,41 +24,31 @@
 
 import Foundation
 
-/// Response middleware for decoding JSON. If the response body is raw data, the
-/// decoder attempts to convert the data to a JSON object. If successful, the
-/// decoder replaces the data with the JSON object. The decoder allows JSON
-/// fragments, primitives as well as objects and arrays. It does not test the
-/// response's content type.
-public class DecodeJSON: Response.Middleware {
+extension Request {
 
-  /// Sets up the request headers to accept JSON.
-  public override func call(env: Env) -> Response {
-    env.request?.accepts = ["application/json"]
-    return super.call(env)
+  public var accept: String? {
+    get {
+      return headers["Accept"]
+    }
+    set(newAccept) {
+      headers["Accept"] = newAccept
+    }
   }
 
-  /// Parses the response for JSON. Converts an `NSData` object in the response
-  /// body to an NSObject representing the JSON. It allows both JSON objects and
-  /// JSON primitives.
-  override func onComplete(env: Env) {
-    guard let response = env.response else {
-      return super.onComplete(env)
-    }
-    if let data = response.body as? NSData {
-      if let object = try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments]) {
-        response.body = object
+  /// Accesses the HTTP Accept header. The header is a comma-delimited string of
+  /// media ranges, each with an optional quality factor separated from the
+  /// media range by a semicolon. The `accepts` method (plural) splits the
+  /// header by commas and trims out any white-space. The result is an array of
+  /// strings, one for each media range.
+  public var accepts: [String]? {
+    get {
+      return accept?.characters.split(",").map {
+        String($0).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
       }
     }
-  }
-
-  public class Handler: RackHandler {
-
-    public init() {}
-
-    public func build(app: App) -> Middleware {
-      return DecodeJSON(app: app)
+    set(newAccepts) {
+      accept = newAccepts?.joinWithSeparator(", ")
     }
-
   }
 
 }

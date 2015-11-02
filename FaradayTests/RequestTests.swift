@@ -79,4 +79,14 @@ class RequestTests: XCTestCase {
     XCTAssertEqual(request.URL?.path, "/api/path/to")
   }
 
+  func testAccepts() {
+    // given
+    request.accepts = ["application/hal+json; q=1.0", "text/plain"]
+    // when
+    let accept = request.accept
+    // then
+    XCTAssertEqual(accept, "application/hal+json; q=1.0, text/plain")
+    XCTAssertEqual(request.accepts!, ["application/hal+json; q=1.0", "text/plain"])
+  }
+
 }
