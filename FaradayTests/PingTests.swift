@@ -23,6 +23,7 @@
 //------------------------------------------------------------------------------
 
 import XCTest
+import Faraday
 
 class PingTests: ConnectionTests {
 
@@ -46,6 +47,57 @@ class PingTests: ConnectionTests {
 
     // then
     waitForExpectationsWithTimeout(30.0) { error in
+      XCTAssertNil(error)
+    }
+  }
+
+  class Counter {
+
+    var count = 0
+    let limit: Int
+
+    let connection: Connection
+
+    typealias CompletionHandler = (Counter) -> Void
+    let completionHandler: CompletionHandler?
+
+    init(limit: Int, connection: Connection, completionHandler: CompletionHandler? = nil) {
+      self.connection = connection
+      self.limit = limit
+      self.completionHandler = completionHandler
+    }
+
+    func ping() {
+      let response = self.connection.get { request in
+        request.path = "ping"
+      }
+      response.onComplete { env in
+        self.pong()
+      }
+    }
+
+    func pong() {
+      if ++count == limit {
+        completionHandler?(self)
+      }
+      else {
+        ping()
+      }
+    }
+
+  }
+
+  /// Performs three GET requests in a row, one after the other.
+  func testCounter() {
+    // given
+    let expectation = expectationWithDescription("Counter")
+    // when
+    let counter = Counter(limit: 3, connection: connection) { counter in
+      expectation.fulfill()
+    }
+    counter.ping()
+    // then
+    waitForExpectationsWithTimeout(30.0) { (error) -> Void in
       XCTAssertNil(error)
     }
   }
