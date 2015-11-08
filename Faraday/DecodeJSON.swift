@@ -31,16 +31,18 @@ import Foundation
 /// response's content type.
 public class DecodeJSON: Response.Middleware {
 
-  /// Sets up the request headers to accept JSON.
+  /// Sets up the request headers to accept JSON. Adds `application/json` to the
+  /// front of the Accept header with a default implicit quality factor of 1.
   public override func call(env: Env) -> Response {
-    env.request?.accepts = ["application/json"]
+    env.request?.accepts = ["application/json"] + (env.request?.accepts ?? [])
     return super.call(env)
   }
 
   /// Parses the response for JSON. Converts an `NSData` object in the response
   /// body to an NSObject representing the JSON. It allows both JSON objects and
-  /// JSON primitives.
-  override func onComplete(env: Env) {
+  /// JSON primitives. Does nothing if the body is not data or fails to convert
+  /// to JSON. Ignores the response's content type.
+  public override func onComplete(env: Env) {
     guard let response = env.response else {
       return super.onComplete(env)
     }
