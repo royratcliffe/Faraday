@@ -44,7 +44,7 @@ public class Response {
       }
     }
 
-    func onComplete(env: Env) {}
+    public func onComplete(env: Env) {}
 
   }
 
