@@ -40,15 +40,14 @@ public class EncodeJSON: Middleware {
     guard let request = env.request else {
       return super.call(env)
     }
-    if let body = request.body {
-      if NSJSONSerialization.isValidJSONObject(body) {
-        if let data = try? NSJSONSerialization.dataWithJSONObject(body, options: [.PrettyPrinted]) {
-          if request.headers["Content-Type"] == nil {
-            request.headers["Content-Type"] = "application/json"
-          }
-          request.body = data
-        }
+    guard let body = request.body where NSJSONSerialization.isValidJSONObject(body) else {
+      return super.call(env)
+    }
+    if let data = try? NSJSONSerialization.dataWithJSONObject(body, options: [.PrettyPrinted]) {
+      if request.headers["Content-Type"] == nil {
+        request.headers["Content-Type"] = "application/json"
       }
+      request.body = data
     }
     return app(env)
   }
