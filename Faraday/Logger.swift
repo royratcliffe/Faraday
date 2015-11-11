@@ -35,7 +35,7 @@ public class Logger: Response.Middleware {
     return super.call(env)
   }
 
-  override func onComplete(env: Env) {
+  public override func onComplete(env: Env) {
     if let status = env.response?.status {
       Logger.log("Status: \(String(status))")
     }

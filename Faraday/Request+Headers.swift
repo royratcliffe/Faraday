@@ -1,4 +1,4 @@
-// Faraday Response.swift
+// Faraday Request+Headers.swift
 //
 // Copyright © 2015, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -24,51 +24,31 @@
 
 import Foundation
 
-public class Response {
+extension Request {
 
-  public init() {}
+  public var accept: String? {
+    get {
+      return headers["Accept"]
+    }
+    set(newAccept) {
+      headers["Accept"] = newAccept
+    }
+  }
 
-  public var status: Int?
-
-  public var headers = Headers()
-
-  public var body: Body?
-
-  // MARK: - Response Middleware
-
-  public class Middleware: Faraday.Middleware {
-
-    public override func call(env: Env) -> Response {
-      return app(env).onComplete { env in
-        self.onComplete(env)
+  /// Accesses the HTTP Accept header. The header is a comma-delimited string of
+  /// media ranges, each with an optional quality factor separated from the
+  /// media range by a semicolon. The `accepts` method (plural) splits the
+  /// header by commas and trims out any white-space. The result is an array of
+  /// strings, one for each media range.
+  public var accepts: [String]? {
+    get {
+      return accept?.characters.split(",").map {
+        String($0).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
       }
     }
-
-    public func onComplete(env: Env) {}
-
-  }
-
-  var env: Env?
-
-  var finished: Bool {
-    return env != nil
-  }
-
-  public typealias OnCompleteCallback = (Env) -> Void
-
-  public var onCompleteCallbacks = [OnCompleteCallback]()
-
-  public func onComplete(callback: OnCompleteCallback) -> Response {
-    onCompleteCallbacks.append(callback)
-    return self
-  }
-
-  func finish(env: Env) -> Response {
-    for callback in onCompleteCallbacks {
-      callback(env)
+    set(newAccepts) {
+      accept = newAccepts?.joinWithSeparator(", ")
     }
-    self.env = env
-    return self
   }
 
 }

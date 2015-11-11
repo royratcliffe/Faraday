@@ -30,6 +30,22 @@ import Foundation
 // adding query items.
 extension Request {
 
+  /// Accesses the request URL as mutable components. Note that the components
+  /// are *relative* components only. The components remain relative to the
+  /// URL's base URL. Same goes for new components. The base URL derives from
+  /// the original connection.
+  public var URLComponents: NSURLComponents? {
+    get {
+      guard let URL = URL else {
+        return nil
+      }
+      return NSURLComponents(URL: URL, resolvingAgainstBaseURL: false)
+    }
+    set(newComponents) {
+      URL = newComponents?.URLRelativeToURL(URL?.baseURL)
+    }
+  }
+
   /// Getter and setter for accessing the request URL's relative path; they do
   /// not access the _absolute_ URL if the URL has a base URL.
   ///
@@ -42,15 +58,12 @@ extension Request {
   /// same level, the URL-component level.
   public var path: String? {
     get {
-      guard let URL = URL else { return nil }
-      let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false)
-      return components?.path
+      return URLComponents?.path
     }
     set(newPath) {
-      guard let URL = URL else { return }
-      let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false)
+      let components = URLComponents
       components?.path = newPath
-      self.URL = components?.URLRelativeToURL(URL.baseURL)
+      URLComponents = components
     }
   }
 

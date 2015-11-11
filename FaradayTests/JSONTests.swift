@@ -1,4 +1,4 @@
-// Faraday Response.swift
+// FaradayTests JSONTests.swift
 //
 // Copyright © 2015, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -22,53 +22,35 @@
 //
 //------------------------------------------------------------------------------
 
+import XCTest
 import Foundation
 
-public class Response {
+class JSONTests: XCTestCase {
 
-  public init() {}
+  func testInvalidJSONObject() {
+    XCTAssertFalse(NSJSONSerialization.isValidJSONObject(false))
+    XCTAssertFalse(NSJSONSerialization.isValidJSONObject(0))
+    XCTAssertFalse(NSJSONSerialization.isValidJSONObject("string"))
+  }
 
-  public var status: Int?
+  func testValidJSONObject() {
+    XCTAssertTrue(NSJSONSerialization.isValidJSONObject([]))
+    XCTAssertTrue(NSJSONSerialization.isValidJSONObject([:]))
+  }
 
-  public var headers = Headers()
+  func testAllowFragments() {
+    XCTAssertNotNil(JSONTests.fragment("false"))
+    XCTAssertNotNil(JSONTests.fragment("0"))
+    XCTAssertNotNil(JSONTests.fragment("\"string\""))
+  }
 
-  public var body: Body?
-
-  // MARK: - Response Middleware
-
-  public class Middleware: Faraday.Middleware {
-
-    public override func call(env: Env) -> Response {
-      return app(env).onComplete { env in
-        self.onComplete(env)
-      }
+  /// Converts a string to a JSON object, even if the string represents a JSON
+  /// fragment; that is, not an object but a primitive.
+  static func fragment(string: String) -> AnyObject? {
+    guard let data = NSString(string: string).dataUsingEncoding(NSUTF8StringEncoding) else {
+      return nil
     }
-
-    public func onComplete(env: Env) {}
-
-  }
-
-  var env: Env?
-
-  var finished: Bool {
-    return env != nil
-  }
-
-  public typealias OnCompleteCallback = (Env) -> Void
-
-  public var onCompleteCallbacks = [OnCompleteCallback]()
-
-  public func onComplete(callback: OnCompleteCallback) -> Response {
-    onCompleteCallbacks.append(callback)
-    return self
-  }
-
-  func finish(env: Env) -> Response {
-    for callback in onCompleteCallbacks {
-      callback(env)
-    }
-    self.env = env
-    return self
+    return try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
   }
 
 }

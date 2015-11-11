@@ -29,7 +29,9 @@
 		783E6EA11BCDA3490018BA03 /* Response+Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783E6EA01BCDA3490018BA03 /* Response+Headers.swift */; };
 		7846F0C01BD74B8B00FDC88A /* Request+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846F0BF1BD74B8B00FDC88A /* Request+URL.swift */; };
 		7846F0C21BD74D8400FDC88A /* NSURLComponents+Faraday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846F0C11BD74D8400FDC88A /* NSURLComponents+Faraday.swift */; };
+		78816EB61BE70A65008BE409 /* Request+Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78816EB51BE70A65008BE409 /* Request+Headers.swift */; };
 		78A2837D1BDCE41C0043C9AA /* RequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A2837C1BDCE41C0043C9AA /* RequestTests.swift */; };
+		78A46A451BEA419000870B39 /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A46A441BEA419000870B39 /* JSONTests.swift */; };
 		78B47B531BDA27920004BA75 /* PingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B47B521BDA27920004BA75 /* PingTests.swift */; };
 		78ECAC651BE6862C0021D3E6 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ECAC641BE6862C0021D3E6 /* ConnectionTests.swift */; };
 /* End PBXBuildFile section */
@@ -70,7 +72,9 @@
 		783E6EA01BCDA3490018BA03 /* Response+Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+Headers.swift"; sourceTree = "<group>"; };
 		7846F0BF1BD74B8B00FDC88A /* Request+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Request+URL.swift"; sourceTree = "<group>"; };
 		7846F0C11BD74D8400FDC88A /* NSURLComponents+Faraday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLComponents+Faraday.swift"; sourceTree = "<group>"; };
+		78816EB51BE70A65008BE409 /* Request+Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Request+Headers.swift"; sourceTree = "<group>"; };
 		78A2837C1BDCE41C0043C9AA /* RequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTests.swift; sourceTree = "<group>"; };
+		78A46A441BEA419000870B39 /* JSONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
 		78B47B521BDA27920004BA75 /* PingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingTests.swift; sourceTree = "<group>"; };
 		78ECAC641BE6862C0021D3E6 /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +126,7 @@
 				780356BD1BC3C639000B9578 /* Env.swift */,
 				780356BF1BC3C6C7000B9578 /* Request.swift */,
 				7846F0BF1BD74B8B00FDC88A /* Request+URL.swift */,
+				78816EB51BE70A65008BE409 /* Request+Headers.swift */,
 				780356C11BC3C6D0000B9578 /* Response.swift */,
 				783E6EA01BCDA3490018BA03 /* Response+Headers.swift */,
 				780356BB1BC3C5BC000B9578 /* Middleware.swift */,
@@ -147,6 +152,7 @@
 				78161B861BD7AC5B00298FBB /* ResponseTests.swift */,
 				78ECAC641BE6862C0021D3E6 /* ConnectionTests.swift */,
 				78B47B521BDA27920004BA75 /* PingTests.swift */,
+				78A46A441BEA419000870B39 /* JSONTests.swift */,
 				780356AC1BC3C521000B9578 /* Info.plist */,
 			);
 			path = FaradayTests;
@@ -271,6 +277,7 @@
 				780356C81BC3F4E1000B9578 /* Logger.swift in Sources */,
 				780356C61BC3D59F000B9578 /* RackBuilder.swift in Sources */,
 				780356CE1BC4195F000B9578 /* Headers.swift in Sources */,
+				78816EB61BE70A65008BE409 /* Request+Headers.swift in Sources */,
 				780356D41BC4224C000B9578 /* Body.swift in Sources */,
 				780356C41BC3D580000B9578 /* App.swift in Sources */,
 				7846F0C01BD74B8B00FDC88A /* Request+URL.swift in Sources */,
@@ -286,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78A2837D1BDCE41C0043C9AA /* RequestTests.swift in Sources */,
+				78A46A451BEA419000870B39 /* JSONTests.swift in Sources */,
 				78161B871BD7AC5B00298FBB /* ResponseTests.swift in Sources */,
 				780356AB1BC3C521000B9578 /* FaradayTests.swift in Sources */,
 				78B47B531BDA27920004BA75 /* PingTests.swift in Sources */,
@@ -323,7 +331,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 0.1;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -371,7 +379,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 0.1;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -399,7 +407,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0.1;
+				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Faraday/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -417,7 +425,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0.1;
+				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Faraday/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
