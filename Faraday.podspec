@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = 'Faraday'
-  spec.version = '0.1.1'
+  spec.version = '0.1.2'
   spec.summary = 'Flexible HTTP client framework based on Rack'
   spec.description = <<-DESCRIPTION
   Flexible HTTP and HTTPS client framework based on Rack. Adopts the concept of
@@ -14,8 +14,7 @@ Pod::Spec.new do |spec|
   spec.source = {
     git: 'https://github.com/royratcliffe/Faraday.git',
     tag: spec.version.to_s }
-  spec.source_files = 'Faraday/**/*.swift'
-  spec.public_header_files = 'Faraday/**/*.h'
+  spec.source_files = 'Faraday/**/*.{swift,h}'
   spec.platform = :ios, '9.0'
   spec.requires_arc = true
 end
