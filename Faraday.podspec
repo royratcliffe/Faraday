@@ -14,8 +14,7 @@ Pod::Spec.new do |spec|
   spec.source = {
     git: 'https://github.com/royratcliffe/Faraday.git',
     tag: spec.version.to_s }
-  spec.source_files = 'Faraday/**/*.swift'
-  spec.public_header_files = 'Faraday/**/*.h'
+  spec.source_files = 'Faraday/**/*.{swift,h}'
   spec.platform = :ios, '9.0'
   spec.requires_arc = true
 end
