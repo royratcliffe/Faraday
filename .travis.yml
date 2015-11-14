@@ -2,3 +2,6 @@ language: objective-c
 xcode_project: Faraday.xcodeproj
 xcode_scheme: Faraday
 osx_image: xcode7.1
+before_install:
+  - brew update
+  - brew uninstall xctool && brew install --HEAD xctool
