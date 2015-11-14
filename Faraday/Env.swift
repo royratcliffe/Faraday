@@ -24,6 +24,15 @@
 
 import Foundation
 
+/// The environment is a bag of key-value pairs collating information about the
+/// state of the request and the response, a scratchpad for the request-response
+/// cycle. (The Faraday implementation in Ruby is a dictionary of strings to any
+/// objects. Values have any type but indexed by known strings.) In Swift, the
+/// environment here is just a request-response pair for carrying
+/// request-response state. The environment starts off unfinished. Middleware
+/// request handlers load the environment; then later, the middleware
+/// responder-chain loads the response. In-between an adapter fires off the
+/// request and captures the raw response when it arrives.
 public class Env {
 
   public init() {}

@@ -24,6 +24,9 @@
 
 import Foundation
 
+/// Adds methods to the Foundation framework's NSURLComponents class for
+/// accessing query items by name, also accessing their values by name as an
+/// array of strings and setting up their values by name.
 extension NSURLComponents {
 
   /// Filters the query items by name. Answers an array of items whose name
