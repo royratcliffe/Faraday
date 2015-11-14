@@ -1,3 +1,4 @@
+# Faraday for Swift
 
 [faraday]:https://github.com/lostisland/faraday
 [rack]:https://github.com/rack/rack

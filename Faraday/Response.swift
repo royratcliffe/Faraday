@@ -28,31 +28,21 @@ public class Response {
 
   public init() {}
 
+  /// - returns: Answers the response status as an integer. Answers `nil` if
+  ///   there is no status as yet.
   public var status: Int?
 
   public var headers = Headers()
 
   public var body: Body?
 
-  // MARK: - Response Middleware
-
-  public class Middleware: Faraday.Middleware {
-
-    public override func call(env: Env) -> Response {
-      return app(env).onComplete { env in
-        self.onComplete(env)
-      }
-    }
-
-    public func onComplete(env: Env) {}
-
-  }
-
   var env: Env?
 
   var finished: Bool {
     return env != nil
   }
+
+  // MARK: - On Complete
 
   public typealias OnCompleteCallback = (Env) -> Void
 
@@ -69,6 +59,21 @@ public class Response {
     }
     self.env = env
     return self
+  }
+
+  // MARK: - Response Middleware
+
+  public class Middleware: Faraday.Middleware {
+
+    public override func call(env: Env) -> Response {
+      return app(env).onComplete { env in
+        self.onComplete(env)
+      }
+    }
+
+    /// Override to modify the environment after the response has finished.
+    public func onComplete(env: Env) {}
+
   }
 
 }
