@@ -34,20 +34,6 @@ public class Response {
 
   public var body: Body?
 
-  // MARK: - Response Middleware
-
-  public class Middleware: Faraday.Middleware {
-
-    public override func call(env: Env) -> Response {
-      return app(env).onComplete { env in
-        self.onComplete(env)
-      }
-    }
-
-    public func onComplete(env: Env) {}
-
-  }
-
   var env: Env?
 
   var finished: Bool {
@@ -69,6 +55,21 @@ public class Response {
     }
     self.env = env
     return self
+  }
+
+  // MARK: - Response Middleware
+
+  public class Middleware: Faraday.Middleware {
+
+    public override func call(env: Env) -> Response {
+      return app(env).onComplete { env in
+        self.onComplete(env)
+      }
+    }
+
+    /// Override to modify the environment after the response has finished.
+    public func onComplete(env: Env) {}
+
   }
 
 }
