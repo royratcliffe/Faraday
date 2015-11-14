@@ -28,6 +28,8 @@ public class Response {
 
   public init() {}
 
+  /// - returns: Answers the response status as an integer. Answers `nil` if
+  ///   there is no status as yet.
   public var status: Int?
 
   public var headers = Headers()
@@ -39,6 +41,8 @@ public class Response {
   var finished: Bool {
     return env != nil
   }
+
+  // MARK: - On Complete
 
   public typealias OnCompleteCallback = (Env) -> Void
 
