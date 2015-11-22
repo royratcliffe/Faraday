@@ -63,33 +63,33 @@ public class Connection {
   public typealias RequestBuilder = (Request) -> Void
 
   /// Runs a GET request.
-  public func get(requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("GET", requestBuilder: requestBuilder)
+  public func get(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
+    return runRequest("GET", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a HEAD request.
-  public func head(requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("HEAD", requestBuilder: requestBuilder)
+  public func head(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
+    return runRequest("HEAD", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a DELETE request.
-  public func delete(requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("DELETE", requestBuilder: requestBuilder)
+  public func delete(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
+    return runRequest("DELETE", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a POST request.
-  public func post(requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("POST", requestBuilder: requestBuilder)
+  public func post(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
+    return runRequest("POST", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a PUT request.
-  public func put(requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("PUT", requestBuilder: requestBuilder)
+  public func put(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
+    return runRequest("PUT", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a PATCH request.
-  public func patch(requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("PATCH", requestBuilder: requestBuilder)
+  public func patch(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
+    return runRequest("PATCH", path: path, requestBuilder: requestBuilder)
   }
 
   /// Builds a request using the given method, then builds a response using the
@@ -98,8 +98,8 @@ public class Connection {
   /// - parameter method: String specifying the request method.
   /// - parameter requestBuilder: Capture for building the request.
   /// - returns: Unfinished response.
-  public func runRequest(method: String, requestBuilder: RequestBuilder? = nil) -> Response {
-    let request = buildRequest(method, requestBuilder: requestBuilder)
+  public func runRequest(method: String, path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
+    let request = buildRequest(method, path: path, requestBuilder: requestBuilder)
     return builder.buildResponse(self, request: request)
   }
 
@@ -111,10 +111,10 @@ public class Connection {
   ///
   /// In the Ruby implementation, the connection shares responsibility for
   /// building the request with the Rack builder. Not so here.
-  func buildRequest(method: String, requestBuilder: RequestBuilder? = nil) -> Request {
+  func buildRequest(method: String, path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Request {
     let request = Request()
     request.method = method
-    request.URL = NSURL(string: "", relativeToURL: URL)
+    request.URL = NSURL(string: path ?? "", relativeToURL: URL)
     request.headers = headers
     requestBuilder?(request)
     return request
