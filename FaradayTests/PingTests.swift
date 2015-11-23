@@ -32,10 +32,10 @@ class PingTests: ConnectionTests {
     let expectation = expectationWithDescription("GET ping")
 
     // when
-    let response = connection.get { request in
-      request.path = "ping"
-    }
-    response.onComplete { env in
+    connection.get("ping").onComplete { env in
+      guard let response = env.response else {
+        return
+      }
       let body = response.body as? NSDictionary
       XCTAssertNotNil(env.response)
       XCTAssertNotNil(response.body)
@@ -68,10 +68,7 @@ class PingTests: ConnectionTests {
     }
 
     func ping() {
-      let response = self.connection.get { request in
-        request.path = "ping"
-      }
-      response.onComplete { env in
+      self.connection.get("ping").onComplete { env in
         self.pong()
       }
     }
