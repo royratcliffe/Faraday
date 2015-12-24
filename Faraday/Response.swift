@@ -53,6 +53,18 @@ public class Response {
     return self
   }
 
+  /// Adds a response completion call-back to the end of the call-backs just as
+  /// onComplete does, but asynchronously runs the given capture in the given
+  /// dispatch queue. Useful when the adapter finishes responses asynchronously
+  /// in some other queue.
+  public func onComplete(queue: dispatch_queue_t, callback: OnCompleteCallback) -> Response {
+    return onComplete { env in
+      dispatch_async(dispatch_get_main_queue()) {
+        callback(env)
+      }
+    }
+  }
+
   func finish(env: Env) -> Response {
     for callback in onCompleteCallbacks {
       callback(env)
