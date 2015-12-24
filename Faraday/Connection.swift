@@ -100,6 +100,11 @@ public class Connection {
   /// - returns: Unfinished response.
   public func runRequest(method: String, path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
     let request = buildRequest(method, path: path, requestBuilder: requestBuilder)
+    return buildResponse(request)
+  }
+
+  /// Builds a response based on the request. Delegates to the Rack builder.
+  func buildResponse(request: Request) -> Response {
     return builder.buildResponse(self, request: request)
   }
 
