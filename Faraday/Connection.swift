@@ -99,7 +99,13 @@ public class Connection {
   /// - parameter requestBuilder: Capture for building the request.
   /// - returns: Unfinished response.
   public func runRequest(method: String, path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
-    let request = buildRequest(method, path: path, requestBuilder: requestBuilder)
+    return runRequest(buildRequest(method, path: path, requestBuilder: requestBuilder))
+  }
+
+  /// Runs an arbitrary request over the connection without any request
+  /// building. This assumes that the request has already been fully built up,
+  /// ready to run.
+  public func runRequest(request: Request) -> Response {
     return buildResponse(request)
   }
 
