@@ -122,7 +122,7 @@ public class Connection {
   ///
   /// In the Ruby implementation, the connection shares responsibility for
   /// building the request with the Rack builder. Not so here.
-  func buildRequest(method: String, path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Request {
+  public func buildRequest(method: String, path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Request {
     let request = Request()
     request.method = method
     request.URL = NSURL(string: path ?? "", relativeToURL: URL)
