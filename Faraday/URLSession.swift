@@ -73,12 +73,31 @@ public class URLSession: Adapter {
     return app(env)
   }
 
+  /// Sets up a middleware adapter that uses NSURLSession for running requests
+  /// and handling responses.
+  ///
+  /// The handler lets you set up a session configuration and a session. These
+  /// override the lazy defaults used by the URL session middleware. You can use
+  /// the session reference to retain a session with a delegate: the handler
+  /// retains the sessions strongly; the session strongly retains its
+  /// delegate. Useful for SSL handshake delegates.
   public class Handler: RackHandler {
+
+    public var configuration: NSURLSessionConfiguration?
+
+    public var session: NSURLSession?
 
     public init() {}
 
     public func build(app: App) -> Middleware {
-      return URLSession(app: app)
+      let middleware = URLSession(app: app)
+      if let configuration = configuration {
+        middleware.configuration = configuration
+      }
+      if let session = session {
+        middleware.session = session
+      }
+      return middleware
     }
 
   }

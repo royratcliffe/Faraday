@@ -99,7 +99,18 @@ public class Connection {
   /// - parameter requestBuilder: Capture for building the request.
   /// - returns: Unfinished response.
   public func runRequest(method: String, path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
-    let request = buildRequest(method, path: path, requestBuilder: requestBuilder)
+    return runRequest(buildRequest(method, path: path, requestBuilder: requestBuilder))
+  }
+
+  /// Runs an arbitrary request over the connection without any request
+  /// building. This assumes that the request has already been fully built up,
+  /// ready to run.
+  public func runRequest(request: Request) -> Response {
+    return buildResponse(request)
+  }
+
+  /// Builds a response based on the request. Delegates to the Rack builder.
+  func buildResponse(request: Request) -> Response {
     return builder.buildResponse(self, request: request)
   }
 
@@ -111,7 +122,7 @@ public class Connection {
   ///
   /// In the Ruby implementation, the connection shares responsibility for
   /// building the request with the Rack builder. Not so here.
-  func buildRequest(method: String, path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Request {
+  public func buildRequest(method: String, path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Request {
     let request = Request()
     request.method = method
     request.URL = NSURL(string: path ?? "", relativeToURL: URL)
