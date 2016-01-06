@@ -71,7 +71,7 @@ public class Response {
   /// in some other queue.
   public func onComplete(queue: dispatch_queue_t, callback: OnCompleteCallback) -> Response {
     return onComplete { env in
-      dispatch_async(dispatch_get_main_queue()) {
+      dispatch_async(queue) {
         callback(env)
       }
     }
