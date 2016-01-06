@@ -77,6 +77,11 @@ public class Response {
     }
   }
 
+  /// Finishes this response. Finished responses retain the given environment
+  /// after invoking all the pending on-completion call-backs. Carrying the
+  /// response signifies completion.
+  /// - parameters env: completed Rack environment.
+  /// - returns: this response.
   func finish(env: Env) -> Response {
     for callback in onCompleteCallbacks {
       callback(env)
