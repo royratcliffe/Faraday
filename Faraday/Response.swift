@@ -38,6 +38,18 @@ public class Response {
 
   var env: Env?
 
+  /// - returns: true if the response status is successful. Only answers success
+  ///   if the response has finished. Success means any status between 200 and
+  ///   299. Answers false if the response status does not lie in the success
+  ///   range, or there is no status because the response is not yet
+  ///   finished. Success therefore also implies finished.
+  public var success: Bool {
+    guard let status = status where finished else {
+      return false
+    }
+    return (200..<300).contains(status)
+  }
+
   var finished: Bool {
     return env != nil
   }
