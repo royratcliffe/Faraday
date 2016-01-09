@@ -1,6 +1,6 @@
 // Faraday Response.swift
 //
-// Copyright © 2015, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -38,6 +38,18 @@ public class Response {
 
   var env: Env?
 
+  /// - returns: true if the response status is successful. Only answers success
+  ///   if the response has finished. Success means any status between 200 and
+  ///   299. Answers false if the response status does not lie in the success
+  ///   range, or there is no status because the response is not yet
+  ///   finished. Success therefore also implies finished.
+  public var success: Bool {
+    guard let status = status where finished else {
+      return false
+    }
+    return (200..<300).contains(status)
+  }
+
   var finished: Bool {
     return env != nil
   }
@@ -59,12 +71,17 @@ public class Response {
   /// in some other queue.
   public func onComplete(queue: dispatch_queue_t, callback: OnCompleteCallback) -> Response {
     return onComplete { env in
-      dispatch_async(dispatch_get_main_queue()) {
+      dispatch_async(queue) {
         callback(env)
       }
     }
   }
 
+  /// Finishes this response. Finished responses retain the given environment
+  /// after invoking all the pending on-completion call-backs. Carrying the
+  /// response signifies completion.
+  /// - parameters env: completed Rack environment.
+  /// - returns: this response.
   func finish(env: Env) -> Response {
     for callback in onCompleteCallbacks {
       callback(env)
