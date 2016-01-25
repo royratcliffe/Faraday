@@ -1,6 +1,6 @@
-// Faraday Headers.swift
+// FaradayTests HeadersTests.swift
 //
-// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -22,36 +22,40 @@
 //
 //------------------------------------------------------------------------------
 
-import Foundation
+import XCTest
+import Faraday
 
-/// Header fields, i.e. header name-value pairs for request or response headers.
-public struct Headers: SequenceType {
+class HeadersTests: XCTestCase {
 
-  private var headerFields = [String: String]()
+  func testGetterSetter() {
+    // given
+    var headers = Headers()
+    // when
+    headers["Content-Length"] = "0"
+    // then
+    XCTAssertEqual(headers["Content-Length"], "0")
+  }
 
-  public subscript(field: String) -> String? {
-    get {
-      return headerFields[field]
-    }
-    set(value) {
+  func testGenerate() {
+    // given
+    var headers = Headers()
+    headers["Content-Length"] = "\(0)"
+    // when
+    var headerFields = [String: String]()
+    headers.forEach { field, value in
       headerFields[field] = value
     }
+    // then
+    XCTAssertEqual(headerFields["Content-Length"], "\(0)")
   }
 
-  /// - returns: all the header fields in a form compatible with the Foundation
-  ///   framework's NSURLRequest class, hence the method name. Answers an
-  ///   immutable copy of all the header fields.
-  public var allHeaderFields: [String: String] {
-    return headerFields
-  }
-
-  /// Provides an accessible initialiser so that `Headers` can be constructed.
-  public init() {}
-
-  // MARK: - Sequence Type
-
-  public func generate() -> Dictionary<String, String>.Generator {
-    return headerFields.generate()
+  func testBasicAuth() {
+    // given
+    var headers = Headers()
+    // when
+    headers.basicAuth("login", pass: "pass")
+    // then
+    XCTAssertEqual(headers.authorization, "Basic bG9naW46cGFzcw==")
   }
 
 }

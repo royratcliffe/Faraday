@@ -26,29 +26,4 @@ import Foundation
 
 extension Request {
 
-  public var accept: String? {
-    get {
-      return headers["Accept"]
-    }
-    set(newAccept) {
-      headers["Accept"] = newAccept
-    }
-  }
-
-  /// Accesses the HTTP Accept header. The header is a comma-delimited string of
-  /// media ranges, each with an optional quality factor separated from the
-  /// media range by a semicolon. The `accepts` method (plural) splits the
-  /// header by commas and trims out any white-space. The result is an array of
-  /// strings, one for each media range.
-  public var accepts: [String]? {
-    get {
-      return accept?.characters.split(",").map {
-        String($0).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-      }
-    }
-    set(newAccepts) {
-      accept = newAccepts?.joinWithSeparator(", ")
-    }
-  }
-
 }
