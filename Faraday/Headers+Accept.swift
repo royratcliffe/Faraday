@@ -1,6 +1,6 @@
-// Faraday Headers.swift
+// Faraday Headers+Accept.swift
 //
-// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -24,34 +24,31 @@
 
 import Foundation
 
-/// Header fields, i.e. header name-value pairs for request or response headers.
-public struct Headers: SequenceType {
+extension Headers {
 
-  private var headerFields = [String: String]()
-
-  public subscript(field: String) -> String? {
+  public var accept: String? {
     get {
-      return headerFields[field]
+      return self["Accept"]
     }
     set(value) {
-      headerFields[field] = value
+      self["Accept"] = value
     }
   }
 
-  /// - returns: all the header fields in a form compatible with the Foundation
-  ///   framework's NSURLRequest class, hence the method name. Answers an
-  ///   immutable copy of all the header fields.
-  public var allHeaderFields: [String: String] {
-    return headerFields
-  }
-
-  /// Provides an accessible initialiser so that `Headers` can be constructed.
-  public init() {}
-
-  // MARK: - Sequence Type
-
-  public func generate() -> Dictionary<String, String>.Generator {
-    return headerFields.generate()
+  /// Accesses the HTTP Accept header. The header is a comma-delimited string of
+  /// media ranges, each with an optional quality factor separated from the
+  /// media range by a semicolon. The `accepts` method (plural) splits the
+  /// header by commas and trims out any white-space. The result is an array of
+  /// strings, one for each media range.
+  public var accepts: [String]? {
+    get {
+      return accept?.characters.split(",").map {
+        String($0).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+      }
+    }
+    set(value) {
+      accept = value?.joinWithSeparator(", ")
+    }
   }
 
 }

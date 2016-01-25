@@ -46,7 +46,7 @@ public class URLSession: Adapter {
       return
     }
     URLRequest.HTTPMethod = method
-    URLRequest.allHTTPHeaderFields = env.request?.headers
+    URLRequest.allHTTPHeaderFields = env.request?.headers.allHeaderFields
     let handler = { (body: NSData?, URLResponse: NSURLResponse?, error: NSError?) in
       guard let HTTPURLResponse = URLResponse as? NSHTTPURLResponse else {
         return

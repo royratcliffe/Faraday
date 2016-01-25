@@ -30,7 +30,7 @@ public class Logger: Response.Middleware {
     let method = env.request?.method ?? "[METHOD]"
     let URLString = (env.request?.URL ?? NSURL()).absoluteString
     Logger.log("\(method) \(URLString)")
-    Logger.log("request", headers: env.request?.headers)
+    Logger.log("request", headers: env.request?.headers.allHeaderFields)
     Logger.log("request", body: env.request?.body)
     return super.call(env)
   }
@@ -39,7 +39,7 @@ public class Logger: Response.Middleware {
     if let status = env.response?.status {
       Logger.log("Status: \(String(status))")
     }
-    Logger.log("response", headers: env.response?.headers)
+    Logger.log("response", headers: env.response?.headers.allHeaderFields)
     Logger.log("response", body: env.response?.body)
   }
 

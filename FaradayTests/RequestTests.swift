@@ -81,12 +81,12 @@ class RequestTests: XCTestCase {
 
   func testAccepts() {
     // given
-    request.accepts = ["application/hal+json; q=1.0", "text/plain"]
+    request.headers.accepts = ["application/hal+json; q=1.0", "text/plain"]
     // when
-    let accept = request.accept
+    let accept = request.headers.accept
     // then
     XCTAssertEqual(accept, "application/hal+json; q=1.0, text/plain")
-    XCTAssertEqual(request.accepts!, ["application/hal+json; q=1.0", "text/plain"])
+    XCTAssertEqual(request.headers.accepts!, ["application/hal+json; q=1.0", "text/plain"])
   }
 
 }

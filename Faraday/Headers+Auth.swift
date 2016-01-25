@@ -1,6 +1,6 @@
-// Faraday Headers.swift
+// Faraday Headers+Auth.swift
 //
-// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -24,34 +24,31 @@
 
 import Foundation
 
-/// Header fields, i.e. header name-value pairs for request or response headers.
-public struct Headers: SequenceType {
+extension Headers {
 
-  private var headerFields = [String: String]()
-
-  public subscript(field: String) -> String? {
+  public var authorization: String? {
     get {
-      return headerFields[field]
+      return self["Authorization"]
     }
     set(value) {
-      headerFields[field] = value
+      self["Authorization"] = value
     }
   }
 
-  /// - returns: all the header fields in a form compatible with the Foundation
-  ///   framework's NSURLRequest class, hence the method name. Answers an
-  ///   immutable copy of all the header fields.
-  public var allHeaderFields: [String: String] {
-    return headerFields
-  }
-
-  /// Provides an accessible initialiser so that `Headers` can be constructed.
-  public init() {}
-
-  // MARK: - Sequence Type
-
-  public func generate() -> Dictionary<String, String>.Generator {
-    return headerFields.generate()
+  /// Sets up basic authorisation using the given log-in user name and
+  /// corresponding password. These become part of the `Authorization` header
+  /// after some encoding. Useful for preparing individual request headers, or
+  /// connection-wide request headers, for authorised access.
+  /// - returns: the new authorisation header value, or `nil` if the given
+  ///   log-in user name and password fails to encode as UTF-8.
+  public mutating func basicAuth(login: String, pass: String) -> String? {
+    guard let data = "\(login):\(pass)".dataUsingEncoding(NSUTF8StringEncoding) else {
+      return nil
+    }
+    let string = data.base64EncodedStringWithOptions([])
+    let basicAuthHeaderValue = "Basic \(string)"
+    authorization = basicAuthHeaderValue
+    return basicAuthHeaderValue
   }
 
 }

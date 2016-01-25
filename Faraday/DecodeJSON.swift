@@ -34,7 +34,7 @@ public class DecodeJSON: Response.Middleware {
   /// Sets up the request headers to accept JSON. Adds `application/json` to the
   /// front of the Accept header with a default implicit quality factor of 1.
   public override func call(env: Env) -> Response {
-    env.request?.accepts = ["application/json"] + (env.request?.accepts ?? [])
+    env.request?.headers.accepts = ["application/json"] + (env.request?.headers.accepts ?? [])
     return super.call(env)
   }
 
