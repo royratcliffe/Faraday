@@ -58,4 +58,13 @@ class HeadersTests: XCTestCase {
     XCTAssertEqual(headers.authorization, "Basic bG9naW46cGFzcw==")
   }
 
+  func testTokenAuth() {
+    // given
+    var headers = Headers()
+    // when
+    headers.tokenAuth("abcdef", options: ["foo": "bar"])
+    // then
+    XCTAssertEqual(headers.authorization, "Token token=abcdef,foo=bar")
+  }
+
 }
