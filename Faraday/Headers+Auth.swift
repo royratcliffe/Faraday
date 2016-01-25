@@ -51,4 +51,19 @@ extension Headers {
     return basicAuthHeaderValue
   }
 
+  /// Sets up token-based authorisation.
+  /// - parameter token: string to set up as the token.
+  /// - parameter options: optional dictionary of additional key-value pairs for
+  ///   the authorisation header.
+  public mutating func tokenAuth(token: String, options: [String: String]? = nil) {
+    var keyedValues = options ?? [:]
+    keyedValues["token"] = token
+    let strings = keyedValues.map { (key, value) -> String in
+      return "\(key)=\(value)"
+    }
+    let string = strings.joinWithSeparator(",")
+    let tokenAuthHeaderValue = "Token \(string)"
+    authorization = tokenAuthHeaderValue
+  }
+
 }
