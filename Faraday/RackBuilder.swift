@@ -44,7 +44,7 @@ class RackBuilder {
       env.response = response
       return response
     }
-    }()
+  }()
 
   func toApp(innerApp: App) -> App {
     return handlers.reverse().reduce(innerApp) { app, handler -> App in
