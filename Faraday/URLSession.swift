@@ -28,11 +28,11 @@ public class URLSession: Adapter {
 
   public lazy var configuration: NSURLSessionConfiguration = {
     NSURLSessionConfiguration.defaultSessionConfiguration()
-    }()
+  }()
 
   public lazy var session: NSURLSession = {
     NSURLSession(configuration: self.configuration)
-    }()
+  }()
 
   func performRequest(env: Env) {
     guard let request = env.request else {
