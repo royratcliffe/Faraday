@@ -85,12 +85,16 @@ class PingTests: ConnectionTests {
   }
 
   /// Performs three GET requests in a row, one after the other.
+  ///
+  /// Weakly retains the expectation in order to avoid unnecessary exceptions
+  /// when trying to fulfil an expectation for which the time-out has already
+  /// expired.
   func testCounter() {
     // given
     let expectation = expectationWithDescription("Counter")
     // when
-    let counter = Counter(limit: 3, connection: connection) { counter in
-      expectation.fulfill()
+    let counter = Counter(limit: 3, connection: connection) { [weak expectation] counter in
+      expectation?.fulfill()
     }
     counter.ping()
     // then
