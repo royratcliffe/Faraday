@@ -36,6 +36,37 @@ class HeadersTests: XCTestCase {
     XCTAssertEqual(headers["Content-Length"], "0")
   }
 
+  func testAcceptsEmpty() {
+    // given
+    var headers = Headers()
+    // when
+    headers.accepts([])
+    // then
+    XCTAssertNotNil(headers.accept)
+    XCTAssertEqual(headers.accepts!, [])
+  }
+
+  func testAcceptsNonEmpty() {
+    // given
+    var headers = Headers()
+    // when
+    headers.accepts(["application/json"])
+    // then
+    XCTAssertNotNil(headers.accept)
+    XCTAssertEqual(headers.accept, "application/json")
+  }
+
+  func testAcceptsDuplicate() {
+    // given
+    var headers = Headers()
+    // when
+    headers.accepts(["application/json"])
+    headers.accepts(["application/json"])
+    // then
+    XCTAssertNotNil(headers.accept)
+    XCTAssertEqual(headers.accept, "application/json")
+  }
+
   func testGenerate() {
     // given
     var headers = Headers()

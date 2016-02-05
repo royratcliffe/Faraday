@@ -1,25 +1,22 @@
 # Change Log
 
-## [0.1.7](https://github.com/royratcliffe/faraday/tree/0.1.7) (2016-01-24)
-[Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.6...0.1.7)
+## [0.1.x](https://github.com/royratcliffe/faraday/tree/0.1.11)
 
-## [0.1.6](https://github.com/royratcliffe/faraday/tree/0.1.6) (2016-01-09)
-[Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.5...0.1.6)
+Initial versions with various patches for:
 
-## [0.1.5](https://github.com/royratcliffe/faraday/tree/0.1.5) (2016-01-01)
-[Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.4...0.1.5)
+- Weakly retain expectation (fix tests)
+- Token and basic authorisation
+- Fix for response retaining `env` before invoking call-backs
+- Using the given dispatch queue (fix)
+- Response success or failure using `onSuccess` or `onFailure`
+- URL session handler sets up configuration and session
+- Make `buildRequest` method public
+- Invoke `runRequest(request)` from `runRequest(method, path, requestBuilder)`
+- Make `buildResponse` behaviour available for `Connection`s
+- Variant of `Response`'s `onComplete` method: with dispatch queue
+- Ping tests use optional `path` argument
+- Request runners accept optional `path` argument
+- Travis CI support
+- Jazzy set-up
 
-## [0.1.4](https://github.com/royratcliffe/faraday/tree/0.1.4) (2015-11-23)
-[Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.3...0.1.4)
-
-## [0.1.3](https://github.com/royratcliffe/faraday/tree/0.1.3) (2015-11-14)
-[Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.2...0.1.3)
-
-## [0.1.2](https://github.com/royratcliffe/faraday/tree/0.1.2) (2015-11-11)
-[Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.1...0.1.2)
-
-## [0.1.1](https://github.com/royratcliffe/faraday/tree/0.1.1) (2015-11-11)
-[Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.0...0.1.1)
-
-## [0.1.0](https://github.com/royratcliffe/faraday/tree/0.1.0) (2015-11-11)
-
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.0...0.1.11).
