@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.1.x](https://github.com/royratcliffe/faraday/tree/0.1.10)
+## [0.1.x](https://github.com/royratcliffe/faraday/tree/0.1.11)
 
 Initial versions with various patches for:
 
@@ -19,4 +19,4 @@ Initial versions with various patches for:
 - Travis CI support
 - Jazzy set-up
 
-See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.0...0.1.10).
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.0...0.1.11).
