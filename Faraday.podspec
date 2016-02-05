@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = 'Faraday'
-  spec.version = '0.1.10'
+  spec.version = '0.1.11'
   spec.summary = 'Flexible HTTP client framework based on Rack'
   spec.description = <<-DESCRIPTION
   Flexible HTTP and HTTPS client framework based on Rack. Adopts the concept of
