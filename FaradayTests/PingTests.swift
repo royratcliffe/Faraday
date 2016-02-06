@@ -46,7 +46,7 @@ class PingTests: ConnectionTests {
     }
 
     // then
-    waitForExpectationsWithTimeout(30.0) { error in
+    waitForExpectationsWithTimeout(60.0) { error in
       XCTAssertNil(error)
     }
   }
@@ -129,7 +129,7 @@ class PingTests: ConnectionTests {
     }
 
     // then
-    waitForExpectationsWithTimeout(30.0) { error in
+    waitForExpectationsWithTimeout(60.0) { error in
       XCTAssertNil(error)
     }
   }
