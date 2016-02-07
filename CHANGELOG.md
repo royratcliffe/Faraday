@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.1.x](https://github.com/royratcliffe/faraday/tree/0.1.11)
+## [0.1.x](https://github.com/royratcliffe/faraday/tree/0.2.0)
 
 Initial versions with various patches for:
 
@@ -16,7 +16,7 @@ Initial versions with various patches for:
 - Variant of `Response`'s `onComplete` method: with dispatch queue
 - Ping tests use optional `path` argument
 - Request runners accept optional `path` argument
-- Travis CI support
+- Travis CI support; fix tests for Travis
 - Jazzy set-up
 
-See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.0...0.1.11).
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.1.0...0.2.0).

@@ -95,7 +95,7 @@ class HeadersTests: XCTestCase {
     // when
     headers.tokenAuth("abcdef", options: ["foo": "bar"])
     // then
-    XCTAssertEqual(headers.authorization, "Token token=abcdef,foo=bar")
+    XCTAssertTrue(["Token token=abcdef,foo=bar", "Token foo=bar,token=abcdef"].contains(headers.authorization!))
   }
 
 }

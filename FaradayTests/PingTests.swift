@@ -46,7 +46,7 @@ class PingTests: ConnectionTests {
     }
 
     // then
-    waitForExpectationsWithTimeout(30.0) { error in
+    waitForExpectationsWithTimeout(60.0) { error in
       XCTAssertNil(error)
     }
   }
@@ -89,6 +89,8 @@ class PingTests: ConnectionTests {
   /// Weakly retains the expectation in order to avoid unnecessary exceptions
   /// when trying to fulfil an expectation for which the time-out has already
   /// expired.
+  ///
+  /// Give Heroku at least 60 seconds to spin up a free dyno.
   func testCounter() {
     // given
     let expectation = expectationWithDescription("Counter")
@@ -98,7 +100,7 @@ class PingTests: ConnectionTests {
     }
     counter.ping()
     // then
-    waitForExpectationsWithTimeout(30.0) { (error) -> Void in
+    waitForExpectationsWithTimeout(60.0) { (error) -> Void in
       XCTAssertNil(error)
     }
   }
@@ -127,7 +129,7 @@ class PingTests: ConnectionTests {
     }
 
     // then
-    waitForExpectationsWithTimeout(30.0) { error in
+    waitForExpectationsWithTimeout(60.0) { error in
       XCTAssertNil(error)
     }
   }
