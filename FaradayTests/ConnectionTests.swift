@@ -34,7 +34,7 @@ class ConnectionTests: XCTestCase {
 
     // The URL's trailing slash is very important. Without it, merging URLs will
     // replace the entire path rather than just append the path.
-    connection.URL = NSURL(string: "https://faraday-tests.herokuapp.com/")
+    connection.URL = NSURL(string: "http://faraday-tests.herokuapp.com/")
     connection.use(EncodeJSON.Handler())
     connection.use(DecodeJSON.Handler())
     connection.use(Logger.Handler())
