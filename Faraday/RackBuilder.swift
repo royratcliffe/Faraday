@@ -30,7 +30,7 @@ import Foundation
 /// environment and answer an unfinished response; and build their middleware
 /// in-between. Connection objects use a rack builder to manage the middleware
 /// stack and build responses from the stack.
-class RackBuilder {
+class RackBuilder: NSObject {
 
   var handlers = [RackHandler]()
 

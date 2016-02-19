@@ -24,6 +24,7 @@
 
 import Foundation
 
+@objc(FaradayURLSession)
 public class URLSession: Adapter {
 
   public lazy var configuration: NSURLSessionConfiguration = {
@@ -52,7 +53,7 @@ public class URLSession: Adapter {
         return
       }
       let status = HTTPURLResponse.statusCode
-      var headers = Headers()
+      let headers = Headers()
       for (key, value) in HTTPURLResponse.allHeaderFields {
         headers[String(key)] = String(value)
       }
@@ -81,13 +82,12 @@ public class URLSession: Adapter {
   /// the session reference to retain a session with a delegate: the handler
   /// retains the sessions strongly; the session strongly retains its
   /// delegate. Useful for SSL handshake delegates.
-  public class Handler: RackHandler {
+  @objc(FaradayURLSessionHandler)
+  public class Handler: NSObject, RackHandler {
 
     public var configuration: NSURLSessionConfiguration?
 
     public var session: NSURLSession?
-
-    public init() {}
 
     public func build(app: App) -> Middleware {
       let middleware = URLSession(app: app)

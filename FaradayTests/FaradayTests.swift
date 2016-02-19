@@ -27,13 +27,13 @@ import XCTest
 
 class FaradayTests: XCTestCase {
 
-  class NothingMiddleware: Response.Middleware {
+  class NothingMiddleware: ResponseMiddleware {
 
     override func onComplete(env: Env) {
       NSLog("***")
     }
 
-    class Handler: RackHandler {
+    class Handler: NSObject, RackHandler {
 
       func build(app: App) -> Middleware {
         return NothingMiddleware(app: app)

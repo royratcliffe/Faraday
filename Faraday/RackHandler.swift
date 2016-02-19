@@ -31,7 +31,8 @@ import Foundation
 /// Rack handler protocol implementers should inherit from NSObject for two
 /// reasons. First, that makes it accessible from Objective-C. Second, NSObject
 /// provides a default initialiser so no need to provide one explicitly.
-public protocol RackHandler {
+@objc(FaradayRackHandler)
+public protocol RackHandler: NSObjectProtocol {
 
   /// Builds a piece of middleware given a capture that accepts an environment
   /// and answers an unfinished response.

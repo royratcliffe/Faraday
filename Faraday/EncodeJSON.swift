@@ -34,6 +34,7 @@ import Foundation
 /// The implementation only sets up the content-type header for JSON if, and
 /// only if, not already set. If the encoder finds no content-type, then it
 /// becomes `application/json`.
+@objc(FaradayEncodeJSON)
 public class EncodeJSON: Middleware {
 
   public override func call(env: Env) -> Response {
@@ -52,9 +53,8 @@ public class EncodeJSON: Middleware {
     return app(env)
   }
 
-  public class Handler: RackHandler {
-
-    public init() {}
+  @objc(FaradayEncodeJSONHandler)
+  public class Handler: NSObject, RackHandler {
 
     public func build(app: App) -> Middleware {
       return EncodeJSON(app: app)

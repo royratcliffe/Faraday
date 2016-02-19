@@ -33,9 +33,8 @@ import Foundation
 /// Connections manage request defaults such as the URL, including query items,
 /// and headers. All new requests receive the connection defaults, the default
 /// URL and headers.
-public class Connection {
-
-  public init() {}
+@objc(FaradayConnection)
+public class Connection: NSObject {
 
   public var URL: NSURL?
 

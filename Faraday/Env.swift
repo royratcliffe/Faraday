@@ -33,9 +33,8 @@ import Foundation
 /// request handlers load the environment; then later, the middleware
 /// responder-chain loads the response. In-between an adapter fires off the
 /// request and captures the raw response when it arrives.
-public class Env {
-
-  public init() {}
+@objc(FaradayEnv)
+public class Env: NSObject {
 
   public var request: Request?
 

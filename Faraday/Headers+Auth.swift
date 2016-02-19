@@ -41,7 +41,7 @@ extension Headers {
   /// connection-wide request headers, for authorised access.
   /// - returns: the new authorisation header value, or `nil` if the given
   ///   log-in user name and password fails to encode as UTF-8.
-  public mutating func basicAuth(login: String, pass: String) -> String? {
+  public func basicAuth(login: String, pass: String) -> String? {
     guard let data = "\(login):\(pass)".dataUsingEncoding(NSUTF8StringEncoding) else {
       return nil
     }
@@ -55,7 +55,7 @@ extension Headers {
   /// - parameter token: string to set up as the token.
   /// - parameter options: optional dictionary of additional key-value pairs for
   ///   the authorisation header.
-  public mutating func tokenAuth(token: String, options: [String: String]? = nil) {
+  public func tokenAuth(token: String, options: [String: String]? = nil) {
     var keyedValues = options ?? [:]
     keyedValues["token"] = token
     let strings = keyedValues.map { (key, value) -> String in

@@ -29,7 +29,8 @@ import Foundation
 /// decoder replaces the data with the JSON object. The decoder allows JSON
 /// fragments, primitives as well as objects and arrays. It does not test the
 /// response's content type.
-public class DecodeJSON: Response.Middleware {
+@objc(FaradayDecodeJSON)
+public class DecodeJSON: ResponseMiddleware {
 
   /// Sets up the request headers to accept JSON. Adds `application/json` to the
   /// front of the Accept header with a default implicit quality factor of 1.
@@ -53,9 +54,8 @@ public class DecodeJSON: Response.Middleware {
     }
   }
 
-  public class Handler: RackHandler {
-
-    public init() {}
+  @objc(FaradayDecodeJSONHandler)
+  public class Handler: NSObject, RackHandler {
 
     public func build(app: App) -> Middleware {
       return DecodeJSON(app: app)

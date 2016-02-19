@@ -24,9 +24,8 @@
 
 import Foundation
 
-public class Response {
-
-  public init() {}
+@objc(FaradayResponse)
+public class Response: NSObject {
 
   /// - returns: Answers the response status as an integer. Answers `nil` if
   ///   there is no status as yet.
@@ -88,21 +87,6 @@ public class Response {
       callback(env)
     }
     return self
-  }
-
-  // MARK: - Response Middleware
-
-  public class Middleware: Faraday.Middleware {
-
-    public override func call(env: Env) -> Response {
-      return app(env).onComplete { env in
-        self.onComplete(env)
-      }
-    }
-
-    /// Override to modify the environment after the response has finished.
-    public func onComplete(env: Env) {}
-
   }
 
 }

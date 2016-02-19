@@ -24,7 +24,8 @@
 
 import Foundation
 
-public class Logger: Response.Middleware {
+@objc(FaradayLogger)
+public class Logger: ResponseMiddleware {
 
   public override func call(env: Env) -> Response {
     let method = env.request?.method ?? "[METHOD]"
@@ -74,9 +75,8 @@ public class Logger: Response.Middleware {
     }
   }
 
-  public class Handler: RackHandler {
-
-    public init() {}
+  @objc(FaradayLoggerHandler)
+  public class Handler: NSObject, RackHandler {
 
     public func build(app: App) -> Middleware {
       return Logger(app: app)

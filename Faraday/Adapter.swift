@@ -24,6 +24,7 @@
 
 import Foundation
 
+@objc(FaradayAdapter)
 public class Adapter: Middleware {
 
   /// Strictly speaking, this could be implemented as a static method. The

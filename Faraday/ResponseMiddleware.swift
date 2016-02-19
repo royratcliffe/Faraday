@@ -1,6 +1,6 @@
-// Faraday Request.swift
+// Faraday ResponseMiddleware.swift
 //
-// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -24,18 +24,16 @@
 
 import Foundation
 
-/// Represents a HTTP request comprising a method, URL with query items, headers
-/// and body.
-@objc(FaradayRequest)
-public class Request: NSObject {
+@objc(FaradayResponseMiddleware)
+public class ResponseMiddleware: Middleware {
 
-  public var method: String?
+  public override func call(env: Env) -> Response {
+    return app(env).onComplete { env in
+      self.onComplete(env)
+    }
+  }
 
-  /// The URL components comprise query items. They are the request parameters.
-  public var URL: NSURL?
-
-  public var headers = Headers()
-
-  public var body: Body?
+  /// Override to modify the environment after the response has finished.
+  public func onComplete(env: Env) {}
 
 }

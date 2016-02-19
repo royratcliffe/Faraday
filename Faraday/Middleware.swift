@@ -31,7 +31,8 @@ import Foundation
 /// it to a response which passes back up the stack of middleware. Response
 /// middleware adds a completion handler to the unfinished response. Such
 /// handlers run in reverse-stack order when the asynchronous response finishes.
-public class Middleware {
+@objc(FaradayMiddleware)
+public class Middleware: NSObject {
 
   public var app: App
 

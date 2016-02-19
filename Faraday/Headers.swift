@@ -25,7 +25,8 @@
 import Foundation
 
 /// Header fields, i.e. header name-value pairs for request or response headers.
-public struct Headers: SequenceType {
+@objc(FaradayHeaders)
+public class Headers: NSObject, SequenceType {
 
   private var headerFields = [String: String]()
 
@@ -44,9 +45,6 @@ public struct Headers: SequenceType {
   public var allHeaderFields: [String: String] {
     return headerFields
   }
-
-  /// Provides an accessible initialiser so that `Headers` can be constructed.
-  public init() {}
 
   // MARK: - Sequence Type
 

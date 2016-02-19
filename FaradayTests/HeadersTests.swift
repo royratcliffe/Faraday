@@ -29,7 +29,7 @@ class HeadersTests: XCTestCase {
 
   func testGetterSetter() {
     // given
-    var headers = Headers()
+    let headers = Headers()
     // when
     headers["Content-Length"] = "0"
     // then
@@ -38,7 +38,7 @@ class HeadersTests: XCTestCase {
 
   func testAcceptsEmpty() {
     // given
-    var headers = Headers()
+    let headers = Headers()
     // when
     headers.accepts([])
     // then
@@ -48,7 +48,7 @@ class HeadersTests: XCTestCase {
 
   func testAcceptsNonEmpty() {
     // given
-    var headers = Headers()
+    let headers = Headers()
     // when
     headers.accepts(["application/json"])
     // then
@@ -58,7 +58,7 @@ class HeadersTests: XCTestCase {
 
   func testAcceptsDuplicate() {
     // given
-    var headers = Headers()
+    let headers = Headers()
     // when
     headers.accepts(["application/json"])
     headers.accepts(["application/json"])
@@ -69,7 +69,7 @@ class HeadersTests: XCTestCase {
 
   func testGenerate() {
     // given
-    var headers = Headers()
+    let headers = Headers()
     headers["Content-Length"] = "\(0)"
     // when
     var headerFields = [String: String]()
@@ -82,7 +82,7 @@ class HeadersTests: XCTestCase {
 
   func testBasicAuth() {
     // given
-    var headers = Headers()
+    let headers = Headers()
     // when
     headers.basicAuth("login", pass: "pass")
     // then
@@ -91,7 +91,7 @@ class HeadersTests: XCTestCase {
 
   func testTokenAuth() {
     // given
-    var headers = Headers()
+    let headers = Headers()
     // when
     headers.tokenAuth("abcdef", options: ["foo": "bar"])
     // then

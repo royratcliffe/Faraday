@@ -54,7 +54,7 @@ extension Headers {
   /// Adds more type elements to the Accept header. Does not add duplicates;
   /// instead, it passes the new elements through a filter in order to remove
   /// duplicates and make the acceptable types unique.
-  public mutating func accepts(newAccepts: [String]) {
+  public func accepts(newAccepts: [String]) {
     guard let oldAccepts = accepts else {
       accepts = newAccepts
       return
