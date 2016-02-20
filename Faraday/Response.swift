@@ -50,7 +50,7 @@ public class Response {
     return (200..<300).contains(status)
   }
 
-  var finished: Bool {
+  public var finished: Bool {
     return env != nil
   }
 
