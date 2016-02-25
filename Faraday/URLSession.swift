@@ -26,13 +26,9 @@ import Foundation
 
 public class URLSession: Adapter {
 
-  public lazy var configuration: NSURLSessionConfiguration = {
-    NSURLSessionConfiguration.defaultSessionConfiguration()
-  }()
+  var configuration: NSURLSessionConfiguration!
 
-  public lazy var session: NSURLSession = {
-    NSURLSession(configuration: self.configuration)
-  }()
+  var session: NSURLSession!
 
   func performRequest(env: Env) {
     guard let request = env.request else {
@@ -83,20 +79,20 @@ public class URLSession: Adapter {
   /// delegate. Useful for SSL handshake delegates.
   public class Handler: RackHandler {
 
-    public var configuration: NSURLSessionConfiguration?
+    public lazy var configuration: NSURLSessionConfiguration = {
+      NSURLSessionConfiguration.defaultSessionConfiguration()
+    }()
 
-    public var session: NSURLSession?
+    public lazy var session: NSURLSession = {
+      NSURLSession(configuration: self.configuration)
+    }()
 
     public init() {}
 
     public func build(app: App) -> Middleware {
       let middleware = URLSession(app: app)
-      if let configuration = configuration {
-        middleware.configuration = configuration
-      }
-      if let session = session {
-        middleware.session = session
-      }
+      middleware.configuration = configuration
+      middleware.session = session
       return middleware
     }
 
