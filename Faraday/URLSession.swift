@@ -48,23 +48,13 @@ public class URLSession: Adapter {
     }
     URLRequest.HTTPMethod = method
     URLRequest.allHTTPHeaderFields = env.request?.headers.allHeaderFields
-    let handler = { (body: NSData?, URLResponse: NSURLResponse?, error: NSError?) in
-      guard let HTTPURLResponse = URLResponse as? NSHTTPURLResponse else {
-        return
-      }
-      let status = HTTPURLResponse.statusCode
-      var headers = Headers()
-      for (key, value) in HTTPURLResponse.allHeaderFields {
-        headers[String(key)] = String(value)
-      }
-      self.saveResponse(env, status: status, body: body, headers: headers)
-    }
     var task: NSURLSessionDataTask
     if let body = request.body as? NSData {
-      task = session.uploadTaskWithRequest(URLRequest, fromData: body, completionHandler: handler)
+      task = session.uploadTaskWithRequest(URLRequest, fromData: body)
     } else {
-      task = session.dataTaskWithRequest(URLRequest, completionHandler: handler)
+      task = session.dataTaskWithRequest(URLRequest)
     }
+    task.env = env
     task.resume()
     return task
   }
@@ -91,22 +81,49 @@ public class URLSession: Adapter {
   /// the session reference to retain a session with a delegate: the handler
   /// retains the sessions strongly; the session strongly retains its
   /// delegate. Useful for SSL handshake delegates.
-  public class Handler: RackHandler {
+  public class Handler: NSObject, RackHandler, NSURLSessionDataDelegate {
 
     public lazy var configuration: NSURLSessionConfiguration = {
       NSURLSessionConfiguration.defaultSessionConfiguration()
     }()
 
     public lazy var session: NSURLSession = {
-      NSURLSession(configuration: self.configuration)
+      NSURLSession(configuration: self.configuration, delegate: self, delegateQueue: nil)
     }()
 
-    public init() {}
-
     public func build(app: App) -> Middleware {
-      let middleware = URLSession(app: app)
+      let middleware = Faraday.URLSession(app: app)
       middleware.session = session
       return middleware
+    }
+
+    // MARK: - URL Session Data Delegate
+
+    // Handles data-received events for both data and upload tasks; an upload
+    // task _is_ a data task because data task is upload task's super-class. The
+    // Handler consumes data as the URL session delegate.
+    //
+    // The data task sends either complete or partial data. How can you tell if
+    // the data comprises the final response or whether the message is one of
+    // many continuing responses in a multipart sequence? Multi-part responses
+    // see an initial finished response followed by additional finished
+    // responses until either the end-point terminates the connection or the
+    // client cancels the response.
+    public func URLSession(session: NSURLSession,
+                           dataTask: NSURLSessionDataTask,
+                           didReceiveData data: NSData) {
+      guard let env = dataTask.env else {
+        return
+      }
+      guard let HTTPURLResponse = dataTask.response as? NSHTTPURLResponse else {
+        return
+      }
+      let status = HTTPURLResponse.statusCode
+      var headers = Headers()
+      for (key, value) in HTTPURLResponse.allHeaderFields {
+        headers[String(key)] = String(value)
+      }
+      env.saveResponse(status, body: data, headers: headers)
     }
 
   }

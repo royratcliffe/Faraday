@@ -31,13 +31,7 @@ public class Adapter: Middleware {
   /// middleware superclass. Implementing it as an instance method only lets
   /// adapter subclasses override it.
   public func saveResponse(env: Env, status: Int, body: Body?, headers: Headers) {
-    guard let response = env.response else {
-      return
-    }
-    response.status = status
-    response.body = body
-    response.headers = headers
-    response.finish(env)
+    env.saveResponse(status, body: body, headers: headers)
   }
 
 }
