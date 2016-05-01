@@ -34,16 +34,23 @@ public class URLSession: Adapter {
     NSURLSession(configuration: self.configuration)
   }()
 
-  func performRequest(env: Env) {
+  /// Performs a request.
+  /// - parameter env: Rack environment under construction.
+  /// - returns: New running URL-session data task set up for either uploading
+  ///   or downloading data depending on the environment's request body. Presence
+  ///   of a body translates to upload, absence to download. Returns without a
+  ///   task if the environment contains no request, or the request has no URL or
+  ///   no method.
+  func performRequest(env: Env) -> NSURLSessionDataTask? {
     guard let request = env.request else {
-      return
+      return nil
     }
     guard let URL = request.URL else {
-      return
+      return nil
     }
     let URLRequest = NSMutableURLRequest(URL: URL)
     guard let method = request.method else {
-      return
+      return nil
     }
     URLRequest.HTTPMethod = method
     URLRequest.allHTTPHeaderFields = env.request?.headers.allHeaderFields
@@ -66,6 +73,7 @@ public class URLSession: Adapter {
       task = session.dataTaskWithRequest(URLRequest, completionHandler: handler)
     }
     task.resume()
+    return task
   }
 
   public override func call(env: Env) -> Response {
