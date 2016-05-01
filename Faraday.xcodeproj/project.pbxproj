@@ -33,6 +33,7 @@
 		7877E7581C380DC90013833B /* Response+OnComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7877E7571C380DC90013833B /* Response+OnComplete.swift */; };
 		78A2837D1BDCE41C0043C9AA /* RequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A2837C1BDCE41C0043C9AA /* RequestTests.swift */; };
 		78A46A451BEA419000870B39 /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A46A441BEA419000870B39 /* JSONTests.swift */; };
+		78B145A21C883BA6002F733B /* NSData+Faraday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B145A11C883BA6002F733B /* NSData+Faraday.swift */; };
 		78B47B531BDA27920004BA75 /* PingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B47B521BDA27920004BA75 /* PingTests.swift */; };
 		78E072841C549FB400EBEF5F /* Headers+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E072831C549FB400EBEF5F /* Headers+Auth.swift */; };
 		78E072861C54A20000EBEF5F /* Headers+Accept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E072851C54A20000EBEF5F /* Headers+Accept.swift */; };
@@ -79,6 +80,7 @@
 		7877E7571C380DC90013833B /* Response+OnComplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+OnComplete.swift"; sourceTree = "<group>"; };
 		78A2837C1BDCE41C0043C9AA /* RequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTests.swift; sourceTree = "<group>"; };
 		78A46A441BEA419000870B39 /* JSONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
+		78B145A11C883BA6002F733B /* NSData+Faraday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Faraday.swift"; sourceTree = "<group>"; };
 		78B47B521BDA27920004BA75 /* PingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingTests.swift; sourceTree = "<group>"; };
 		78E072831C549FB400EBEF5F /* Headers+Auth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Headers+Auth.swift"; sourceTree = "<group>"; };
 		78E072851C54A20000EBEF5F /* Headers+Accept.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Headers+Accept.swift"; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				780356D11BC41E30000B9578 /* DecodeJSON.swift */,
 				780356B71BC3C5A0000B9578 /* URLSession.swift */,
 				7846F0C11BD74D8400FDC88A /* NSURLComponents+Faraday.swift */,
+				78B145A11C883BA6002F733B /* NSData+Faraday.swift */,
 				780356A01BC3C521000B9578 /* Info.plist */,
 			);
 			path = Faraday;
@@ -288,6 +291,7 @@
 				780356C81BC3F4E1000B9578 /* Logger.swift in Sources */,
 				780356C61BC3D59F000B9578 /* RackBuilder.swift in Sources */,
 				78E072861C54A20000EBEF5F /* Headers+Accept.swift in Sources */,
+				78B145A21C883BA6002F733B /* NSData+Faraday.swift in Sources */,
 				780356CE1BC4195F000B9578 /* Headers.swift in Sources */,
 				780356D41BC4224C000B9578 /* Body.swift in Sources */,
 				780356C41BC3D580000B9578 /* App.swift in Sources */,
