@@ -80,8 +80,7 @@ extension Request {
     set(newPathComponents) {
       if let components = newPathComponents {
         path = NSString.pathWithComponents(components)
-      }
-      else {
+      } else {
         path = nil
       }
     }
