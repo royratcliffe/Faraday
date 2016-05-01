@@ -42,6 +42,7 @@ extension NSData {
     enumerateByteRangesUsingBlock { (_, range, _) -> Void in
       byteIndexes.addIndexesInRange(range)
     }
+    // swiftlint:disable:next force_cast
     return byteIndexes.copy() as! NSIndexSet
   }
 
