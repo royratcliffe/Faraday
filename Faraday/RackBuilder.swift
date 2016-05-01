@@ -38,6 +38,11 @@ class RackBuilder {
     handlers.append(handler)
   }
 
+  /// Constructs the response. Runs when the adapter asks for the response at
+  /// the bottom of the Rack builder stack, i.e. when the adapter calls
+  /// `app(env)`. This last piece of middleware simply constructs a new
+  /// response, attaches it to the environment and returns back up the
+  /// middleware application stack.
   lazy var app: App = {
     return self.toApp { env in
       let response = Response()
