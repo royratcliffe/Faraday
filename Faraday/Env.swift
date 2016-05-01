@@ -41,4 +41,8 @@ public class Env {
 
   public var response: Response?
 
+  public func saveResponse(status: Int, body: Body?, headers: Headers) {
+    response?.save(status, body: body, headers: headers)
+  }
+
 }

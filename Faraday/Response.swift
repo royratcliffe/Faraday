@@ -42,6 +42,13 @@ public class Response {
 
   var cancelBlock: (() -> Void)?
 
+  /// Saves the status, optional body and headers. Replaces any existing items.
+  public func save(status: Int, body: Body?, headers: Headers) {
+    self.status = status
+    self.body = body
+    self.headers = headers
+  }
+
   /// - returns: true if the response status is successful. Only answers success
   ///   if the response has finished. Success means any status between 200 and
   ///   299. Answers false if the response status does not lie in the success
