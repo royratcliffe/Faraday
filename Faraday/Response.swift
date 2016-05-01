@@ -36,7 +36,9 @@ public class Response {
 
   public var body: Body?
 
-  var env: Env?
+  /// Rack environment when finished. Weakly retains the environment because the
+  /// environment retains the response; avoids retain cycle.
+  weak var env: Env?
 
   /// - returns: true if the response status is successful. Only answers success
   ///   if the response has finished. Success means any status between 200 and
