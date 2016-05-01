@@ -76,9 +76,18 @@ public class URLSession: Adapter {
     return task
   }
 
+  /// Performs a request and sets up cancellation.
+  /// - parameter env: New Rack environment containing new request.
+  /// - returns: New response object attached to the Rack environment. The
+  ///   response knows how to cancel the request-response cycle in-flight, if
+  ///   necessary.
   public override func call(env: Env) -> Response {
-    performRequest(env)
-    return app(env)
+    let task = performRequest(env)
+    let response = app(env)
+    response.cancelBlock = { [weak task] in
+      task?.cancel()
+    }
+    return response
   }
 
   /// Sets up a middleware adapter that uses NSURLSession for running requests
