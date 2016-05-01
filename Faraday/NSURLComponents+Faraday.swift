@@ -53,12 +53,10 @@ extension NSURLComponents {
     if let items = items {
       if let otherItems = otherItems {
         queryItems = otherItems + items
-      }
-      else {
+      } else {
         queryItems = items
       }
-    }
-    else {
+    } else {
       queryItems = otherItems
     }
   }

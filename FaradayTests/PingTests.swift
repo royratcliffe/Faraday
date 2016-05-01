@@ -76,8 +76,7 @@ class PingTests: ConnectionTests {
     func pong() {
       if ++count == limit {
         completionHandler?(self)
-      }
-      else {
+      } else {
         ping()
       }
     }

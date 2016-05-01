@@ -1,6 +1,6 @@
-// FaradayTests FaradayTests.swift
+// Faraday NSData+Faraday.swift
 //
-// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -22,38 +22,28 @@
 //
 //------------------------------------------------------------------------------
 
-import XCTest
-@testable import Faraday
+import Foundation
 
-class FaradayTests: XCTestCase {
+extension NSData {
 
-  class NothingMiddleware: Response.Middleware {
-
-    override func onComplete(env: Env) {
-      NSLog("***")
+  /// - returns: all the byte ranges belonging to this block of data by
+  ///   enumerating and collating all the currently available ranges.
+  public var byteRanges: [NSRange] {
+    var byteRanges = [NSRange]()
+    enumerateByteRangesUsingBlock { (_, range, _) -> Void in
+      byteRanges.append(range)
     }
-
-    // swiftlint:disable:next nesting
-    class Handler: RackHandler {
-
-      func build(app: App) -> Middleware {
-        return NothingMiddleware(app: app)
-      }
-
-    }
-
+    return byteRanges
   }
 
-  func testNothingMiddleware() {
-    // given
-    let builder = RackBuilder()
-    // when
-    builder.use(Logger.Handler())
-    builder.use(NothingMiddleware.Handler())
-    let env = Env()
-    // then
-    let response = builder.app(env)
-    response.finish(env)
+  /// - returns: an index set representing all the available byte indexes.
+  public var byteIndexes: NSIndexSet {
+    let byteIndexes = NSMutableIndexSet()
+    enumerateByteRangesUsingBlock { (_, range, _) -> Void in
+      byteIndexes.addIndexesInRange(range)
+    }
+    // swiftlint:disable:next force_cast
+    return byteIndexes.copy() as! NSIndexSet
   }
 
 }
