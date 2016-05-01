@@ -33,6 +33,7 @@ class FaradayTests: XCTestCase {
       NSLog("***")
     }
 
+    // swiftlint:disable:next nesting
     class Handler: RackHandler {
 
       func build(app: App) -> Middleware {

@@ -68,8 +68,7 @@ public class URLSession: Adapter {
     var task: NSURLSessionDataTask
     if let body = request.body as? NSData {
       task = session.uploadTaskWithRequest(URLRequest, fromData: body, completionHandler: handler)
-    }
-    else {
+    } else {
       task = session.dataTaskWithRequest(URLRequest, completionHandler: handler)
     }
     task.resume()

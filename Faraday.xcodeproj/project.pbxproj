@@ -192,6 +192,7 @@
 				780356971BC3C521000B9578 /* Frameworks */,
 				780356981BC3C521000B9578 /* Headers */,
 				780356991BC3C521000B9578 /* Resources */,
+				78F244901CD651D500B80CAB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -272,6 +273,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		78F244901CD651D500B80CAB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# https://github.com/ypresto/SwiftLintXcode\nif which swiftlint > /dev/null\nthen swiftlint\nelse echo \"cannot find swiftlint\" > /dev/stderr\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		780356961BC3C521000B9578 /* Sources */ = {
