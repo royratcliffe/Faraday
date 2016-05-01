@@ -26,8 +26,6 @@ import Foundation
 
 public class URLSession: Adapter {
 
-  var configuration: NSURLSessionConfiguration!
-
   var session: NSURLSession!
 
   /// Performs a request.
@@ -107,7 +105,6 @@ public class URLSession: Adapter {
 
     public func build(app: App) -> Middleware {
       let middleware = URLSession(app: app)
-      middleware.configuration = configuration
       middleware.session = session
       return middleware
     }
