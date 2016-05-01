@@ -28,8 +28,8 @@ extension NSURLSessionTask {
 
   struct Static {
     /// Provides a unique address in memory space used as a key for identifying
-    /// the associated Env object. The exact value does not matter. The address
-    /// is the key, not the value.
+    /// the associated Env object. The exact value does not matter. Its address
+    /// in memory is the key, not the value.
     static var env = UInt64(bigEndian: 0xbadc0ffee0ddf00d)
   }
 
