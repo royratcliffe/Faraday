@@ -109,8 +109,11 @@ public class URLSession: Adapter {
     public func URLSession(session: NSURLSession,
                            task: NSURLSessionTask,
                            didCompleteWithError error: NSError?) {
-      guard let env = task.env,
-            let response = env.response,
+      guard let env = task.env else {
+        return
+      }
+      task.env = nil
+      guard let response = env.response,
             let error = error else {
         return
       }
