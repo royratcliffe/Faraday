@@ -131,10 +131,18 @@ public class URLSession: Adapter {
     // see an initial finished response followed by additional finished
     // responses until either the end-point terminates the connection or the
     // client cancels the response.
+    //
+    // Cancels the data task if the environment has no response. This only
+    // happens if a completion handler disconnects the response because it wants
+    // no more information.
     public func URLSession(session: NSURLSession,
                            dataTask: NSURLSessionDataTask,
                            didReceiveData data: NSData) {
       guard let env = dataTask.env else {
+        return
+      }
+      guard let _ = env.response else {
+        dataTask.cancel()
         return
       }
       guard let HTTPURLResponse = dataTask.response as? NSHTTPURLResponse else {
