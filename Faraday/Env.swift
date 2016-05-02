@@ -55,4 +55,11 @@ public class Env {
     response.finish(self)
   }
 
+  /// Cancels the response. Requires that the response object exists. Otherwise
+  /// cancels nothing. Response objects begin to exist when the Rack builder
+  /// hits the bottom of the middleware stack.
+  public func cancel() {
+    response?.cancel()
+  }
+
 }
