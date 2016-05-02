@@ -97,6 +97,28 @@ public class URLSession: Adapter {
       return middleware
     }
 
+    // MARK: - URL Session Delegate
+
+    // Finishes a response with an error, if and only if a final error
+    // occurs. URL sessions complete either with or without an error. All data
+    // has already been delivered at this point. The URL session adapter
+    // delivers data and completion as separate events. Data does not arrive
+    // with errors. Errors, if any, arrives on completion after data. The
+    // implementation ignores completion when no error. If an error, the final
+    // finish retains the status and headers, but has no body.
+    public func URLSession(session: NSURLSession,
+                           task: NSURLSessionTask,
+                           didCompleteWithError error: NSError?) {
+      guard let env = task.env,
+            let response = env.response,
+            let error = error else {
+        return
+      }
+      env.error = error
+      response.body = nil
+      response.finish(env)
+    }
+
     // MARK: - URL Session Data Delegate
 
     // Handles data-received events for both data and upload tasks; an upload
