@@ -26,13 +26,7 @@ import Foundation
 
 public class URLSession: Adapter {
 
-  public lazy var configuration: NSURLSessionConfiguration = {
-    NSURLSessionConfiguration.defaultSessionConfiguration()
-  }()
-
-  public lazy var session: NSURLSession = {
-    NSURLSession(configuration: self.configuration)
-  }()
+  var session: NSURLSession!
 
   /// Performs a request.
   /// - parameter env: Rack environment under construction.
@@ -54,23 +48,13 @@ public class URLSession: Adapter {
     }
     URLRequest.HTTPMethod = method
     URLRequest.allHTTPHeaderFields = env.request?.headers.allHeaderFields
-    let handler = { (body: NSData?, URLResponse: NSURLResponse?, error: NSError?) in
-      guard let HTTPURLResponse = URLResponse as? NSHTTPURLResponse else {
-        return
-      }
-      let status = HTTPURLResponse.statusCode
-      var headers = Headers()
-      for (key, value) in HTTPURLResponse.allHeaderFields {
-        headers[String(key)] = String(value)
-      }
-      self.saveResponse(env, status: status, body: body, headers: headers)
-    }
     var task: NSURLSessionDataTask
     if let body = request.body as? NSData {
-      task = session.uploadTaskWithRequest(URLRequest, fromData: body, completionHandler: handler)
+      task = session.uploadTaskWithRequest(URLRequest, fromData: body)
     } else {
-      task = session.dataTaskWithRequest(URLRequest, completionHandler: handler)
+      task = session.dataTaskWithRequest(URLRequest)
     }
+    task.env = env
     task.resume()
     return task
   }
@@ -97,23 +81,82 @@ public class URLSession: Adapter {
   /// the session reference to retain a session with a delegate: the handler
   /// retains the sessions strongly; the session strongly retains its
   /// delegate. Useful for SSL handshake delegates.
-  public class Handler: RackHandler {
+  public class Handler: NSObject, RackHandler, NSURLSessionDataDelegate {
 
-    public var configuration: NSURLSessionConfiguration?
+    public lazy var configuration: NSURLSessionConfiguration = {
+      NSURLSessionConfiguration.defaultSessionConfiguration()
+    }()
 
-    public var session: NSURLSession?
-
-    public init() {}
+    public lazy var session: NSURLSession = {
+      NSURLSession(configuration: self.configuration, delegate: self, delegateQueue: nil)
+    }()
 
     public func build(app: App) -> Middleware {
-      let middleware = URLSession(app: app)
-      if let configuration = configuration {
-        middleware.configuration = configuration
-      }
-      if let session = session {
-        middleware.session = session
-      }
+      let middleware = Faraday.URLSession(app: app)
+      middleware.session = session
       return middleware
+    }
+
+    // MARK: - URL Session Delegate
+
+    // Finishes a response with an error, if and only if a final error
+    // occurs. URL sessions complete either with or without an error. All data
+    // has already been delivered at this point. The URL session adapter
+    // delivers data and completion as separate events. Data does not arrive
+    // with errors. Errors, if any, arrives on completion after data. The
+    // implementation ignores completion when no error. If an error, the final
+    // finish retains the status and headers, but has no body.
+    public func URLSession(session: NSURLSession,
+                           task: NSURLSessionTask,
+                           didCompleteWithError error: NSError?) {
+      guard let env = task.env else {
+        return
+      }
+      task.env = nil
+      guard let response = env.response,
+            let error = error else {
+        return
+      }
+      env.error = error
+      response.body = nil
+      response.finish(env)
+    }
+
+    // MARK: - URL Session Data Delegate
+
+    // Handles data-received events for both data and upload tasks; an upload
+    // task _is_ a data task because data task is upload task's super-class. The
+    // Handler consumes data as the URL session delegate.
+    //
+    // The data task sends either complete or partial data. How can you tell if
+    // the data comprises the final response or whether the message is one of
+    // many continuing responses in a multipart sequence? Multi-part responses
+    // see an initial finished response followed by additional finished
+    // responses until either the end-point terminates the connection or the
+    // client cancels the response.
+    //
+    // Cancels the data task if the environment has no response. This only
+    // happens if a completion handler disconnects the response because it wants
+    // no more information.
+    public func URLSession(session: NSURLSession,
+                           dataTask: NSURLSessionDataTask,
+                           didReceiveData data: NSData) {
+      guard let env = dataTask.env else {
+        return
+      }
+      guard let _ = env.response else {
+        dataTask.cancel()
+        return
+      }
+      guard let HTTPURLResponse = dataTask.response as? NSHTTPURLResponse else {
+        return
+      }
+      let status = HTTPURLResponse.statusCode
+      var headers = Headers()
+      for (key, value) in HTTPURLResponse.allHeaderFields {
+        headers[String(key)] = String(value)
+      }
+      env.saveResponse(status, body: data, headers: headers)
     }
 
   }

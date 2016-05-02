@@ -1,6 +1,6 @@
-// Faraday Adapter.swift
+// Faraday NSError+Faraday.swift
 //
-// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -24,14 +24,15 @@
 
 import Foundation
 
-public class Adapter: Middleware {
+extension NSError {
 
-  /// Strictly speaking, this could be implemented as a static method. The
-  /// implementation references nothing in `self`, either the adapter or its
-  /// middleware superclass. Implementing it as an instance method only lets
-  /// adapter subclasses override it.
-  public func saveResponse(env: Env, status: Int, body: Body?, headers: Headers) {
-    env.saveResponse(status, body: body, headers: headers)
+  /// - returns: True if the error represents an URL cancellation. Cancel
+  ///   "errors" also carry a user-information dictionary with a localised
+  ///   description (literally, cancelled) and the failing URL. The URL session
+  ///   treats cancelled responses as errors. The final middleware response
+  ///   includes a cancelled error but excludes a response body.
+  public var isURLCancelled: Bool {
+    return domain == NSURLErrorDomain && code == NSURLErrorCancelled
   }
 
 }
