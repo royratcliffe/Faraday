@@ -1,8 +1,8 @@
 Pod::Spec.new do |spec|
   spec.name = 'Faraday'
-  spec.version = '0.2.1'
+  spec.version = '0.3.0'
   spec.summary = 'Flexible HTTP client framework based on Rack'
-  spec.description = <<-DESCRIPTION
+  spec.description = <<-DESCRIPTION.gsub(/\s+/, ' ').chomp
   Flexible HTTP and HTTPS client framework based on Rack. Adopts the concept of
   Rack middleware when processing the HTTP requests and responses.  When you
   build a connection, you set up a stack of middleware components for processing
