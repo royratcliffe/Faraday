@@ -41,6 +41,8 @@ public class Env {
 
   public var response: Response?
 
+  public var error: ErrorType?
+
   /// Saves and finishes the response. Called by the adapter when the response
   /// finally arrives.
   public func saveResponse(status: Int, body: Body?, headers: Headers) {
