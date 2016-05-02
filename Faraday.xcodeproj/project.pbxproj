@@ -39,6 +39,7 @@
 		78E072841C549FB400EBEF5F /* Headers+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E072831C549FB400EBEF5F /* Headers+Auth.swift */; };
 		78E072861C54A20000EBEF5F /* Headers+Accept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E072851C54A20000EBEF5F /* Headers+Accept.swift */; };
 		78ECAC651BE6862C0021D3E6 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ECAC641BE6862C0021D3E6 /* ConnectionTests.swift */; };
+		78F244921CD66BE100B80CAB /* HeartbeatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F244911CD66BE100B80CAB /* HeartbeatTests.swift */; };
 		78F244981CD7D05300B80CAB /* NSError+Faraday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F244971CD7D05300B80CAB /* NSError+Faraday.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		78E072831C549FB400EBEF5F /* Headers+Auth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Headers+Auth.swift"; sourceTree = "<group>"; };
 		78E072851C54A20000EBEF5F /* Headers+Accept.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Headers+Accept.swift"; sourceTree = "<group>"; };
 		78ECAC641BE6862C0021D3E6 /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
+		78F244911CD66BE100B80CAB /* HeartbeatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartbeatTests.swift; sourceTree = "<group>"; };
 		78F244971CD7D05300B80CAB /* NSError+Faraday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+Faraday.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,6 +172,7 @@
 				78161B861BD7AC5B00298FBB /* ResponseTests.swift */,
 				78ECAC641BE6862C0021D3E6 /* ConnectionTests.swift */,
 				78B47B521BDA27920004BA75 /* PingTests.swift */,
+				78F244911CD66BE100B80CAB /* HeartbeatTests.swift */,
 				78A46A441BEA419000870B39 /* JSONTests.swift */,
 				780356AC1BC3C521000B9578 /* Info.plist */,
 			);
@@ -334,6 +337,7 @@
 			files = (
 				78A2837D1BDCE41C0043C9AA /* RequestTests.swift in Sources */,
 				78A46A451BEA419000870B39 /* JSONTests.swift in Sources */,
+				78F244921CD66BE100B80CAB /* HeartbeatTests.swift in Sources */,
 				78161B871BD7AC5B00298FBB /* ResponseTests.swift in Sources */,
 				780356AB1BC3C521000B9578 /* FaradayTests.swift in Sources */,
 				783870A41C55DFD00063C296 /* HeadersTests.swift in Sources */,
