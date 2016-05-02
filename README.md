@@ -1,3 +1,7 @@
+[![Travis](https://img.shields.io/travis/royratcliffe/Faraday/master.svg)](https://travis-ci.org/royratcliffe/Faraday)
+[![CocoaPods](https://img.shields.io/cocoapods/v/Faraday.svg)](https://cocoapods.org/pods/Faraday)
+[![CocoaDocs](https://img.shields.io/cocoapods/metrics/doc-percent/Faraday.svg)](http://cocoadocs.org/docsets/Faraday)
+
 # Faraday for Swift
 
 [faraday]:https://github.com/lostisland/faraday
