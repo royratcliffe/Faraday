@@ -36,7 +36,11 @@ public class Response {
 
   public var body: Body?
 
-  var env: Env?
+  /// Rack environment when finished. Weakly retains the environment because the
+  /// environment retains the response; avoids retain cycle.
+  weak var env: Env?
+
+  var cancelBlock: (() -> Void)?
 
   /// - returns: true if the response status is successful. Only answers success
   ///   if the response has finished. Success means any status between 200 and
@@ -52,6 +56,18 @@ public class Response {
 
   public var finished: Bool {
     return env != nil
+  }
+
+  /// - returns: True if this response can be cancelled. Some adapters support
+  ///   cancellation of requests before the response finishes.
+  public var canCancel: Bool {
+    return cancelBlock != nil
+  }
+
+  /// Cancels the response, if the response's underlying adapter supports
+  /// cancellation of in-flight request-response cycles. Does nothing otherwise.
+  public func cancel() {
+    cancelBlock?()
   }
 
   // MARK: - On Complete

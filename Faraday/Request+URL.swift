@@ -80,11 +80,30 @@ extension Request {
     set(newPathComponents) {
       if let components = newPathComponents {
         path = NSString.pathWithComponents(components)
-      }
-      else {
+      } else {
         path = nil
       }
     }
+  }
+
+  // MARK: - Query Items
+
+  public func queryItems(forName name: String) -> [NSURLQueryItem]? {
+    return URLComponents?.queryItems(forName: name)
+  }
+
+  public func queryValues(forName name: String) -> [String?]? {
+    return URLComponents?.queryValues(forName: name)
+  }
+
+  /// Sets up the query items by first deconstructing the URL. The URL first
+  /// becomes URL components. URL components are mutable, URLs are not. Hence,
+  /// the implementation copies the URL components for mutation. After mutating,
+  /// converts components back to an immutable URL.
+  public func setQueryValues(values: [String?]?, forName name: String) {
+    let components = URLComponents
+    components?.setQueryValues(values, forName: name)
+    URLComponents = components
   }
 
 }

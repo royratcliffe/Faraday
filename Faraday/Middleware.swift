@@ -33,6 +33,11 @@ import Foundation
 /// handlers run in reverse-stack order when the asynchronous response finishes.
 public class Middleware {
 
+  /// Retains the middleware application: simply just a capture that takes an
+  /// environment and answers a response. Nothing more than that. Middleware is
+  /// therefore just an object that retains such a capture. When you call the
+  /// middleware, it merely invokes the capture and passes back the capture's
+  /// response.
   public var app: App
 
   public required init(app: App) {

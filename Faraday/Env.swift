@@ -41,4 +41,25 @@ public class Env {
 
   public var response: Response?
 
+  public var error: ErrorType?
+
+  /// Saves and finishes the response. Called by the adapter when the response
+  /// finally arrives.
+  public func saveResponse(status: Int, body: Body?, headers: Headers) {
+    guard let response = response else {
+      return
+    }
+    response.status = status
+    response.body = body
+    response.headers = headers
+    response.finish(self)
+  }
+
+  /// Cancels the response. Requires that the response object exists. Otherwise
+  /// cancels nothing. Response objects begin to exist when the Rack builder
+  /// hits the bottom of the middleware stack.
+  public func cancel() {
+    response?.cancel()
+  }
+
 }

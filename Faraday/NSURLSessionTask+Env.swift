@@ -1,6 +1,6 @@
-// Faraday Adapter.swift
+// Faraday NSURLSessionTask+Env.swift
 //
-// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -24,14 +24,25 @@
 
 import Foundation
 
-public class Adapter: Middleware {
+extension NSURLSessionTask {
 
-  /// Strictly speaking, this could be implemented as a static method. The
-  /// implementation references nothing in `self`, either the adapter or its
-  /// middleware superclass. Implementing it as an instance method only lets
-  /// adapter subclasses override it.
-  public func saveResponse(env: Env, status: Int, body: Body?, headers: Headers) {
-    env.saveResponse(status, body: body, headers: headers)
+  struct Static {
+    /// Provides a unique address in memory space used as a key for identifying
+    /// the associated Env object. The exact value does not matter. Its address
+    /// in memory is the key, not the value.
+    static var env = UInt64(bigEndian: 0xbadc0ffee0ddf00d)
+  }
+
+  /// Associates a Rack environment with an URL session task, either a data or
+  /// upload task. Associates by retaining the environment. The environment
+  /// therefore lives at least as long as the task.
+  public var env: Env? {
+    get {
+      return objc_getAssociatedObject(self, &Static.env) as? Env
+    }
+    set(newEnv) {
+      objc_setAssociatedObject(self, &Static.env, newEnv, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
   }
 
 }
