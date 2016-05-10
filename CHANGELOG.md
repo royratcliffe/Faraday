@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.3.1](https://github.com/royratcliffe/faraday/tree/0.3.1)
+
+- Test ResponseOperation, one ping only
+- ResponseOperation class
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.3.0...0.3.1).
+
 ## [0.1.x](https://github.com/royratcliffe/faraday/tree/0.2.0)
 
 Initial versions with various patches for:
