@@ -36,6 +36,7 @@
 		78B145981C86337E002F733B /* NSURLSessionTask+Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B145971C86337E002F733B /* NSURLSessionTask+Env.swift */; };
 		78B145A21C883BA6002F733B /* NSData+Faraday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B145A11C883BA6002F733B /* NSData+Faraday.swift */; };
 		78B47B531BDA27920004BA75 /* PingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B47B521BDA27920004BA75 /* PingTests.swift */; };
+		78D9BDBD1CE239BC00EED7EB /* ResponseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D9BDBC1CE239BC00EED7EB /* ResponseOperation.swift */; };
 		78E072841C549FB400EBEF5F /* Headers+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E072831C549FB400EBEF5F /* Headers+Auth.swift */; };
 		78E072861C54A20000EBEF5F /* Headers+Accept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E072851C54A20000EBEF5F /* Headers+Accept.swift */; };
 		78ECAC651BE6862C0021D3E6 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ECAC641BE6862C0021D3E6 /* ConnectionTests.swift */; };
@@ -86,6 +87,7 @@
 		78B145971C86337E002F733B /* NSURLSessionTask+Env.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionTask+Env.swift"; sourceTree = "<group>"; };
 		78B145A11C883BA6002F733B /* NSData+Faraday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Faraday.swift"; sourceTree = "<group>"; };
 		78B47B521BDA27920004BA75 /* PingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingTests.swift; sourceTree = "<group>"; };
+		78D9BDBC1CE239BC00EED7EB /* ResponseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseOperation.swift; sourceTree = "<group>"; };
 		78E072831C549FB400EBEF5F /* Headers+Auth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Headers+Auth.swift"; sourceTree = "<group>"; };
 		78E072851C54A20000EBEF5F /* Headers+Accept.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Headers+Accept.swift"; sourceTree = "<group>"; };
 		78ECAC641BE6862C0021D3E6 /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				7846F0C11BD74D8400FDC88A /* NSURLComponents+Faraday.swift */,
 				78B145A11C883BA6002F733B /* NSData+Faraday.swift */,
 				78F244971CD7D05300B80CAB /* NSError+Faraday.swift */,
+				78D9BDBC1CE239BC00EED7EB /* ResponseOperation.swift */,
 				780356A01BC3C521000B9578 /* Info.plist */,
 			);
 			path = Faraday;
@@ -308,6 +311,7 @@
 				780356BE1BC3C639000B9578 /* Env.swift in Sources */,
 				780356C01BC3C6C7000B9578 /* Request.swift in Sources */,
 				780356B81BC3C5A0000B9578 /* URLSession.swift in Sources */,
+				78D9BDBD1CE239BC00EED7EB /* ResponseOperation.swift in Sources */,
 				780356BC1BC3C5BC000B9578 /* Middleware.swift in Sources */,
 				7877E7581C380DC90013833B /* Response+OnComplete.swift in Sources */,
 				780356CA1BC3F5FB000B9578 /* RackHandler.swift in Sources */,
