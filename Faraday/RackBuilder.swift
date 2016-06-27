@@ -52,15 +52,15 @@ class RackBuilder {
   }()
 
   func toApp(innerApp: App) -> App {
-    return handlers.reverse().reduce(innerApp) { app, handler -> App in
+    return handlers.reversed().reduce(innerApp) { app, handler -> App in
       return { env -> Response in
-        handler.build(app).call(env)
+        handler.build(app: app).call(env: env)
       }
     }
   }
 
   func buildResponse(connection: Connection, request: Request) -> Response {
-    return app(buildEnv(connection, request: request))
+    return app(buildEnv(connection: connection, request: request))
   }
 
   func buildEnv(connection: Connection, request: Request) -> Env {

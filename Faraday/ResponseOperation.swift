@@ -31,7 +31,7 @@ import Foundation
 /// Works by inserting a semaphore between the response completion handlers and
 /// the operation. Note, the operation does nothing and returns immediately if
 /// cancelled.
-public class ResponseOperation: NSOperation {
+public class ResponseOperation: Operation {
 
   /// Response to finish the operation whenever the response completes, either
   /// completing successfully or with failure.
@@ -40,7 +40,7 @@ public class ResponseOperation: NSOperation {
   /// Optional timeout interval in seconds. There is no default timeout
   /// interval. The operation waits forever for the response to complete, by
   /// default.
-  public var timeoutInterval: NSTimeInterval?
+  public var timeoutInterval: TimeInterval?
 
   /// - returns: True if the operation timed out while waiting for the response
   ///   to complete. Answers `false` when the response finishes in time, or
@@ -58,22 +58,22 @@ public class ResponseOperation: NSOperation {
 
   public override func main() {
     // Do nothing and return immediately if cancelled.
-    guard !cancelled else {
+    guard !isCancelled else {
       return
     }
 
     // Wait for the response to complete, successfully or otherwise.
-    let semaphore = dispatch_semaphore_create(0)
-    response.onComplete { (env) in
-      dispatch_semaphore_signal(semaphore)
+    let semaphore = DispatchSemaphore(value: 0)
+    let _ = response.onComplete { (env) in
+      semaphore.signal()
     }
-    let timeout: dispatch_time_t
+    let timeout: DispatchTime
     if let timeoutInterval = timeoutInterval {
-      timeout = dispatch_time_t(timeoutInterval * NSTimeInterval(NSEC_PER_SEC))
+      timeout = .now() + timeoutInterval
     } else {
-      timeout = DISPATCH_TIME_FOREVER
+      timeout = .distantFuture
     }
-    timedOut = dispatch_semaphore_wait(semaphore, timeout) != 0
+    timedOut = semaphore.wait(timeout: timeout) != .TimedOut
   }
 
 }

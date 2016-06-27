@@ -22,8 +22,6 @@
 //
 //------------------------------------------------------------------------------
 
-import Foundation
-
 /// This is the closest Swift gets to a Ruby Rack app. This type defines a
 /// capture that accepts an environment and answers an unfinished response. In
 /// its current form, it does not throw errors, like its Ruby-based

@@ -38,12 +38,12 @@ public class EncodeJSON: Middleware {
 
   public override func call(env: Env) -> Response {
     guard let request = env.request else {
-      return super.call(env)
+      return super.call(env: env)
     }
-    guard let body = request.body where NSJSONSerialization.isValidJSONObject(body) else {
-      return super.call(env)
+    guard let body = request.body where JSONSerialization.isValidJSONObject(body) else {
+      return super.call(env: env)
     }
-    if let data = try? NSJSONSerialization.dataWithJSONObject(body, options: [.PrettyPrinted]) {
+    if let data = try? JSONSerialization.data(withJSONObject: body, options: [.prettyPrinted]) {
       if request.headers["Content-Type"] == nil {
         request.headers["Content-Type"] = "application/json"
       }

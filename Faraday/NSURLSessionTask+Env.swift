@@ -24,7 +24,7 @@
 
 import Foundation
 
-extension NSURLSessionTask {
+extension URLSessionTask {
 
   struct Static {
     /// Provides a unique address in memory space used as a key for identifying

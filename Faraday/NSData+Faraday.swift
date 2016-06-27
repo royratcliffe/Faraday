@@ -30,7 +30,7 @@ extension NSData {
   ///   enumerating and collating all the currently available ranges.
   public var byteRanges: [NSRange] {
     var byteRanges = [NSRange]()
-    enumerateByteRangesUsingBlock { (_, range, _) -> Void in
+    enumerateBytes { (_, range, _) -> Void in
       byteRanges.append(range)
     }
     return byteRanges
@@ -39,8 +39,8 @@ extension NSData {
   /// - returns: an index set representing all the available byte indexes.
   public var byteIndexes: NSIndexSet {
     let byteIndexes = NSMutableIndexSet()
-    enumerateByteRangesUsingBlock { (_, range, _) -> Void in
-      byteIndexes.addIndexesInRange(range)
+    enumerateBytes { (_, range, _) -> Void in
+      byteIndexes.add(in: range)
     }
     // swiftlint:disable:next force_cast
     return byteIndexes.copy() as! NSIndexSet
