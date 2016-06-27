@@ -22,10 +22,8 @@
 //
 //------------------------------------------------------------------------------
 
-import Foundation
-
 /// Header fields, i.e. header name-value pairs for request or response headers.
-public struct Headers: SequenceType {
+public struct Headers: Sequence {
 
   private var headerFields = [String: String]()
 
@@ -50,8 +48,8 @@ public struct Headers: SequenceType {
 
   // MARK: - Sequence Type
 
-  public func generate() -> Dictionary<String, String>.Generator {
-    return headerFields.generate()
+  public func makeIterator() -> Dictionary<String, String>.Generator {
+    return headerFields.makeIterator()
   }
 
 }

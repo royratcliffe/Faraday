@@ -42,12 +42,12 @@ extension Headers {
   /// strings, one for each media range.
   public var accepts: [String]? {
     get {
-      return accept?.characters.split(",").map {
-        String($0).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+      return accept?.characters.split(separator: ",").map {
+        String($0).trimmingCharacters(in: NSCharacterSet.whitespaces())
       }
     }
     set(value) {
-      accept = value?.joinWithSeparator(", ")
+      accept = value?.joined(separator: ", ")
     }
   }
 
