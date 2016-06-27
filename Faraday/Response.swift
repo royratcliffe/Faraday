@@ -85,9 +85,9 @@ public class Response {
   /// onComplete does, but asynchronously runs the given capture in the given
   /// dispatch queue. Useful when the adapter finishes responses asynchronously
   /// in some other queue.
-  public func onComplete(queue: dispatch_queue_t, callback: OnCompleteCallback) -> Response {
+  public func onComplete(queue: DispatchQueue, callback: OnCompleteCallback) -> Response {
     return onComplete { env in
-      dispatch_async(queue) {
+      queue.async() {
         callback(env)
       }
     }
@@ -112,7 +112,7 @@ public class Response {
 
     public override func call(env: Env) -> Response {
       return app(env).onComplete { env in
-        self.onComplete(env)
+        self.onComplete(env: env)
       }
     }
 

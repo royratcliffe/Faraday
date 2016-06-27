@@ -34,15 +34,15 @@ extension Request {
   /// are *relative* components only. The components remain relative to the
   /// URL's base URL. Same goes for new components. The base URL derives from
   /// the original connection.
-  public var URLComponents: NSURLComponents? {
+  public var urlComponents: URLComponents? {
     get {
-      guard let URL = URL else {
+      guard let url = url else {
         return nil
       }
-      return NSURLComponents(URL: URL, resolvingAgainstBaseURL: false)
+      return URLComponents(url: url, resolvingAgainstBaseURL: false)
     }
     set(newComponents) {
-      URL = newComponents?.URLRelativeToURL(URL?.baseURL)
+      url = newComponents?.url(relativeTo: url?.baseURL)
     }
   }
 
@@ -58,12 +58,12 @@ extension Request {
   /// same level, the URL-component level.
   public var path: String? {
     get {
-      return URLComponents?.path
+      return urlComponents?.path
     }
     set(newPath) {
-      let components = URLComponents
+      var components = urlComponents
       components?.path = newPath
-      URLComponents = components
+      urlComponents = components
     }
   }
 
@@ -75,11 +75,11 @@ extension Request {
       guard let path = path else {
         return nil
       }
-      return NSString(string: path).pathComponents
+      return (path as NSString).pathComponents
     }
     set(newPathComponents) {
       if let components = newPathComponents {
-        path = NSString.pathWithComponents(components)
+        path = NSString.path(withComponents: components)
       } else {
         path = nil
       }
@@ -89,21 +89,21 @@ extension Request {
   // MARK: - Query Items
 
   public func queryItems(forName name: String) -> [NSURLQueryItem]? {
-    return URLComponents?.queryItems(forName: name)
+    return urlComponents?.queryItems(forName: name)
   }
 
   public func queryValues(forName name: String) -> [String?]? {
-    return URLComponents?.queryValues(forName: name)
+    return urlComponents?.queryValues(forName: name)
   }
 
   /// Sets up the query items by first deconstructing the URL. The URL first
   /// becomes URL components. URL components are mutable, URLs are not. Hence,
   /// the implementation copies the URL components for mutation. After mutating,
   /// converts components back to an immutable URL.
-  public func setQueryValues(values: [String?]?, forName name: String) {
-    let components = URLComponents
-    components?.setQueryValues(values, forName: name)
-    URLComponents = components
+  public func setQuery(values: [String?]?, forName name: String) {
+    var components = urlComponents
+    components?.setQuery(values: values, forName: name)
+    urlComponents = components
   }
 
 }

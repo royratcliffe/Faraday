@@ -27,7 +27,7 @@ import Foundation
 /// Adds methods to the Foundation framework's NSURLComponents class for
 /// accessing query items by name, also accessing their values by name as an
 /// array of strings and setting up their values by name.
-extension NSURLComponents {
+extension URLComponents {
 
   /// Filters the query items by name. Answers an array of items whose name
   /// matches the given name string; all the items in the resulting array share
@@ -47,8 +47,8 @@ extension NSURLComponents {
   /// existing query items by the given name. Merges the new query items with
   /// existing items _not_ matching the given name. The new items appear after
   /// any existing ones.
-  public func setQueryValues(values: [String?]?, forName name: String) {
-    let items = values?.map { value in NSURLQueryItem(name: name, value: value) }
+  public mutating func setQuery(values: [String?]?, forName name: String) {
+    let items = values?.map { value in URLQueryItem(name: name, value: value) }
     let otherItems = queryItems?.filter { item in item.name != name }
     if let items = items {
       if let otherItems = otherItems {

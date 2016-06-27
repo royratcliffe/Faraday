@@ -33,7 +33,7 @@ public class Request {
   public var method: String?
 
   /// The URL components comprise query items. They are the request parameters.
-  public var URL: NSURL?
+  public var url: URL?
 
   public var headers = Headers()
 
