@@ -41,7 +41,7 @@ public class Env {
 
   public var response: Response?
 
-  public var error: ErrorType?
+  public var error: ErrorProtocol?
 
   /// Saves and finishes the response. Called by the adapter when the response
   /// finally arrives.
@@ -52,7 +52,7 @@ public class Env {
     response.status = status
     response.body = body
     response.headers = headers
-    response.finish(self)
+    let _ = response.finish(env: self)
   }
 
   /// Cancels the response. Requires that the response object exists. Otherwise
