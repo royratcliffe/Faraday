@@ -1,4 +1,4 @@
-// Faraday NSURLComponents+Faraday.swift
+// Faraday URLComponents+Faraday.swift
 //
 // Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //

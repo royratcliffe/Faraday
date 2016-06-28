@@ -1,4 +1,4 @@
-// Faraday NSURLSessionTask+Env.swift
+// Faraday URLSessionTask+Env.swift
 //
 // Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
