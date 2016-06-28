@@ -11,7 +11,7 @@
 		780356A61BC3C521000B9578 /* Faraday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7803569B1BC3C521000B9578 /* Faraday.framework */; };
 		780356AB1BC3C521000B9578 /* FaradayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780356AA1BC3C521000B9578 /* FaradayTests.swift */; };
 		780356B61BC3C57A000B9578 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780356B51BC3C57A000B9578 /* Connection.swift */; };
-		780356B81BC3C5A0000B9578 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780356B71BC3C5A0000B9578 /* URLSession.swift */; };
+		780356B81BC3C5A0000B9578 /* URLSessionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780356B71BC3C5A0000B9578 /* URLSessionAdapter.swift */; };
 		780356BA1BC3C5B0000B9578 /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780356B91BC3C5B0000B9578 /* Adapter.swift */; };
 		780356BC1BC3C5BC000B9578 /* Middleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780356BB1BC3C5BC000B9578 /* Middleware.swift */; };
 		780356BE1BC3C639000B9578 /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780356BD1BC3C639000B9578 /* Env.swift */; };
@@ -63,7 +63,7 @@
 		780356AA1BC3C521000B9578 /* FaradayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaradayTests.swift; sourceTree = "<group>"; };
 		780356AC1BC3C521000B9578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		780356B51BC3C57A000B9578 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
-		780356B71BC3C5A0000B9578 /* URLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
+		780356B71BC3C5A0000B9578 /* URLSessionAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionAdapter.swift; sourceTree = "<group>"; };
 		780356B91BC3C5B0000B9578 /* Adapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
 		780356BB1BC3C5BC000B9578 /* Middleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Middleware.swift; sourceTree = "<group>"; };
 		780356BD1BC3C639000B9578 /* Env.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 				780356C71BC3F4E1000B9578 /* Logger.swift */,
 				780356CF1BC41E1E000B9578 /* EncodeJSON.swift */,
 				780356D11BC41E30000B9578 /* DecodeJSON.swift */,
-				780356B71BC3C5A0000B9578 /* URLSession.swift */,
+				780356B71BC3C5A0000B9578 /* URLSessionAdapter.swift */,
 				78B145971C86337E002F733B /* NSURLSessionTask+Env.swift */,
 				7846F0C11BD74D8400FDC88A /* NSURLComponents+Faraday.swift */,
 				78B145A11C883BA6002F733B /* NSData+Faraday.swift */,
@@ -313,7 +313,7 @@
 				78E072841C549FB400EBEF5F /* Headers+Auth.swift in Sources */,
 				780356BE1BC3C639000B9578 /* Env.swift in Sources */,
 				780356C01BC3C6C7000B9578 /* Request.swift in Sources */,
-				780356B81BC3C5A0000B9578 /* URLSession.swift in Sources */,
+				780356B81BC3C5A0000B9578 /* URLSessionAdapter.swift in Sources */,
 				78D9BDBD1CE239BC00EED7EB /* ResponseOperation.swift in Sources */,
 				780356BC1BC3C5BC000B9578 /* Middleware.swift in Sources */,
 				7877E7581C380DC90013833B /* Response+OnComplete.swift in Sources */,
