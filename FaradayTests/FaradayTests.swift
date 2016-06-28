@@ -48,12 +48,12 @@ class FaradayTests: XCTestCase {
     // given
     let builder = RackBuilder()
     // when
-    builder.use(Logger.Handler())
-    builder.use(NothingMiddleware.Handler())
+    builder.use(handler: Logger.Handler())
+    builder.use(handler: NothingMiddleware.Handler())
     let env = Env()
     // then
     let response = builder.app(env)
-    response.finish(env)
+    let _ = response.finish(env: env)
   }
 
 }

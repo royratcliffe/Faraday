@@ -29,12 +29,12 @@ class OperationTests: ConnectionTests {
 
   func testOnePingOnly() {
     // given
-    let expectation = expectationWithDescription("One ping only")
-    let q = NSOperationQueue()
+    let expectation = self.expectation(withDescription: "One ping only")
+    let q = OperationQueue()
 
     // when
-    let op = ResponseOperation(connection.get("ping"))
-    let blockOp = NSBlockOperation {
+    let op = ResponseOperation(connection.get(path: "ping"))
+    let blockOp = BlockOperation {
       XCTAssertNotNil(op.timedOut)
       XCTAssertFalse(op.timedOut!)
       XCTAssertEqual(op.response.status, 200)
@@ -46,7 +46,7 @@ class OperationTests: ConnectionTests {
     q.addOperation(blockOp)
 
     // then
-    waitForExpectationsWithTimeout(10.0, handler: nil)
+    waitForExpectations(withTimeout: 10.0, handler: nil)
   }
 
 }

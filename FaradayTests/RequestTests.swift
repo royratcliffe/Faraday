@@ -29,7 +29,7 @@ class RequestTests: XCTestCase {
 
   // given
   let request = Request()
-  let baseURL = NSURL(string: "http://localhost:9292/api/")
+  let baseURL = URL(string: "http://localhost:9292/api/")!
 
   func testNoBaseURL() {
     // when
@@ -40,35 +40,35 @@ class RequestTests: XCTestCase {
 
   func testEmptyRelativeToURL() {
     // when
-    request.URL = NSURL(string: "", relativeToURL: baseURL)
+    request.url = URL(string: "", relativeTo: baseURL)
     // then
     XCTAssertEqual(request.path, "")
-    XCTAssertEqual(request.URL?.path, "/api")
+    XCTAssertEqual(request.url?.path, "/api")
   }
 
   func testPathToRelativeToURL() {
     // when
-    request.URL = NSURL(string: "path/to", relativeToURL: baseURL)
+    request.url = URL(string: "path/to", relativeTo: baseURL)
     // then
     XCTAssertEqual(request.path, "path/to")
-    XCTAssertEqual(request.URL?.path, "/api/path/to")
+    XCTAssertEqual(request.url?.path, "/api/path/to")
   }
 
   /// Setting the path sets the relative path, not the absolute path. The
   /// connection object does this kind of set up for new request URLs.
   func testPathSetter() {
     // given
-    request.URL = NSURL(string: "", relativeToURL: baseURL)
+    request.url = URL(string: "", relativeTo: baseURL)
     // when
     request.path = "path/to"
     // then
     XCTAssertEqual(request.path, "path/to")
-    XCTAssertEqual(request.URL?.path, "/api/path/to")
+    XCTAssertEqual(request.url?.path, "/api/path/to")
   }
 
   func testPathComponentsSetter() {
     // given
-    request.URL = NSURL(string: "", relativeToURL: baseURL)
+    request.url = URL(string: "", relativeTo: baseURL)
     // when
     request.pathComponents = ["path", "to"]
     // then
@@ -76,17 +76,17 @@ class RequestTests: XCTestCase {
     XCTAssertEqual(request.pathComponents!, ["path", "to"])
     // and then
     XCTAssertEqual(request.path, "path/to")
-    XCTAssertEqual(request.URL?.path, "/api/path/to")
+    XCTAssertEqual(request.url?.path, "/api/path/to")
   }
 
   func testAccepts() {
     // given
-    request.headers.accepts = ["application/hal+json; q=1.0", "text/plain"]
+    request.headers.acceptContentTypes = ["application/hal+json; q=1.0", "text/plain"]
     // when
     let accept = request.headers.accept
     // then
     XCTAssertEqual(accept, "application/hal+json; q=1.0, text/plain")
-    XCTAssertEqual(request.headers.accepts!, ["application/hal+json; q=1.0", "text/plain"])
+    XCTAssertEqual(request.headers.acceptContentTypes!, ["application/hal+json; q=1.0", "text/plain"])
   }
 
 }
