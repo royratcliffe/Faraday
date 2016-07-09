@@ -69,7 +69,7 @@ public class Logger: Response.Middleware {
   }
 
   static func log(string: String) {
-    for line in string.components(separatedBy: NSCharacterSet.newlines()) {
+    for line in string.components(separatedBy: NSCharacterSet.newlines) {
       NSLog("%@", line)
     }
   }

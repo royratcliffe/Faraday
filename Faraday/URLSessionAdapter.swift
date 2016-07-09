@@ -84,7 +84,7 @@ public class URLSessionAdapter: Adapter {
   public class Handler: NSObject, RackHandler, URLSessionDataDelegate {
 
     public lazy var configuration: URLSessionConfiguration = {
-      URLSessionConfiguration.default()
+      URLSessionConfiguration.default
     }()
 
     public lazy var session: URLSession = {

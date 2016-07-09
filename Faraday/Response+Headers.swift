@@ -38,7 +38,7 @@ extension Response {
     guard let contentType = headers["Content-Type"] else { return nil }
     let splits = contentType.characters.split(maxSplits: 1) { $0 == ";" }
     guard let first = splits.first else { return nil }
-    return String(first).trimmingCharacters(in: NSCharacterSet.whitespaces())
+    return String(first).trimmingCharacters(in: NSCharacterSet.whitespaces)
   }
 
 }
