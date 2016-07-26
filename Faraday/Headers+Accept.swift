@@ -43,7 +43,7 @@ extension Headers {
   public var acceptContentTypes: [String]? {
     get {
       return accept?.characters.split(separator: ",").map {
-        String($0).trimmingCharacters(in: NSCharacterSet.whitespaces)
+        String($0).trimmingCharacters(in: CharacterSet.whitespaces)
       }
     }
     set(value) {
