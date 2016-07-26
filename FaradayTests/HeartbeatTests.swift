@@ -57,7 +57,7 @@ class HeartbeatTests: XCTestCase {
       XCTAssertEqual(env.response?.status, 200)
       XCTAssertNotNil(body?["date"])
       XCTAssertNotNil(body?["count"])
-      if let count = body?["count"] as? Int where count >= 3 {
+      if let count = body?["count"] as? Int, count >= 3 {
         expectation.fulfill()
         // Do not send `XCTestExpectation.fulfill()` more than once. Doing so
         // triggers a `NSInternalInconsistencyException` error. Multiple fulfil
@@ -106,7 +106,7 @@ class HeartbeatTests: XCTestCase {
       XCTAssertEqual(env.response?.status, 200)
       XCTAssertNotNil(body?["date"])
       XCTAssertNotNil(body?["count"])
-      if let count = body?["count"] as? Int where count == 10 {
+      if let count = body?["count"] as? Int, count == 10 {
         limitExpectation.fulfill()
         // Sending a `cancel()` message differs from setting `response` to `nil`
         // when using the URL session adapter. It triggers a final nil-body

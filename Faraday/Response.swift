@@ -48,7 +48,7 @@ public class Response {
   ///   range, or there is no status because the response is not yet
   ///   finished. Success therefore also implies finished.
   public var success: Bool {
-    guard let status = status where finished else {
+    guard let status = status, finished else {
       return false
     }
     return (200..<300).contains(status)
