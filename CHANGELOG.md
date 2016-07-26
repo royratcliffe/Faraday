@@ -1,5 +1,16 @@
 # Change Log
 
+## [0.3.2](https://github.com/royratcliffe/faraday/tree/0.3.2)
+
+- Merge branch 'feature/swift_2_3' into develop
+- Disable conditional_binding_cascade SwiftLint rule
+- ++ deprecated
+- Xcode 8.x upgrade
+- Whole-module optimisation
+- Migrate to Swift 2.3 using Xcode 8 beta 3 (8S174q)
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.3.1...0.3.2).
+
 ## [0.3.1](https://github.com/royratcliffe/faraday/tree/0.3.1)
 
 - Test ResponseOperation, one ping only
