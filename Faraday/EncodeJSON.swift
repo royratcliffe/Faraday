@@ -40,7 +40,7 @@ public class EncodeJSON: Middleware {
     guard let request = env.request else {
       return super.call(env: env)
     }
-    guard let body = request.body where JSONSerialization.isValidJSONObject(body) else {
+    guard let body = request.body, JSONSerialization.isValidJSONObject(body) else {
       return super.call(env: env)
     }
     if let data = try? JSONSerialization.data(withJSONObject: body, options: [.prettyPrinted]) {
