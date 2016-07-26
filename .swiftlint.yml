@@ -1,4 +1,8 @@
 disabled_rules:
   - valid_docs
 
+  # Switch off nagging about repeated `let` statements in conditional binding
+  # cascades.
+  - conditional_binding_cascade
+
 line_length: 150
