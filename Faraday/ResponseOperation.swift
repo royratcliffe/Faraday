@@ -67,13 +67,12 @@ public class ResponseOperation: Operation {
     let _ = response.onComplete { (env) in
       semaphore.signal()
     }
-    let timeout: DispatchTime
     if let timeoutInterval = timeoutInterval {
-      timeout = .now() + timeoutInterval
+      timedOut = semaphore.wait(timeout: .now() + timeoutInterval) != .TimedOut
     } else {
-      timeout = .distantFuture
+      semaphore.wait()
+      timedOut = false
     }
-    timedOut = semaphore.wait(timeout: timeout) != .TimedOut
   }
 
 }
