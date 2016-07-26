@@ -41,7 +41,7 @@ class HeartbeatTests: XCTestCase {
 
   func testInterval() {
     // given
-    let expectation = self.expectation(withDescription: "Interval")
+    let expectation = self.expectation(description: "Interval")
 
     // when
     let _ = connection.get(path: "") { request in
@@ -69,7 +69,7 @@ class HeartbeatTests: XCTestCase {
     }
 
     // then
-    waitForExpectations(withTimeout: 60.0) { (error) -> Void in
+    waitForExpectations(timeout: 60.0) { (error) -> Void in
       if let error = error {
         NSLog("%@", error.localizedDescription)
       }
@@ -79,8 +79,8 @@ class HeartbeatTests: XCTestCase {
 
   func testLimit() {
     // given
-    let limitExpectation = expectation(withDescription: "Limit")
-    let errorExpectation = expectation(withDescription: "Error")
+    let limitExpectation = expectation(description: "Limit")
+    let errorExpectation = expectation(description: "Error")
 
     // when
     let _ = connection.get { request in
@@ -119,7 +119,7 @@ class HeartbeatTests: XCTestCase {
     }
 
     // then
-    waitForExpectations(withTimeout: 60.0) { (error) -> Void in
+    waitForExpectations(timeout: 60.0) { (error) -> Void in
       if let error = error {
         NSLog("%@", error.localizedDescription)
       }

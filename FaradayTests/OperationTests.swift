@@ -29,7 +29,7 @@ class OperationTests: ConnectionTests {
 
   func testOnePingOnly() {
     // given
-    let expectation = self.expectation(withDescription: "One ping only")
+    let expectation = self.expectation(description: "One ping only")
     let q = OperationQueue()
 
     // when
@@ -46,7 +46,7 @@ class OperationTests: ConnectionTests {
     q.addOperation(blockOp)
 
     // then
-    waitForExpectations(withTimeout: 10.0, handler: nil)
+    waitForExpectations(timeout: 10.0, handler: nil)
   }
 
 }

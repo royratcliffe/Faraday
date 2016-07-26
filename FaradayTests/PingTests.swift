@@ -29,7 +29,7 @@ class PingTests: ConnectionTests {
 
   func testGet() {
     // given
-    let expectation = self.expectation(withDescription: "GET ping")
+    let expectation = self.expectation(description: "GET ping")
 
     // when
     let _ = connection.get(path: "ping").onComplete { env in
@@ -46,7 +46,7 @@ class PingTests: ConnectionTests {
     }
 
     // then
-    waitForExpectations(withTimeout: 60.0) { error in
+    waitForExpectations(timeout: 60.0) { error in
       XCTAssertNil(error)
     }
   }
@@ -93,21 +93,21 @@ class PingTests: ConnectionTests {
   /// Give Heroku at least 60 seconds to spin up a free dyno.
   func testCounter() {
     // given
-    let expectation = self.expectation(withDescription: "Counter")
+    let expectation = self.expectation(description: "Counter")
     // when
     let counter = Counter(limit: 3, connection: connection) { [weak expectation] counter in
       expectation?.fulfill()
     }
     counter.ping()
     // then
-    waitForExpectations(withTimeout: 60.0) { (error) -> Void in
+    waitForExpectations(timeout: 60.0) { (error) -> Void in
       XCTAssertNil(error)
     }
   }
 
   func testPost() {
     // given
-    let expectation = self.expectation(withDescription: "POST ping")
+    let expectation = self.expectation(description: "POST ping")
 
     // when
     let response = connection.post { request in
@@ -129,7 +129,7 @@ class PingTests: ConnectionTests {
     }
 
     // then
-    waitForExpectations(withTimeout: 60.0) { error in
+    waitForExpectations(timeout: 60.0) { error in
       XCTAssertNil(error)
     }
   }
