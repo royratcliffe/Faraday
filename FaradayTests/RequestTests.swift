@@ -40,9 +40,9 @@ class RequestTests: XCTestCase {
 
   func testEmptyRelativeToURL() {
     // when
-    request.url = URL(string: "", relativeTo: baseURL)
+    request.url = URL(string: ".", relativeTo: baseURL)
     // then
-    XCTAssertEqual(request.path, "")
+    XCTAssertEqual(request.path, ".")
     XCTAssertEqual(request.url?.path, "/api")
   }
 
@@ -58,7 +58,7 @@ class RequestTests: XCTestCase {
   /// connection object does this kind of set up for new request URLs.
   func testPathSetter() {
     // given
-    request.url = URL(string: "", relativeTo: baseURL)
+    request.url = URL(string: ".", relativeTo: baseURL)
     // when
     request.path = "path/to"
     // then
@@ -68,7 +68,7 @@ class RequestTests: XCTestCase {
 
   func testPathComponentsSetter() {
     // given
-    request.url = URL(string: "", relativeTo: baseURL)
+    request.url = URL(string: ".", relativeTo: baseURL)
     // when
     request.pathComponents = ["path", "to"]
     // then

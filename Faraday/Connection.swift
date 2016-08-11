@@ -130,9 +130,9 @@ public class Connection {
     let request = Request()
     request.method = method
     if let url = url {
-      request.url = URL(string: path ?? "", relativeTo: url)
+      request.url = URL(string: path ?? ".", relativeTo: url)
     } else {
-      request.url = URL(string: path ?? "")
+      request.url = URL(string: path ?? ".")
     }
     request.headers = headers
     requestBuilder?(request)
