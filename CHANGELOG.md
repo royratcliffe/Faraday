@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.3.3](https://github.com/royratcliffe/faraday/tree/0.3.3)
+
+- Remove Gemfile and lock
+- Merge branch 'release/0.3.2' into develop
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.3.2...0.3.3).
+
 ## [0.3.2](https://github.com/royratcliffe/faraday/tree/0.3.2)
 
 - Merge branch 'feature/swift_2_3' into develop
