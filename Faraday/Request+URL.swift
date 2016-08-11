@@ -61,9 +61,13 @@ extension Request {
       return urlComponents?.path
     }
     set(newPath) {
-      var components = urlComponents
-      components?.path = newPath
-      urlComponents = components
+      if let newPath = newPath {
+        var components = urlComponents
+        components?.path = newPath
+        urlComponents = components
+      } else {
+        urlComponents = nil
+      }
     }
   }
 
