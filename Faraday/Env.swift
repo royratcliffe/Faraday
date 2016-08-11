@@ -41,7 +41,7 @@ public class Env {
 
   public var response: Response?
 
-  public var error: ErrorProtocol?
+  public var error: Error?
 
   /// Saves and finishes the response. Called by the adapter when the response
   /// finally arrives.

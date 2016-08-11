@@ -108,7 +108,7 @@ public class URLSessionAdapter: Adapter {
     // finish retains the status and headers, but has no body.
     public func urlSession(_ session: URLSession,
                            task: URLSessionTask,
-                           didCompleteWithError error: NSError?) {
+                           didCompleteWithError error: Error?) {
       guard let env = task.env else {
         return
       }
