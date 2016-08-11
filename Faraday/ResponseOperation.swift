@@ -68,7 +68,7 @@ public class ResponseOperation: Operation {
       semaphore.signal()
     }
     if let timeoutInterval = timeoutInterval {
-      timedOut = semaphore.wait(timeout: .now() + timeoutInterval) != .TimedOut
+      timedOut = semaphore.wait(timeout: .now() + timeoutInterval) != .timedOut
     } else {
       semaphore.wait()
       timedOut = false
