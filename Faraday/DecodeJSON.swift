@@ -34,8 +34,8 @@ public class DecodeJSON: Response.Middleware {
   /// Sets up the request headers to accept JSON. Adds `application/json` to the
   /// front of the Accept header with a default implicit quality factor of 1.
   public override func call(env: Env) -> Response {
-    env.request?.headers.accepts(["application/json"])
-    return super.call(env)
+    env.request?.headers.accepts(contentTypes: ["application/json"])
+    return super.call(env: env)
   }
 
   /// Parses the response for JSON. Converts an `NSData` object in the response
@@ -44,10 +44,10 @@ public class DecodeJSON: Response.Middleware {
   /// to JSON. Ignores the response's content type.
   public override func onComplete(env: Env) {
     guard let response = env.response else {
-      return super.onComplete(env)
+      return super.onComplete(env: env)
     }
-    if let data = response.body as? NSData {
-      if let object = try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments]) {
+    if let data = response.body as? Data {
+      if let object = try? JSONSerialization.jsonObject(with: data, options: [.allowFragments]) {
         response.body = object
       }
     }

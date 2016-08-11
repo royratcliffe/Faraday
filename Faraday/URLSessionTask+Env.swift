@@ -1,4 +1,4 @@
-// Faraday NSURLSessionTask+Env.swift
+// Faraday URLSessionTask+Env.swift
 //
 // Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -24,7 +24,7 @@
 
 import Foundation
 
-extension NSURLSessionTask {
+extension URLSessionTask {
 
   struct Static {
     /// Provides a unique address in memory space used as a key for identifying

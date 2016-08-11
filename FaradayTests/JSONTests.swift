@@ -28,29 +28,29 @@ import Foundation
 class JSONTests: XCTestCase {
 
   func testInvalidJSONObject() {
-    XCTAssertFalse(NSJSONSerialization.isValidJSONObject(false))
-    XCTAssertFalse(NSJSONSerialization.isValidJSONObject(0))
-    XCTAssertFalse(NSJSONSerialization.isValidJSONObject("string"))
+    XCTAssertFalse(JSONSerialization.isValidJSONObject(false))
+    XCTAssertFalse(JSONSerialization.isValidJSONObject(0))
+    XCTAssertFalse(JSONSerialization.isValidJSONObject("string"))
   }
 
   func testValidJSONObject() {
-    XCTAssertTrue(NSJSONSerialization.isValidJSONObject([]))
-    XCTAssertTrue(NSJSONSerialization.isValidJSONObject([:]))
+    XCTAssertTrue(JSONSerialization.isValidJSONObject([]))
+    XCTAssertTrue(JSONSerialization.isValidJSONObject([:]))
   }
 
   func testAllowFragments() {
-    XCTAssertNotNil(JSONTests.fragment("false"))
-    XCTAssertNotNil(JSONTests.fragment("0"))
-    XCTAssertNotNil(JSONTests.fragment("\"string\""))
+    XCTAssertNotNil(JSONTests.fragment(string: "false"))
+    XCTAssertNotNil(JSONTests.fragment(string: "0"))
+    XCTAssertNotNil(JSONTests.fragment(string: "\"string\""))
   }
 
   /// Converts a string to a JSON object, even if the string represents a JSON
   /// fragment; that is, not an object but a primitive.
   static func fragment(string: String) -> AnyObject? {
-    guard let data = NSString(string: string).dataUsingEncoding(NSUTF8StringEncoding) else {
+    guard let data = string.data(using: String.Encoding.utf8) else {
       return nil
     }
-    return try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
+    return try? JSONSerialization.jsonObject(with: data, options: [.allowFragments])
   }
 
 }

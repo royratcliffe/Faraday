@@ -32,21 +32,21 @@ class HeartbeatTests: XCTestCase {
   override func setUp() {
     super.setUp()
 
-    connection.URL = NSURL(string: "http://heartbeatapi.herokuapp.com/")
-    connection.use(EncodeJSON.Handler())
-    connection.use(DecodeJSON.Handler())
-    connection.use(Logger.Handler())
-    connection.use(URLSession.Handler())
+    connection.url = URL(string: "http://heartbeatapi.herokuapp.com/")
+    connection.use(handler: EncodeJSON.Handler())
+    connection.use(handler: DecodeJSON.Handler())
+    connection.use(handler: Logger.Handler())
+    connection.use(handler: URLSessionAdapter.Handler())
   }
 
   func testInterval() {
     // given
-    let expectation = expectationWithDescription("Interval")
+    let expectation = self.expectation(description: "Interval")
 
     // when
-    connection.get("", requestBuilder: { request in
-      request.setQueryValues(["1.1"], forName: "interval")
-    }).onComplete { env in
+    let _ = connection.get(path: ".") { request in
+      request.setQuery(values: ["1.1"], forName: "interval")
+    }.onComplete { env in
       guard let response = env.response else {
         return
       }
@@ -57,7 +57,7 @@ class HeartbeatTests: XCTestCase {
       XCTAssertEqual(env.response?.status, 200)
       XCTAssertNotNil(body?["date"])
       XCTAssertNotNil(body?["count"])
-      if let count = body?["count"] as? Int where count >= 3 {
+      if let count = body?["count"] as? Int, count >= 3 {
         expectation.fulfill()
         // Do not send `XCTestExpectation.fulfill()` more than once. Doing so
         // triggers a `NSInternalInconsistencyException` error. Multiple fulfil
@@ -69,7 +69,7 @@ class HeartbeatTests: XCTestCase {
     }
 
     // then
-    waitForExpectationsWithTimeout(60.0) { (error) -> Void in
+    waitForExpectations(timeout: 60.0) { (error) -> Void in
       if let error = error {
         NSLog("%@", error.localizedDescription)
       }
@@ -79,12 +79,12 @@ class HeartbeatTests: XCTestCase {
 
   func testLimit() {
     // given
-    let limitExpectation = expectationWithDescription("Limit")
-    let errorExpectation = expectationWithDescription("Error")
+    let limitExpectation = expectation(description: "Limit")
+    let errorExpectation = expectation(description: "Error")
 
     // when
-    connection.get { request in
-      request.setQueryValues(["10"], forName: "limit")
+    let _ = connection.get { request in
+      request.setQuery(values: ["10"], forName: "limit")
     }.onComplete { env in
       guard env.error == nil else {
         if let error = env.error as? NSError {
@@ -106,7 +106,7 @@ class HeartbeatTests: XCTestCase {
       XCTAssertEqual(env.response?.status, 200)
       XCTAssertNotNil(body?["date"])
       XCTAssertNotNil(body?["count"])
-      if let count = body?["count"] as? Int where count == 10 {
+      if let count = body?["count"] as? Int, count == 10 {
         limitExpectation.fulfill()
         // Sending a `cancel()` message differs from setting `response` to `nil`
         // when using the URL session adapter. It triggers a final nil-body
@@ -119,7 +119,7 @@ class HeartbeatTests: XCTestCase {
     }
 
     // then
-    waitForExpectationsWithTimeout(60.0) { (error) -> Void in
+    waitForExpectations(timeout: 60.0) { (error) -> Void in
       if let error = error {
         NSLog("%@", error.localizedDescription)
       }

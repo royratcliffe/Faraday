@@ -28,25 +28,25 @@ public class Logger: Response.Middleware {
 
   public override func call(env: Env) -> Response {
     let method = env.request?.method ?? "[METHOD]"
-    let URLString = (env.request?.URL ?? NSURL()).absoluteString
-    Logger.log("\(method) \(URLString)")
-    Logger.log("request", headers: env.request?.headers.allHeaderFields)
-    Logger.log("request", body: env.request?.body)
-    return super.call(env)
+    let urlString = env.request?.url?.absoluteString ?? "[URL]"
+    Logger.log(string: "\(method) \(urlString)")
+    Logger.log(prefix: "request", headers: env.request?.headers.allHeaderFields)
+    Logger.log(prefix: "request", body: env.request?.body)
+    return super.call(env: env)
   }
 
   public override func onComplete(env: Env) {
     if let status = env.response?.status {
-      Logger.log("Status: \(String(status))")
+      Logger.log(string: "Status: \(String(status))")
     }
-    Logger.log("response", headers: env.response?.headers.allHeaderFields)
-    Logger.log("response", body: env.response?.body)
+    Logger.log(prefix: "response", headers: env.response?.headers.allHeaderFields)
+    Logger.log(prefix: "response", body: env.response?.body)
   }
 
   static func log(prefix: String, headers: [NSObject: AnyObject]?) {
     if let headers = headers {
       for (key, value) in headers {
-        Logger.log("\(prefix) \(key): \(String(value))")
+        Logger.log(string: "\(prefix) \(key): \(String(value))")
       }
     }
   }
@@ -57,19 +57,19 @@ public class Logger: Response.Middleware {
   static func log(prefix: String, body: Body?) {
     if let body = body {
       switch body {
-      case let data as NSData:
-        guard let string = String(data: data, encoding: NSUTF8StringEncoding) else {
+      case let data as Data:
+        guard let string = String(data: data, encoding: String.Encoding.utf8) else {
           fallthrough
         }
-        log(string)
+        log(string: string)
       default:
-        log(String(body))
+        log(string: String(body))
       }
     }
   }
 
   static func log(string: String) {
-    for line in string.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet()) {
+    for line in string.components(separatedBy: NSCharacterSet.newlines) {
       NSLog("%@", line)
     }
   }

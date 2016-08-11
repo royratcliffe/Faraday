@@ -1,4 +1,4 @@
-// Faraday URLSession.swift
+// Faraday URLSessionAdapter.swift
 //
 // Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -24,9 +24,9 @@
 
 import Foundation
 
-public class URLSession: Adapter {
+public class URLSessionAdapter: Adapter {
 
-  var session: NSURLSession!
+  var session: URLSession!
 
   /// Performs a request.
   /// - parameter env: Rack environment under construction.
@@ -35,24 +35,24 @@ public class URLSession: Adapter {
   ///   of a body translates to upload, absence to download. Returns without a
   ///   task if the environment contains no request, or the request has no URL or
   ///   no method.
-  func performRequest(env: Env) -> NSURLSessionDataTask? {
+  func performRequest(env: Env) -> URLSessionDataTask? {
     guard let request = env.request else {
       return nil
     }
-    guard let URL = request.URL else {
+    guard let url = request.url else {
       return nil
     }
-    let URLRequest = NSMutableURLRequest(URL: URL)
+    var urlRequest = URLRequest(url: url)
     guard let method = request.method else {
       return nil
     }
-    URLRequest.HTTPMethod = method
-    URLRequest.allHTTPHeaderFields = env.request?.headers.allHeaderFields
-    var task: NSURLSessionDataTask
-    if let body = request.body as? NSData {
-      task = session.uploadTaskWithRequest(URLRequest, fromData: body)
+    urlRequest.httpMethod = method
+    urlRequest.allHTTPHeaderFields = env.request?.headers.allHeaderFields
+    var task: URLSessionDataTask
+    if let body = request.body as? Data {
+      task = session.uploadTask(with: urlRequest, from: body)
     } else {
-      task = session.dataTaskWithRequest(URLRequest)
+      task = session.dataTask(with: urlRequest)
     }
     task.env = env
     task.resume()
@@ -65,7 +65,7 @@ public class URLSession: Adapter {
   ///   response knows how to cancel the request-response cycle in-flight, if
   ///   necessary.
   public override func call(env: Env) -> Response {
-    let task = performRequest(env)
+    let task = performRequest(env: env)
     let response = app(env)
     response.cancelBlock = { [weak task] in
       task?.cancel()
@@ -81,18 +81,18 @@ public class URLSession: Adapter {
   /// the session reference to retain a session with a delegate: the handler
   /// retains the sessions strongly; the session strongly retains its
   /// delegate. Useful for SSL handshake delegates.
-  public class Handler: NSObject, RackHandler, NSURLSessionDataDelegate {
+  public class Handler: NSObject, RackHandler, URLSessionDataDelegate {
 
-    public lazy var configuration: NSURLSessionConfiguration = {
-      NSURLSessionConfiguration.defaultSessionConfiguration()
+    public lazy var configuration: URLSessionConfiguration = {
+      URLSessionConfiguration.default
     }()
 
-    public lazy var session: NSURLSession = {
-      NSURLSession(configuration: self.configuration, delegate: self, delegateQueue: nil)
+    public lazy var session: URLSession = {
+      URLSession(configuration: self.configuration, delegate: self, delegateQueue: nil)
     }()
 
     public func build(app: App) -> Middleware {
-      let middleware = Faraday.URLSession(app: app)
+      let middleware = URLSessionAdapter(app: app)
       middleware.session = session
       return middleware
     }
@@ -106,9 +106,9 @@ public class URLSession: Adapter {
     // with errors. Errors, if any, arrives on completion after data. The
     // implementation ignores completion when no error. If an error, the final
     // finish retains the status and headers, but has no body.
-    public func URLSession(session: NSURLSession,
-                           task: NSURLSessionTask,
-                           didCompleteWithError error: NSError?) {
+    public func urlSession(_ session: URLSession,
+                           task: URLSessionTask,
+                           didCompleteWithError error: Error?) {
       guard let env = task.env else {
         return
       }
@@ -119,7 +119,7 @@ public class URLSession: Adapter {
       }
       env.error = error
       response.body = nil
-      response.finish(env)
+      let _ = response.finish(env: env)
     }
 
     // MARK: - URL Session Data Delegate
@@ -138,9 +138,9 @@ public class URLSession: Adapter {
     // Cancels the data task if the environment has no response. This only
     // happens if a completion handler disconnects the response because it wants
     // no more information.
-    public func URLSession(session: NSURLSession,
-                           dataTask: NSURLSessionDataTask,
-                           didReceiveData data: NSData) {
+    public func urlSession(_ session: URLSession,
+                           dataTask: URLSessionDataTask,
+                           didReceive data: Data) {
       guard let env = dataTask.env else {
         return
       }
@@ -148,15 +148,15 @@ public class URLSession: Adapter {
         dataTask.cancel()
         return
       }
-      guard let HTTPURLResponse = dataTask.response as? NSHTTPURLResponse else {
+      guard let httpURLResponse = dataTask.response as? HTTPURLResponse else {
         return
       }
-      let status = HTTPURLResponse.statusCode
+      let status = httpURLResponse.statusCode
       var headers = Headers()
-      for (key, value) in HTTPURLResponse.allHeaderFields {
+      for (key, value) in httpURLResponse.allHeaderFields {
         headers[String(key)] = String(value)
       }
-      env.saveResponse(status, body: data, headers: headers)
+      env.saveResponse(status: status, body: data, headers: headers)
     }
 
   }

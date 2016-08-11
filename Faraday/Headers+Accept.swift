@@ -40,27 +40,27 @@ extension Headers {
   /// media range by a semicolon. The `accepts` method (plural) splits the
   /// header by commas and trims out any white-space. The result is an array of
   /// strings, one for each media range.
-  public var accepts: [String]? {
+  public var acceptContentTypes: [String]? {
     get {
-      return accept?.characters.split(",").map {
-        String($0).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+      return accept?.characters.split(separator: ",").map {
+        String($0).trimmingCharacters(in: CharacterSet.whitespaces)
       }
     }
     set(value) {
-      accept = value?.joinWithSeparator(", ")
+      accept = value?.joined(separator: ", ")
     }
   }
 
   /// Adds more type elements to the Accept header. Does not add duplicates;
   /// instead, it passes the new elements through a filter in order to remove
   /// duplicates and make the acceptable types unique.
-  public mutating func accepts(newAccepts: [String]) {
-    guard let oldAccepts = accepts else {
-      accepts = newAccepts
+  public mutating func accepts(contentTypes: [String]) {
+    guard let oldContentTypes = acceptContentTypes else {
+      acceptContentTypes = contentTypes
       return
     }
-    accepts = oldAccepts + newAccepts.filter { (accept) -> Bool in
-      !oldAccepts.contains(accept)
+    acceptContentTypes = oldContentTypes + contentTypes.filter { (contentType) -> Bool in
+      !oldContentTypes.contains(contentType)
     }
   }
 

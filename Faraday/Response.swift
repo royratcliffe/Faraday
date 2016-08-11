@@ -48,7 +48,7 @@ public class Response {
   ///   range, or there is no status because the response is not yet
   ///   finished. Success therefore also implies finished.
   public var success: Bool {
-    guard let status = status where finished else {
+    guard let status = status, finished else {
       return false
     }
     return (200..<300).contains(status)
@@ -85,9 +85,9 @@ public class Response {
   /// onComplete does, but asynchronously runs the given capture in the given
   /// dispatch queue. Useful when the adapter finishes responses asynchronously
   /// in some other queue.
-  public func onComplete(queue: dispatch_queue_t, callback: OnCompleteCallback) -> Response {
+  public func onComplete(queue: DispatchQueue, callback: OnCompleteCallback) -> Response {
     return onComplete { env in
-      dispatch_async(queue) {
+      queue.async() {
         callback(env)
       }
     }
@@ -112,7 +112,7 @@ public class Response {
 
     public override func call(env: Env) -> Response {
       return app(env).onComplete { env in
-        self.onComplete(env)
+        self.onComplete(env: env)
       }
     }
 

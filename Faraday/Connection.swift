@@ -37,7 +37,7 @@ public class Connection {
 
   public init() {}
 
-  public var URL: NSURL?
+  public var url: URL?
 
   public var headers = Headers()
 
@@ -50,7 +50,7 @@ public class Connection {
   /// platform-dependent way and asynchronously finish the response at some
   /// later time. Responses start off unfinished.
   public func use(handler: RackHandler) {
-    builder.use(handler)
+    builder.use(handler: handler)
   }
 
   var app: App {
@@ -64,32 +64,32 @@ public class Connection {
 
   /// Runs a GET request.
   public func get(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("GET", path: path, requestBuilder: requestBuilder)
+    return runRequest(method: "GET", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a HEAD request.
   public func head(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("HEAD", path: path, requestBuilder: requestBuilder)
+    return runRequest(method: "HEAD", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a DELETE request.
   public func delete(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("DELETE", path: path, requestBuilder: requestBuilder)
+    return runRequest(method: "DELETE", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a POST request.
   public func post(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("POST", path: path, requestBuilder: requestBuilder)
+    return runRequest(method: "POST", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a PUT request.
   public func put(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("PUT", path: path, requestBuilder: requestBuilder)
+    return runRequest(method: "PUT", path: path, requestBuilder: requestBuilder)
   }
 
   /// Runs a PATCH request.
   public func patch(path: String? = nil, requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest("PATCH", path: path, requestBuilder: requestBuilder)
+    return runRequest(method: "PATCH", path: path, requestBuilder: requestBuilder)
   }
 
   /// Builds a request using the given method, then builds a response using the
@@ -101,19 +101,19 @@ public class Connection {
   public func runRequest(method: String,
                          path: String? = nil,
                          requestBuilder: RequestBuilder? = nil) -> Response {
-    return runRequest(buildRequest(method, path: path, requestBuilder: requestBuilder))
+    return run(request: buildRequest(method: method, path: path, requestBuilder: requestBuilder))
   }
 
   /// Runs an arbitrary request over the connection without any request
   /// building. This assumes that the request has already been fully built up,
   /// ready to run.
-  public func runRequest(request: Request) -> Response {
-    return buildResponse(request)
+  public func run(request: Request) -> Response {
+    return buildResponse(request: request)
   }
 
   /// Builds a response based on the request. Delegates to the Rack builder.
   func buildResponse(request: Request) -> Response {
-    return builder.buildResponse(self, request: request)
+    return builder.buildResponse(connection: self, request: request)
   }
 
   /// Builds a request based on the given method. Sets up the initial request
@@ -129,7 +129,11 @@ public class Connection {
                            requestBuilder: RequestBuilder? = nil) -> Request {
     let request = Request()
     request.method = method
-    request.URL = NSURL(string: path ?? "", relativeToURL: URL)
+    if let url = url {
+      request.url = URL(string: path ?? ".", relativeTo: url)
+    } else {
+      request.url = URL(string: path ?? ".")
+    }
     request.headers = headers
     requestBuilder?(request)
     return request
