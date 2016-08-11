@@ -1,4 +1,4 @@
-// Faraday Adapter.swift
+// Faraday Response+Headers.swift
 //
 // Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -24,14 +24,21 @@
 
 import Foundation
 
-public class Adapter: Middleware {
+extension Response {
 
-  /// Strictly speaking, this could be implemented as a static method. The
-  /// implementation references nothing in `self`, either the adapter or its
-  /// middleware superclass. Implementing it as an instance method only lets
-  /// adapter subclasses override it.
-  public func saveResponse(env: Env, status: Int, body: Body?, headers: Headers) {
-    env.saveResponse(status, body: body, headers: headers)
+  /// - returns: Answers the response content type, including the main type and
+  ///   sub-type. Automatically removes any optional parameters, such as the
+  ///   content character set. Trims any white-space from the string. Answers
+  ///   `nil` if the response does not have a content type.
+  ///
+  /// Splits the content type at the first semi-colon. There is always at least
+  /// one split, even if no semi-colon. The first split is the entire content
+  /// type if none.
+  public var contentType: String? {
+    guard let contentType = headers["Content-Type"] else { return nil }
+    let splits = contentType.characters.split(maxSplits: 1) { $0 == ";" }
+    guard let first = splits.first else { return nil }
+    return String(first).trimmingCharacters(in: CharacterSet.whitespaces)
   }
 
 }

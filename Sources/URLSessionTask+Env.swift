@@ -1,6 +1,6 @@
-// FaradayTests JSONTests.swift
+// Faraday URLSessionTask+Env.swift
 //
-// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -22,35 +22,27 @@
 //
 //------------------------------------------------------------------------------
 
-import XCTest
 import Foundation
 
-class JSONTests: XCTestCase {
+extension URLSessionTask {
 
-  func testInvalidJSONObject() {
-    XCTAssertFalse(NSJSONSerialization.isValidJSONObject(false))
-    XCTAssertFalse(NSJSONSerialization.isValidJSONObject(0))
-    XCTAssertFalse(NSJSONSerialization.isValidJSONObject("string"))
+  struct Static {
+    /// Provides a unique address in memory space used as a key for identifying
+    /// the associated Env object. The exact value does not matter. Its address
+    /// in memory is the key, not the value.
+    static var env = UInt64(bigEndian: 0xbadc0ffee0ddf00d)
   }
 
-  func testValidJSONObject() {
-    XCTAssertTrue(NSJSONSerialization.isValidJSONObject([]))
-    XCTAssertTrue(NSJSONSerialization.isValidJSONObject([:]))
-  }
-
-  func testAllowFragments() {
-    XCTAssertNotNil(JSONTests.fragment("false"))
-    XCTAssertNotNil(JSONTests.fragment("0"))
-    XCTAssertNotNil(JSONTests.fragment("\"string\""))
-  }
-
-  /// Converts a string to a JSON object, even if the string represents a JSON
-  /// fragment; that is, not an object but a primitive.
-  static func fragment(string: String) -> AnyObject? {
-    guard let data = NSString(string: string).dataUsingEncoding(NSUTF8StringEncoding) else {
-      return nil
+  /// Associates a Rack environment with an URL session task, either a data or
+  /// upload task. Associates by retaining the environment. The environment
+  /// therefore lives at least as long as the task.
+  public var env: Env? {
+    get {
+      return objc_getAssociatedObject(self, &Static.env) as? Env
     }
-    return try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
+    set(newEnv) {
+      objc_setAssociatedObject(self, &Static.env, newEnv, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
   }
 
 }

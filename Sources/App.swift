@@ -1,4 +1,4 @@
-// Faraday Response+Headers.swift
+// Faraday App.swift
 //
 // Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -22,22 +22,10 @@
 //
 //------------------------------------------------------------------------------
 
-import Foundation
-
-extension Response {
-
-  /// - returns: Answers the response content type, including the main type and
-  ///   sub-type. Automatically removes any optional parameters, such as the
-  ///   content character set. Trims any white-space from the string. Answers
-  ///   `nil` if the response does not have a content type.
-  ///
-  /// Splits the content type at the first semi-colon. There is always at least
-  /// one split, even if no semi-colon. The first split is the entire content
-  /// type if none.
-  public var contentType: String? {
-    guard let contentType = headers["Content-Type"] else { return nil }
-    let splits = contentType.characters.split(1) { $0 == ";" }
-    return String(splits.first!).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-  }
-
-}
+/// This is the closest Swift gets to a Ruby Rack app. This type defines a
+/// capture that accepts an environment and answers an unfinished response. In
+/// its current form, it does not throw errors, like its Ruby-based
+/// counterpart. Everything in Ruby can throw an exception but not so in
+/// Swift. This initial version of the Swift Faraday framework omits throwing
+/// errors in order to simplify the Rack stack interface and implementation.
+public typealias App = (Env) -> Response

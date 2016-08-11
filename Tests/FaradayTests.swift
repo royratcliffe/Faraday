@@ -1,6 +1,6 @@
-// FaradayTests OperationTests.swift
+// FaradayTests FaradayTests.swift
 //
-// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -23,30 +23,37 @@
 //------------------------------------------------------------------------------
 
 import XCTest
-import Faraday
+@testable import Faraday
 
-class OperationTests: ConnectionTests {
+class FaradayTests: XCTestCase {
 
-  func testOnePingOnly() {
-    // given
-    let expectation = expectationWithDescription("One ping only")
-    let q = NSOperationQueue()
+  class NothingMiddleware: Response.Middleware {
 
-    // when
-    let op = ResponseOperation(connection.get("ping"))
-    let blockOp = NSBlockOperation {
-      XCTAssertNotNil(op.timedOut)
-      XCTAssertFalse(op.timedOut!)
-      XCTAssertEqual(op.response.status, 200)
-      XCTAssertNotNil(op.response.body as? NSDictionary)
-      expectation.fulfill()
+    override func onComplete(env: Env) {
+      NSLog("***")
     }
-    blockOp.addDependency(op)
-    q.addOperation(op)
-    q.addOperation(blockOp)
 
+    // swiftlint:disable:next nesting
+    class Handler: RackHandler {
+
+      func build(app: App) -> Middleware {
+        return NothingMiddleware(app: app)
+      }
+
+    }
+
+  }
+
+  func testNothingMiddleware() {
+    // given
+    let builder = RackBuilder()
+    // when
+    builder.use(handler: Logger.Handler())
+    builder.use(handler: NothingMiddleware.Handler())
+    let env = Env()
     // then
-    waitForExpectationsWithTimeout(10.0, handler: nil)
+    let response = builder.app(env)
+    let _ = response.finish(env: env)
   }
 
 }

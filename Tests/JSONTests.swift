@@ -1,4 +1,4 @@
-// FaradayTests ConnectionTests.swift
+// FaradayTests JSONTests.swift
 //
 // Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -23,22 +23,34 @@
 //------------------------------------------------------------------------------
 
 import XCTest
-import Faraday
+import Foundation
 
-class ConnectionTests: XCTestCase {
+class JSONTests: XCTestCase {
 
-  let connection = Connection()
+  func testInvalidJSONObject() {
+    XCTAssertFalse(JSONSerialization.isValidJSONObject(false))
+    XCTAssertFalse(JSONSerialization.isValidJSONObject(0))
+    XCTAssertFalse(JSONSerialization.isValidJSONObject("string"))
+  }
 
-  override func setUp() {
-    super.setUp()
+  func testValidJSONObject() {
+    XCTAssertTrue(JSONSerialization.isValidJSONObject([]))
+    XCTAssertTrue(JSONSerialization.isValidJSONObject([:]))
+  }
 
-    // The URL's trailing slash is very important. Without it, merging URLs will
-    // replace the entire path rather than just append the path.
-    connection.URL = NSURL(string: "http://faraday-tests.herokuapp.com/")
-    connection.use(EncodeJSON.Handler())
-    connection.use(DecodeJSON.Handler())
-    connection.use(Logger.Handler())
-    connection.use(URLSession.Handler())
+  func testAllowFragments() {
+    XCTAssertNotNil(JSONTests.fragment(string: "false"))
+    XCTAssertNotNil(JSONTests.fragment(string: "0"))
+    XCTAssertNotNil(JSONTests.fragment(string: "\"string\""))
+  }
+
+  /// Converts a string to a JSON object, even if the string represents a JSON
+  /// fragment; that is, not an object but a primitive.
+  static func fragment(string: String) -> AnyObject? {
+    guard let data = string.data(using: String.Encoding.utf8) else {
+      return nil
+    }
+    return try? JSONSerialization.jsonObject(with: data, options: [.allowFragments])
   }
 
 }

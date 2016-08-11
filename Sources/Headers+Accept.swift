@@ -1,4 +1,4 @@
-// Faraday NSURLSessionTask+Env.swift
+// Faraday Headers+Accept.swift
 //
 // Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -24,24 +24,43 @@
 
 import Foundation
 
-extension NSURLSessionTask {
+extension Headers {
 
-  struct Static {
-    /// Provides a unique address in memory space used as a key for identifying
-    /// the associated Env object. The exact value does not matter. Its address
-    /// in memory is the key, not the value.
-    static var env = UInt64(bigEndian: 0xbadc0ffee0ddf00d)
+  public var accept: String? {
+    get {
+      return self["Accept"]
+    }
+    set(value) {
+      self["Accept"] = value
+    }
   }
 
-  /// Associates a Rack environment with an URL session task, either a data or
-  /// upload task. Associates by retaining the environment. The environment
-  /// therefore lives at least as long as the task.
-  public var env: Env? {
+  /// Accesses the HTTP Accept header. The header is a comma-delimited string of
+  /// media ranges, each with an optional quality factor separated from the
+  /// media range by a semicolon. The `accepts` method (plural) splits the
+  /// header by commas and trims out any white-space. The result is an array of
+  /// strings, one for each media range.
+  public var acceptContentTypes: [String]? {
     get {
-      return objc_getAssociatedObject(self, &Static.env) as? Env
+      return accept?.characters.split(separator: ",").map {
+        String($0).trimmingCharacters(in: CharacterSet.whitespaces)
+      }
     }
-    set(newEnv) {
-      objc_setAssociatedObject(self, &Static.env, newEnv, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    set(value) {
+      accept = value?.joined(separator: ", ")
+    }
+  }
+
+  /// Adds more type elements to the Accept header. Does not add duplicates;
+  /// instead, it passes the new elements through a filter in order to remove
+  /// duplicates and make the acceptable types unique.
+  public mutating func accepts(contentTypes: [String]) {
+    guard let oldContentTypes = acceptContentTypes else {
+      acceptContentTypes = contentTypes
+      return
+    }
+    acceptContentTypes = oldContentTypes + contentTypes.filter { (contentType) -> Bool in
+      !oldContentTypes.contains(contentType)
     }
   }
 

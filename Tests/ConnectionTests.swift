@@ -1,4 +1,4 @@
-// Faraday Request.swift
+// FaradayTests ConnectionTests.swift
 //
 // Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -22,21 +22,23 @@
 //
 //------------------------------------------------------------------------------
 
-import Foundation
+import XCTest
+import Faraday
 
-/// Represents a HTTP request comprising a method, URL with query items, headers
-/// and body.
-public class Request {
+class ConnectionTests: XCTestCase {
 
-  public init() {}
+  let connection = Connection()
 
-  public var method: String?
+  override func setUp() {
+    super.setUp()
 
-  /// The URL components comprise query items. They are the request parameters.
-  public var URL: NSURL?
-
-  public var headers = Headers()
-
-  public var body: Body?
+    // The URL's trailing slash is very important. Without it, merging URLs will
+    // replace the entire path rather than just append the path.
+    connection.url = URL(string: "http://faraday-tests.herokuapp.com/")
+    connection.use(handler: EncodeJSON.Handler())
+    connection.use(handler: DecodeJSON.Handler())
+    connection.use(handler: Logger.Handler())
+    connection.use(handler: URLSessionAdapter.Handler())
+  }
 
 }

@@ -1,4 +1,4 @@
-// FaradayTests FaradayTests.swift
+// Faraday Request.swift
 //
 // Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -22,38 +22,21 @@
 //
 //------------------------------------------------------------------------------
 
-import XCTest
-@testable import Faraday
+import Foundation
 
-class FaradayTests: XCTestCase {
+/// Represents a HTTP request comprising a method, URL with query items, headers
+/// and body.
+public class Request {
 
-  class NothingMiddleware: Response.Middleware {
+  public init() {}
 
-    override func onComplete(env: Env) {
-      NSLog("***")
-    }
+  public var method: String?
 
-    // swiftlint:disable:next nesting
-    class Handler: RackHandler {
+  /// The URL components comprise query items. They are the request parameters.
+  public var url: URL?
 
-      func build(app: App) -> Middleware {
-        return NothingMiddleware(app: app)
-      }
+  public var headers = Headers()
 
-    }
-
-  }
-
-  func testNothingMiddleware() {
-    // given
-    let builder = RackBuilder()
-    // when
-    builder.use(Logger.Handler())
-    builder.use(NothingMiddleware.Handler())
-    let env = Env()
-    // then
-    let response = builder.app(env)
-    response.finish(env)
-  }
+  public var body: Body?
 
 }

@@ -40,17 +40,17 @@ class HeadersTests: XCTestCase {
     // given
     var headers = Headers()
     // when
-    headers.accepts([])
+    headers.accepts(contentTypes: [])
     // then
     XCTAssertNotNil(headers.accept)
-    XCTAssertEqual(headers.accepts!, [])
+    XCTAssertEqual(headers.acceptContentTypes!, [])
   }
 
   func testAcceptsNonEmpty() {
     // given
     var headers = Headers()
     // when
-    headers.accepts(["application/json"])
+    headers.accepts(contentTypes: ["application/json"])
     // then
     XCTAssertNotNil(headers.accept)
     XCTAssertEqual(headers.accept, "application/json")
@@ -60,8 +60,8 @@ class HeadersTests: XCTestCase {
     // given
     var headers = Headers()
     // when
-    headers.accepts(["application/json"])
-    headers.accepts(["application/json"])
+    headers.accepts(contentTypes: ["application/json"])
+    headers.accepts(contentTypes: ["application/json"])
     // then
     XCTAssertNotNil(headers.accept)
     XCTAssertEqual(headers.accept, "application/json")
@@ -84,7 +84,7 @@ class HeadersTests: XCTestCase {
     // given
     var headers = Headers()
     // when
-    headers.basicAuth("login", pass: "pass")
+    let _ = headers.basicAuth(login: "login", pass: "pass")
     // then
     XCTAssertEqual(headers.authorization, "Basic bG9naW46cGFzcw==")
   }
@@ -93,7 +93,7 @@ class HeadersTests: XCTestCase {
     // given
     var headers = Headers()
     // when
-    headers.tokenAuth("abcdef", options: ["foo": "bar"])
+    headers.tokenAuth(token: "abcdef", options: ["foo": "bar"])
     // then
     XCTAssertTrue(["Token token=abcdef,foo=bar", "Token foo=bar,token=abcdef"].contains(headers.authorization!))
   }

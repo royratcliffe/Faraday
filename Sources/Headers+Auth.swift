@@ -42,10 +42,10 @@ extension Headers {
   /// - returns: the new authorisation header value, or `nil` if the given
   ///   log-in user name and password fails to encode as UTF-8.
   public mutating func basicAuth(login: String, pass: String) -> String? {
-    guard let data = "\(login):\(pass)".dataUsingEncoding(NSUTF8StringEncoding) else {
+    guard let data = "\(login):\(pass)".data(using: String.Encoding.utf8) else {
       return nil
     }
-    let string = data.base64EncodedStringWithOptions([])
+    let string = data.base64EncodedString()
     let basicAuthHeaderValue = "Basic \(string)"
     authorization = basicAuthHeaderValue
     return basicAuthHeaderValue
@@ -61,7 +61,7 @@ extension Headers {
     let strings = keyedValues.map { (key, value) -> String in
       return "\(key)=\(value)"
     }
-    let string = strings.joinWithSeparator(",")
+    let string = strings.joined(separator: ",")
     let tokenAuthHeaderValue = "Token \(string)"
     authorization = tokenAuthHeaderValue
   }

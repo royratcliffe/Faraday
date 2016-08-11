@@ -1,4 +1,4 @@
-// Faraday Headers+Accept.swift
+// Faraday NSData+Faraday.swift
 //
 // Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -24,44 +24,26 @@
 
 import Foundation
 
-extension Headers {
+extension NSData {
 
-  public var accept: String? {
-    get {
-      return self["Accept"]
+  /// - returns: all the byte ranges belonging to this block of data by
+  ///   enumerating and collating all the currently available ranges.
+  public var byteRanges: [NSRange] {
+    var byteRanges = [NSRange]()
+    enumerateBytes { (_, range, _) -> Void in
+      byteRanges.append(range)
     }
-    set(value) {
-      self["Accept"] = value
-    }
+    return byteRanges
   }
 
-  /// Accesses the HTTP Accept header. The header is a comma-delimited string of
-  /// media ranges, each with an optional quality factor separated from the
-  /// media range by a semicolon. The `accepts` method (plural) splits the
-  /// header by commas and trims out any white-space. The result is an array of
-  /// strings, one for each media range.
-  public var accepts: [String]? {
-    get {
-      return accept?.characters.split(",").map {
-        String($0).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-      }
+  /// - returns: an index set representing all the available byte indexes.
+  public var byteIndexes: NSIndexSet {
+    let byteIndexes = NSMutableIndexSet()
+    enumerateBytes { (_, range, _) -> Void in
+      byteIndexes.add(in: range)
     }
-    set(value) {
-      accept = value?.joinWithSeparator(", ")
-    }
-  }
-
-  /// Adds more type elements to the Accept header. Does not add duplicates;
-  /// instead, it passes the new elements through a filter in order to remove
-  /// duplicates and make the acceptable types unique.
-  public mutating func accepts(newAccepts: [String]) {
-    guard let oldAccepts = accepts else {
-      accepts = newAccepts
-      return
-    }
-    accepts = oldAccepts + newAccepts.filter { (accept) -> Bool in
-      !oldAccepts.contains(accept)
-    }
+    // swiftlint:disable:next force_cast
+    return byteIndexes.copy() as! NSIndexSet
   }
 
 }

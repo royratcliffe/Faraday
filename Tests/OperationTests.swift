@@ -1,6 +1,6 @@
-// Faraday App.swift
+// FaradayTests OperationTests.swift
 //
-// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -22,12 +22,31 @@
 //
 //------------------------------------------------------------------------------
 
-import Foundation
+import XCTest
+import Faraday
 
-/// This is the closest Swift gets to a Ruby Rack app. This type defines a
-/// capture that accepts an environment and answers an unfinished response. In
-/// its current form, it does not throw errors, like its Ruby-based
-/// counterpart. Everything in Ruby can throw an exception but not so in
-/// Swift. This initial version of the Swift Faraday framework omits throwing
-/// errors in order to simplify the Rack stack interface and implementation.
-public typealias App = (Env) -> Response
+class OperationTests: ConnectionTests {
+
+  func testOnePingOnly() {
+    // given
+    let expectation = self.expectation(description: "One ping only")
+    let q = OperationQueue()
+
+    // when
+    let op = ResponseOperation(connection.get(path: "ping"))
+    let blockOp = BlockOperation {
+      XCTAssertNotNil(op.timedOut)
+      XCTAssertFalse(op.timedOut!)
+      XCTAssertEqual(op.response.status, 200)
+      XCTAssertNotNil(op.response.body as? NSDictionary)
+      expectation.fulfill()
+    }
+    blockOp.addDependency(op)
+    q.addOperation(op)
+    q.addOperation(blockOp)
+
+    // then
+    waitForExpectations(timeout: 10.0, handler: nil)
+  }
+
+}

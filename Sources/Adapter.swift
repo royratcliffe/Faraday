@@ -1,6 +1,6 @@
-// Faraday NSData+Faraday.swift
+// Faraday Adapter.swift
 //
-// Copyright © 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
+// Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the “Software”), to deal
@@ -24,26 +24,14 @@
 
 import Foundation
 
-extension NSData {
+public class Adapter: Middleware {
 
-  /// - returns: all the byte ranges belonging to this block of data by
-  ///   enumerating and collating all the currently available ranges.
-  public var byteRanges: [NSRange] {
-    var byteRanges = [NSRange]()
-    enumerateByteRangesUsingBlock { (_, range, _) -> Void in
-      byteRanges.append(range)
-    }
-    return byteRanges
-  }
-
-  /// - returns: an index set representing all the available byte indexes.
-  public var byteIndexes: NSIndexSet {
-    let byteIndexes = NSMutableIndexSet()
-    enumerateByteRangesUsingBlock { (_, range, _) -> Void in
-      byteIndexes.addIndexesInRange(range)
-    }
-    // swiftlint:disable:next force_cast
-    return byteIndexes.copy() as! NSIndexSet
+  /// Strictly speaking, this could be implemented as a static method. The
+  /// implementation references nothing in `self`, either the adapter or its
+  /// middleware superclass. Implementing it as an instance method only lets
+  /// adapter subclasses override it.
+  public func saveResponse(env: Env, status: Int, body: Body?, headers: Headers) {
+    env.saveResponse(status: status, body: body, headers: headers)
   }
 
 }

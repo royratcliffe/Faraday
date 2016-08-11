@@ -1,4 +1,4 @@
-// Faraday DecodeJSON.swift
+// Faraday EncodeJSON.swift
 //
 // Copyright © 2015, 2016, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -24,33 +24,32 @@
 
 import Foundation
 
-/// Response middleware for decoding JSON. If the response body is raw data, the
-/// decoder attempts to convert the data to a JSON object. If successful, the
-/// decoder replaces the data with the JSON object. The decoder allows JSON
-/// fragments, primitives as well as objects and arrays. It does not test the
-/// response's content type.
-public class DecodeJSON: Response.Middleware {
+/// This is the simplest possible JSON encoder implementation. It delegates to
+/// `super` if there is no request. That will never happen under normal
+/// circumstances. If the request has a body, try to serialise it as JSON. If
+/// serialisation succeeds, set up a new body and `Content-Type` header. The
+/// new body becomes data after serialisation, an `NSData` object. The body
+/// was previously anything that the JSON serialiser considers valid.
+///
+/// The implementation only sets up the content-type header for JSON if, and
+/// only if, not already set. If the encoder finds no content-type, then it
+/// becomes `application/json`.
+public class EncodeJSON: Middleware {
 
-  /// Sets up the request headers to accept JSON. Adds `application/json` to the
-  /// front of the Accept header with a default implicit quality factor of 1.
   public override func call(env: Env) -> Response {
-    env.request?.headers.accepts(["application/json"])
-    return super.call(env)
-  }
-
-  /// Parses the response for JSON. Converts an `NSData` object in the response
-  /// body to an NSObject representing the JSON. It allows both JSON objects and
-  /// JSON primitives. Does nothing if the body is not data or fails to convert
-  /// to JSON. Ignores the response's content type.
-  public override func onComplete(env: Env) {
-    guard let response = env.response else {
-      return super.onComplete(env)
+    guard let request = env.request else {
+      return super.call(env: env)
     }
-    if let data = response.body as? NSData {
-      if let object = try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments]) {
-        response.body = object
+    guard let body = request.body, JSONSerialization.isValidJSONObject(body) else {
+      return super.call(env: env)
+    }
+    if let data = try? JSONSerialization.data(withJSONObject: body, options: [.prettyPrinted]) {
+      if request.headers["Content-Type"] == nil {
+        request.headers["Content-Type"] = "application/json"
       }
+      request.body = data
     }
+    return app(env)
   }
 
   public class Handler: RackHandler {
@@ -58,7 +57,7 @@ public class DecodeJSON: Response.Middleware {
     public init() {}
 
     public func build(app: App) -> Middleware {
-      return DecodeJSON(app: app)
+      return EncodeJSON(app: app)
     }
 
   }
