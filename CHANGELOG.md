@@ -1,5 +1,17 @@
 # Change Log
 
+## [0.4.0](https://github.com/royratcliffe/faraday/tree/0.4.0)
+
+- Sub-folders renamed to Sources and Tests
+- Merge branch 'feature/swift_3_0' into develop
+- Allow for conditional binding cascades
+- Lower-case enumerator value, timedOut
+- Assign nil components for nil request paths
+- Use "." rather "" for no path
+- Use Error rather than NSError or ErrorProtocol
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.3.3...0.4.0).
+
 ## [0.3.3](https://github.com/royratcliffe/faraday/tree/0.3.3)
 
 - Remove Gemfile and lock
