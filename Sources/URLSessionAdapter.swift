@@ -119,7 +119,7 @@ public class URLSessionAdapter: Adapter {
       }
       env.error = error
       response.body = nil
-      let _ = response.finish(env: env)
+      _ = response.finish(env: env)
     }
 
     // MARK: - URL Session Data Delegate

@@ -44,7 +44,7 @@ class HeartbeatTests: XCTestCase {
     let expectation = self.expectation(description: "Interval")
 
     // when
-    let _ = connection.get(path: ".") { request in
+    _ = connection.get(path: ".") { request in
       request.setQuery(values: ["1.1"], forName: "interval")
     }.onComplete { env in
       guard let response = env.response else {
@@ -83,7 +83,7 @@ class HeartbeatTests: XCTestCase {
     let errorExpectation = expectation(description: "Error")
 
     // when
-    let _ = connection.get { request in
+    _ = connection.get { request in
       request.setQuery(values: ["10"], forName: "limit")
     }.onComplete { env in
       guard env.error == nil else {

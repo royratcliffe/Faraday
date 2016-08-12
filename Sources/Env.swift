@@ -52,7 +52,7 @@ public class Env {
     response.status = status
     response.body = body
     response.headers = headers
-    let _ = response.finish(env: self)
+    _ = response.finish(env: self)
   }
 
   /// Cancels the response. Requires that the response object exists. Otherwise
