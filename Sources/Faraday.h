@@ -22,7 +22,7 @@
  *
  ******************************************************************************/
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 FOUNDATION_EXPORT double FaradayVersionNumber;
 FOUNDATION_EXPORT const unsigned char FaradayVersionString[];
