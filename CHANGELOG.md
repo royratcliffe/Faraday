@@ -1,5 +1,15 @@
 # Change Log
 
+## [0.4.1](https://github.com/royratcliffe/faraday/tree/0.4.1)
+
+- Wait 30 seconds, at least, for the ping
+- Overload Headers auth() methods, basic or token
+- Fix Travis configuration for Xcode 8
+- Use @import in Objective-C header
+- Removed redundant let in `let _ =`
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.4.0...0.4.1).
+
 ## [0.4.0](https://github.com/royratcliffe/faraday/tree/0.4.0)
 
 - Sub-folders renamed to Sources and Tests
