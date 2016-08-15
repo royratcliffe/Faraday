@@ -84,7 +84,7 @@ class HeadersTests: XCTestCase {
     // given
     var headers = Headers()
     // when
-    let _ = headers.basicAuth(login: "login", pass: "pass")
+    _ = headers.auth(login: "login", pass: "pass")
     // then
     XCTAssertEqual(headers.authorization, "Basic bG9naW46cGFzcw==")
   }
@@ -93,7 +93,7 @@ class HeadersTests: XCTestCase {
     // given
     var headers = Headers()
     // when
-    headers.tokenAuth(token: "abcdef", options: ["foo": "bar"])
+    headers.auth(token: "abcdef", options: ["foo": "bar"])
     // then
     XCTAssertTrue(["Token token=abcdef,foo=bar", "Token foo=bar,token=abcdef"].contains(headers.authorization!))
   }

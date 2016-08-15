@@ -46,7 +46,7 @@ class OperationTests: ConnectionTests {
     q.addOperation(blockOp)
 
     // then
-    waitForExpectations(timeout: 10.0, handler: nil)
+    waitForExpectations(timeout: 30.0, handler: nil)
   }
 
 }

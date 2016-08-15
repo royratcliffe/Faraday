@@ -53,7 +53,7 @@ class FaradayTests: XCTestCase {
     let env = Env()
     // then
     let response = builder.app(env)
-    let _ = response.finish(env: env)
+    _ = response.finish(env: env)
   }
 
 }
