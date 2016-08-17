@@ -1,5 +1,15 @@
 # Change Log
 
+## [0.4.2](https://github.com/royratcliffe/faraday/tree/0.4.2)
+
+- Allow ping test 60 seconds to respond
+- Apply String(describing:) to Any
+- Use [String: String] for headers
+- NSURLQueryItem to URLQueryItem
+- AnyObject to Any
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.4.1...0.4.2).
+
 ## [0.4.1](https://github.com/royratcliffe/faraday/tree/0.4.1)
 
 - Wait 30 seconds, at least, for the ping
