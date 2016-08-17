@@ -24,4 +24,4 @@
 
 import Foundation
 
-public typealias Body = AnyObject
+public typealias Body = Any

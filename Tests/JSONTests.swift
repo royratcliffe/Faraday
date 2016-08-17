@@ -46,7 +46,7 @@ class JSONTests: XCTestCase {
 
   /// Converts a string to a JSON object, even if the string represents a JSON
   /// fragment; that is, not an object but a primitive.
-  static func fragment(string: String) -> AnyObject? {
+  static func fragment(string: String) -> Any? {
     guard let data = string.data(using: String.Encoding.utf8) else {
       return nil
     }

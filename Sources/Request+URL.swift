@@ -92,7 +92,7 @@ extension Request {
 
   // MARK: - Query Items
 
-  public func queryItems(forName name: String) -> [NSURLQueryItem]? {
+  public func queryItems(forName name: String) -> [URLQueryItem]? {
     return urlComponents?.queryItems(forName: name)
   }
 
