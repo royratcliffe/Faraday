@@ -154,7 +154,7 @@ public class URLSessionAdapter: Adapter {
       let status = httpURLResponse.statusCode
       var headers = Headers()
       for (key, value) in httpURLResponse.allHeaderFields {
-        headers[String(key)] = String(value)
+        headers[String(describing: key)] = String(describing: value)
       }
       env.saveResponse(status: status, body: data, headers: headers)
     }

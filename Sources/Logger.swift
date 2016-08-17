@@ -63,7 +63,7 @@ public class Logger: Response.Middleware {
         }
         log(string: string)
       default:
-        log(string: String(body))
+        log(string: String(describing: body))
       }
     }
   }
