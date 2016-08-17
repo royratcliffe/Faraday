@@ -32,7 +32,7 @@ extension URLComponents {
   /// Filters the query items by name. Answers an array of items whose name
   /// matches the given name string; all the items in the resulting array share
   /// exactly the same name.
-  public func queryItems(forName name: String) -> [NSURLQueryItem]? {
+  public func queryItems(forName name: String) -> [URLQueryItem]? {
     return queryItems?.filter { item in item.name == name }
   }
 
