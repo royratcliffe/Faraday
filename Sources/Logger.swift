@@ -43,10 +43,10 @@ public class Logger: Response.Middleware {
     Logger.log(prefix: "response", body: env.response?.body)
   }
 
-  static func log(prefix: String, headers: [NSObject: AnyObject]?) {
+  static func log(prefix: String, headers: [String: String]?) {
     if let headers = headers {
       for (key, value) in headers {
-        Logger.log(string: "\(prefix) \(key): \(String(value))")
+        Logger.log(string: "\(prefix) \(key): \(value)")
       }
     }
   }
