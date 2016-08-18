@@ -24,7 +24,7 @@
 
 import Foundation
 
-public class URLSessionAdapter: Adapter {
+open class URLSessionAdapter: Adapter {
 
   var session: URLSession!
 
@@ -64,7 +64,7 @@ public class URLSessionAdapter: Adapter {
   /// - returns: New response object attached to the Rack environment. The
   ///   response knows how to cancel the request-response cycle in-flight, if
   ///   necessary.
-  public override func call(env: Env) -> Response {
+  open override func call(env: Env) -> Response {
     let task = performRequest(env: env)
     let response = app(env)
     response.cancelBlock = { [weak task] in
@@ -81,7 +81,7 @@ public class URLSessionAdapter: Adapter {
   /// the session reference to retain a session with a delegate: the handler
   /// retains the sessions strongly; the session strongly retains its
   /// delegate. Useful for SSL handshake delegates.
-  public class Handler: NSObject, RackHandler, URLSessionDataDelegate {
+  open class Handler: NSObject, RackHandler, URLSessionDataDelegate {
 
     public lazy var configuration: URLSessionConfiguration = {
       URLSessionConfiguration.default
