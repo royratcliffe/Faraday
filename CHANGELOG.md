@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.4.4](https://github.com/royratcliffe/faraday/tree/0.4.4)
+
+- Adapter has open access
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.4.3...0.4.4).
+
 ## [0.4.3](https://github.com/royratcliffe/faraday/tree/0.4.3)
 
 - Response on-complete callback escapes

@@ -24,7 +24,7 @@
 
 import Foundation
 
-public class Adapter: Middleware {
+open class Adapter: Middleware {
 
   /// Strictly speaking, this could be implemented as a static method. The
   /// implementation references nothing in `self`, either the adapter or its
