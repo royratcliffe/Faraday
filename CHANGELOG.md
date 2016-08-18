@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.4.3](https://github.com/royratcliffe/faraday/tree/0.4.3)
+
+- Response on-complete callback escapes
+- Middleware and Response.Middleware have `open` access
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.4.2...0.4.3).
+
 ## [0.4.2](https://github.com/royratcliffe/faraday/tree/0.4.2)
 
 - Allow ping test 60 seconds to respond
