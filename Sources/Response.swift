@@ -72,7 +72,7 @@ public class Response {
 
   // MARK: - On Complete
 
-  public typealias OnCompleteCallback = (Env) -> Void
+  public typealias OnCompleteCallback = @escaping (Env) -> Void
 
   public var onCompleteCallbacks = [OnCompleteCallback]()
 
