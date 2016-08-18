@@ -42,7 +42,7 @@ public class Response {
 
   var cancelBlock: (() -> Void)?
 
-  /// - returns: true if the response status is successful. Only answers success
+  /// - returns: True if the response status is successful. Only answers success
   ///   if the response has finished. Success means any status between 200 and
   ///   299. Answers false if the response status does not lie in the success
   ///   range, or there is no status because the response is not yet
@@ -97,7 +97,7 @@ public class Response {
   /// then invoke all the pending on-completion call-backs. Carrying the
   /// environment signifies completion.
   /// - parameters env: completed Rack environment.
-  /// - returns: this response.
+  /// - returns: This response.
   func finish(env: Env) -> Response {
     self.env = env
     for callback in onCompleteCallbacks {

@@ -26,7 +26,7 @@ import Foundation
 
 extension NSData {
 
-  /// - returns: all the byte ranges belonging to this block of data by
+  /// - returns: All the byte ranges belonging to this block of data by
   ///   enumerating and collating all the currently available ranges.
   public var byteRanges: [NSRange] {
     var byteRanges = [NSRange]()
@@ -36,7 +36,7 @@ extension NSData {
     return byteRanges
   }
 
-  /// - returns: an index set representing all the available byte indexes.
+  /// - returns: An index set representing all the available byte indexes.
   public var byteIndexes: NSIndexSet {
     let byteIndexes = NSMutableIndexSet()
     enumerateBytes { (_, range, _) -> Void in
