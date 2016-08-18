@@ -31,7 +31,7 @@ import Foundation
 /// it to a response which passes back up the stack of middleware. Response
 /// middleware adds a completion handler to the unfinished response. Such
 /// handlers run in reverse-stack order when the asynchronous response finishes.
-public class Middleware {
+open class Middleware {
 
   /// Retains the middleware application: simply just a capture that takes an
   /// environment and answers a response. Nothing more than that. Middleware is
@@ -56,7 +56,7 @@ public class Middleware {
   /// Note that an adapter implementation of `call(app, env)` does _not_ call
   /// the `app` for the response. Instead, it constructs a new unfinished
   /// response and finishes that new response at some later point in time.
-  public func call(env: Env) -> Response {
+  open func call(env: Env) -> Response {
     return app(env)
   }
 
