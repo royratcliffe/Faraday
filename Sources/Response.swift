@@ -72,7 +72,7 @@ public class Response {
 
   // MARK: - On Complete
 
-  public typealias OnCompleteCallback = (Env) -> Void
+  public typealias OnCompleteCallback = @escaping (Env) -> Void
 
   public var onCompleteCallbacks = [OnCompleteCallback]()
 
@@ -108,16 +108,16 @@ public class Response {
 
   // MARK: - Response Middleware
 
-  public class Middleware: Faraday.Middleware {
+  open class Middleware: Faraday.Middleware {
 
-    public override func call(env: Env) -> Response {
+    open override func call(env: Env) -> Response {
       return app(env).onComplete { env in
         self.onComplete(env: env)
       }
     }
 
     /// Override to modify the environment after the response has finished.
-    public func onComplete(env: Env) {}
+    open func onComplete(env: Env) {}
 
   }
 
