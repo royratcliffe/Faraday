@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.4.5](https://github.com/royratcliffe/faraday/tree/0.4.5)
+
+- Open access for `URLSessionAdapter` and `URLSessionAdapter.Handler`
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.4.4...0.4.5).
+
 ## [0.4.4](https://github.com/royratcliffe/faraday/tree/0.4.4)
 
 - Adapter has open access
