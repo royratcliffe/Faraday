@@ -78,7 +78,7 @@ public class Logger: Response.Middleware {
 
     public init() {}
 
-    public func build(app: App) -> Middleware {
+    public func build(app: @escaping App) -> Middleware {
       return Logger(app: app)
     }
 

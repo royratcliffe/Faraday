@@ -91,7 +91,7 @@ open class URLSessionAdapter: Adapter {
       URLSession(configuration: self.configuration, delegate: self, delegateQueue: nil)
     }()
 
-    public func build(app: App) -> Middleware {
+    public func build(app: @escaping App) -> Middleware {
       let middleware = URLSessionAdapter(app: app)
       middleware.session = session
       return middleware

@@ -51,7 +51,7 @@ class RackBuilder {
     }
   }()
 
-  func toApp(innerApp: App) -> App {
+  func toApp(innerApp: @escaping App) -> App {
     return handlers.reversed().reduce(innerApp) { app, handler -> App in
       return { env -> Response in
         handler.build(app: app).call(env: env)

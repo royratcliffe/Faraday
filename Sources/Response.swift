@@ -72,11 +72,11 @@ public class Response {
 
   // MARK: - On Complete
 
-  public typealias OnCompleteCallback = @escaping (Env) -> Void
+  public typealias OnCompleteCallback = (Env) -> Void
 
   public var onCompleteCallbacks = [OnCompleteCallback]()
 
-  public func onComplete(callback: OnCompleteCallback) -> Response {
+  public func onComplete(callback: @escaping OnCompleteCallback) -> Response {
     onCompleteCallbacks.append(callback)
     return self
   }
@@ -85,7 +85,7 @@ public class Response {
   /// onComplete does, but asynchronously runs the given capture in the given
   /// dispatch queue. Useful when the adapter finishes responses asynchronously
   /// in some other queue.
-  public func onComplete(queue: DispatchQueue, callback: OnCompleteCallback) -> Response {
+  public func onComplete(queue: DispatchQueue, callback: @escaping OnCompleteCallback) -> Response {
     return onComplete { env in
       queue.async() {
         callback(env)

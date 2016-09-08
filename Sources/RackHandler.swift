@@ -39,6 +39,6 @@ public protocol RackHandler {
   /// This method cannot be a class method. Only classes allow class methods,
   /// not protocols. This is a factory method for the middleware, implemented as
   /// an instance method.
-  func build(app: App) -> Middleware
+  func build(app: @escaping App) -> Middleware
 
 }

@@ -40,7 +40,7 @@ open class Middleware {
   /// response.
   public var app: App
 
-  public required init(app: App) {
+  public required init(app: @escaping App) {
     self.app = app
   }
 
