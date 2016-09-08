@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.5.0](https://github.com/royratcliffe/faraday/tree/0.5.0)
+
+- Explicit `@escaping` applies to capture parameters
+- Capitalise initial returns comment sentence
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.4.5...0.5.0).
+
 ## [0.4.5](https://github.com/royratcliffe/faraday/tree/0.4.5)
 
 - Open access for `URLSessionAdapter` and `URLSessionAdapter.Handler`
