@@ -29,7 +29,7 @@ extension Response {
   /// Runs the given completion call-back when the response answers with a
   /// successful status, where success means a response status code within the
   /// integer range 200 and 299 inclusive.
-  public func onSuccess(callback: OnCompleteCallback) -> Response {
+  public func onSuccess(callback: @escaping OnCompleteCallback) -> Response {
     return onComplete { env in
       guard let response = env.response else {
         return
@@ -47,7 +47,7 @@ extension Response {
   /// completion call-backs only execute when the response finishes. Finishing
   /// happens when the middleware adapter saves the response, supplying a
   /// non-optional status code. This code becomes the response status.
-  public func onFailure(callback: OnCompleteCallback) -> Response {
+  public func onFailure(callback: @escaping OnCompleteCallback) -> Response {
     return onComplete { env in
       guard let response = env.response else {
         return

@@ -36,7 +36,7 @@ public struct Headers: Sequence {
     }
   }
 
-  /// - returns: all the header fields in a form compatible with the Foundation
+  /// - returns: All the header fields in a form compatible with the Foundation
   ///   framework's NSURLRequest class, hence the method name. Answers an
   ///   immutable copy of all the header fields.
   public var allHeaderFields: [String: String] {

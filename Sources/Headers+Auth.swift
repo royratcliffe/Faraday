@@ -39,7 +39,7 @@ extension Headers {
   /// corresponding password. These become part of the `Authorization` header
   /// after some encoding. Useful for preparing individual request headers, or
   /// connection-wide request headers, for authorised access.
-  /// - returns: the new authorisation header value, or `nil` if the given
+  /// - returns: The new authorisation header value, or `nil` if the given
   ///   log-in user name and password fails to encode as UTF-8.
   public mutating func auth(login: String, pass: String) -> String? {
     guard let data = "\(login):\(pass)".data(using: String.Encoding.utf8) else {

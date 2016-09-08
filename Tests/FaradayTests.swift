@@ -36,7 +36,7 @@ class FaradayTests: XCTestCase {
     // swiftlint:disable:next nesting
     class Handler: RackHandler {
 
-      func build(app: App) -> Middleware {
+      func build(app: @escaping App) -> Middleware {
         return NothingMiddleware(app: app)
       }
 
