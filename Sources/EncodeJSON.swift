@@ -40,7 +40,21 @@ public class EncodeJSON: Middleware {
     guard let request = env.request else {
       return super.call(env: env)
     }
-    guard let body = request.body, JSONSerialization.isValidJSONObject(body) else {
+    // JSON serialisation is sensitive to Swift types. It fails to convert in
+    // some cases, even though the JSON object's argument type is `Any` and
+    // accepts Next Step arrays or dictionaries according to the
+    // documentation. Explicitly cast the incoming body to a dictionary or
+    // array.
+    var body: Any
+    switch request.body {
+    case let dictionary as NSDictionary:
+      body = dictionary
+    case let array as NSArray:
+      body = array
+    default:
+      return super.call(env: env)
+    }
+    guard JSONSerialization.isValidJSONObject(body) else {
       return super.call(env: env)
     }
     if let data = try? JSONSerialization.data(withJSONObject: body, options: [.prettyPrinted]) {
