@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.5.1](https://github.com/royratcliffe/faraday/tree/0.5.1)
+
+- Explicitly cast body to dictionary or array when encoding JSON
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.5.0...0.5.1).
+
 ## [0.5.0](https://github.com/royratcliffe/faraday/tree/0.5.0)
 
 - Explicit `@escaping` applies to capture parameters
