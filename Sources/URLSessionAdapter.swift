@@ -99,13 +99,12 @@ open class URLSessionAdapter: Adapter {
 
     // MARK: - URL Session Delegate
 
-    // Finishes a response with an error, if and only if a final error
-    // occurs. URL sessions complete either with or without an error. All data
-    // has already been delivered at this point. The URL session adapter
-    // delivers data and completion as separate events. Data does not arrive
-    // with errors. Errors, if any, arrives on completion after data. The
-    // implementation ignores completion when no error. If an error, the final
-    // finish retains the status and headers, but has no body.
+    // Finishes a response. URL sessions complete either with or without an
+    // error. All data has already been delivered at this point. The URL session
+    // adapter delivers data and completion as separate events. Data does not
+    // arrive with errors. Errors, if any, arrive on completion after data. If
+    // an error, the final finish retains the status and headers, and also the
+    // body if any.
     public func urlSession(_ session: URLSession,
                            task: URLSessionTask,
                            didCompleteWithError error: Error?) {
@@ -113,12 +112,10 @@ open class URLSessionAdapter: Adapter {
         return
       }
       task.env = nil
-      guard let response = env.response,
-            let error = error else {
+      guard let response = env.response else {
         return
       }
       env.error = error
-      response.body = nil
       _ = response.finish(env: env)
     }
 
