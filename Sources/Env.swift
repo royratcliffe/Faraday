@@ -43,16 +43,25 @@ public class Env {
 
   public var error: Error?
 
-  /// Saves and finishes the response. Called by the adapter when the response
-  /// finally arrives.
+  /// Saves but does _not_ finish the response. Called by the adapter while the
+  /// response arrives. Adapters may save responses-in-progress more than
+  /// once. Saving accumulates the body, if data, as well as the headers. New
+  /// header values replace older ones. The status does not accumulate; instead,
+  /// the last status replaces any earlier status codes.
   public func saveResponse(status: Int, body: Body?, headers: Headers) {
     guard let response = response else {
       return
     }
     response.status = status
-    response.body = body
-    response.headers = headers
-    _ = response.finish(env: self)
+    if var data = response.body as? Data, let body = body as? Data {
+      data.append(body)
+      response.body = data
+    } else {
+      response.body = body
+    }
+    for (field, value) in headers {
+      response.headers[field] = value
+    }
   }
 
   /// Cancels the response. Requires that the response object exists. Otherwise

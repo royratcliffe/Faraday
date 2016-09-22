@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.5.2](https://github.com/royratcliffe/faraday/tree/0.5.2)
+
+- FIX: `Env.saveResponse` does not finish the response
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.5.1...0.5.2).
+
 ## [0.5.1](https://github.com/royratcliffe/faraday/tree/0.5.1)
 
 - Explicitly cast body to dictionary or array when encoding JSON
