@@ -182,7 +182,8 @@
 				78D9BDBE1CE2518D00EED7EB /* OperationTests.swift */,
 				780356AC1BC3C521000B9578 /* Info.plist */,
 			);
-			path = Tests;
+			name = Tests;
+			path = Tests/FaradayTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
