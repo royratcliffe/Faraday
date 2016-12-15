@@ -135,6 +135,12 @@ open class URLSessionAdapter: Adapter {
     // Cancels the data task if the environment has no response. This only
     // happens if a completion handler disconnects the response because it wants
     // no more information.
+    //
+    // Handles chunked responses by examining the data's byte-ranges. Makes an
+    // assumption about the received data: that the first ranges location is
+    // zero when a new chunk arrives. In such a case, finishes the response
+    // first if the response body already contains non-empty data. Chunked
+    // responses can send multiple response-finished events.
     public func urlSession(_ session: URLSession,
                            dataTask: URLSessionDataTask,
                            didReceive data: Data) {
@@ -152,6 +158,11 @@ open class URLSessionAdapter: Adapter {
       var headers = Headers()
       for (key, value) in httpURLResponse.allHeaderFields {
         headers[String(describing: key)] = String(describing: value)
+      }
+      if let body = env.response?.body as? Data, body.count != 0 {
+        if let range = (data as NSData).byteRanges.first, range.location == 0 {
+          _ = env.response?.finish(env: env)
+        }
       }
       env.saveResponse(status: status, body: data, headers: headers)
     }
