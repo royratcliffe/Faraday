@@ -1,5 +1,27 @@
 # Change Log
 
+## [0.5.4](https://github.com/royratcliffe/faraday/tree/0.5.4)
+
+- Added READ ME section on authorisation and chunked responses
+- Added subsection on query values
+- Added Using a Connection section
+- Comment added to ping tests
+- Use `setQuery(values:forName:)` to set query values
+- Section about Rack stack
+- Promote sub-sections
+- Added READ-ME paragraph about customisation
+- Removed Usage section
+- Description of middleware stack building added
+- Fix connection set-up example for Swift 3
+- Fix outdated `NSURL` reference; Swift 3 uses `URL`
+- More comments for `Connection` class
+- Jazzy now uses `author` instead of `author_name`
+- Disable code signing
+- Xcode enables new warnings
+- Upgrade checks by Xcode 8.2 (8C38)
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.5.3...0.5.4).
+
 ## [0.5.3](https://github.com/royratcliffe/faraday/tree/0.5.3)
 
 - Merge branch 'feature/chunked_response' into develop
