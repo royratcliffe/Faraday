@@ -60,6 +60,20 @@ The URL's trailing slash is very important. Without it, merging URLs will
 replace the entire path rather than just append the path. This is a 'feature'
 associated with Apple's `URL` class.
 
+The above code builds a logged JSON-based connection using Apple's `URLSession`
+adapter. Requests first see the encode-JSON handler which encodes the request
+body using JSON serialisation, from a dictionary to a JSON-encoded string. Then
+the JSON-decoder sees the request but does nothing; the decoder only handles the
+response when it arrives. Next, the logger handler sees the request and dumps
+its details to the debug console using `NSLog`. Finally, the URL session adapter
+sees the request and runs it.
+
+When the response arrives, the response body and headers pass back _up_ through
+the middleware stack. The logger logs the response. The decoder converts the
+response body from JSON to a dictionary. Finally, the encoder sees the response
+and does nothing because it only cares about the request. The outcome arrives
+with the `Response` object, asynchronously.
+
 ## Swift Versus Ruby
 
 There are some important differences between Swift Faraday and Ruby Faraday.
