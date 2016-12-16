@@ -43,24 +43,144 @@ adopting the concept of Rack middle-ware when processing the HTTP
 request-response cycle.  When you build a connection, you build a stack of
 middleware elements for processing the requests and responses.
 
-## Usage
+The following describes how to use a basic connection, but you can add your own
+middleware to customise your connections. See
+[Faraday HAL](https://github.com/royratcliffe/FaradayHAL) for example. It
+includes additional middleware handlers for using Hypertext Application Language
+(HAL) over your HTTP connections.
 
-### Setting Up a Connection
+## Setting Up a Connection
 
 ```swift
 let connection = Connection()
-connection.URL = NSURL(string: "http://faraday-tests.herokuapp.com/")
-connection.use(EncodeJSON.Handler())
-connection.use(DecodeJSON.Handler())
-connection.use(Logger.Handler())
-connection.use(URLSession.Handler())
+connection.url = URL(string: "http://faraday-tests.herokuapp.com/")
+connection.use(handler: EncodeJSON.Handler())
+connection.use(handler: DecodeJSON.Handler())
+connection.use(handler: Logger.Handler())
+connection.use(handler: URLSessionAdapter.Handler())
 ```
 
 The URL's trailing slash is very important. Without it, merging URLs will
 replace the entire path rather than just append the path. This is a 'feature'
-associated with Apple's `NSURL` class.
+associated with Apple's `URL` class.
 
-## Swift Versus Ruby
+The above code builds a logged JSON-based connection using Apple's `URLSession`
+adapter. Requests first see the encode-JSON handler which encodes the request
+body using JSON serialisation, from a dictionary to a JSON-encoded string. Then
+the JSON-decoder sees the request but does nothing; the decoder only handles the
+response when it arrives. Next, the logger handler sees the request and dumps
+its details to the debug console using `NSLog`. Finally, the URL session adapter
+sees the request and runs it.
+
+When the response arrives, the response body and headers pass back _up_ through
+the middleware stack. The logger logs the response. The decoder converts the
+response body from JSON to a dictionary. Finally, the encoder sees the response
+and does nothing because it only cares about the request. The outcome arrives
+with the `Response` object, asynchronously.
+
+Handling requests and responses using middleware mimicks the typical way that
+server-side software handles requests and responses. It helps to decompose the
+complicated affair. Different elements of the stack focus on their own
+particular aspect of the interaction. The "Rack stack" is a useful software
+decomposition tool for handling the request-response cycle, server side _and_
+client side.
+
+## Using a Connection
+
+Once you set up a connection with a base URL and middleware, you can use it to
+run requests: gets, heads, deletes, posts, puts, patches, or any other method.
+
+For example, you can run a `GET` request using the connection as follows:
+
+```swift
+_ = connection.get(path: "path/to/resource").onComplete { env in
+  guard let response = env.response else { return }
+  // Handle the unwrapped response. It contains the response status,
+  // response headers and response body.
+}
+```
+
+This runs an asynchronous `GET` request by adding `path/to/resource` to the base
+URL. Note that the completion capture runs asynchronously in another thread, the
+one allocated by iOS for the associated URL session data task. Bounce it to
+another dispatch queue if necessary.
+
+### Query Values
+
+Requests often include parameters, or query values. Set up any parameters needed
+for the request by supplying a request handler to the run-request method, as
+follows.
+
+```swift
+let response = connection.post { request in
+  request.setQuery(values: ["world"], forName: "hello")
+  // Do other things to configure the request, e.g. adjust headers, add
+  // authentication.
+}
+// We have the response, but the response is not yet complete. It exists as a
+// placeholder until completion. The request runs asynchronously, as does its
+// corresponding response.
+_ = response.onComplete { env in
+  guard let response = env.response else { return }
+  let body = response.body as? NSDictionary
+}
+```
+
+In this case, the post request has no addition path provided. It uses the base
+URL only, but it will add parameters to the URL, i.e. literally `?hello=world`
+will appear at the end of the request URL. The request permits multiple values
+for the same name, hence set query _values_.
+
+### Authorisation
+
+You can use request handlers to set up request authorisation. Faraday has the
+two commonly-used authorisation methods baked in: basic and token
+authorisation. The following configures one particular request with basic
+authorisation, a login and a password.
+
+```swift
+let response = connection.get { request in
+  request.path = "path/to/resource"
+  request.body = ["ping": "pong"]
+  _ = request.headers.auth(login: "login", pass: "pass")
+  // The headers for this request will now include the following basic authorisation.
+  // Authorization: Basic bG9naW46cGFzcw==
+}
+```
+
+You can set up the connection itself with authorisation, so that all requests
+carry the authorisation header. Access the connection headers using
+`connection.headers`; these become the default headers for all
+requests. Individual request headers merge with and override the defaults.
+
+Token authorisation works similarly, only the arguments differ, i.e.
+
+```swift
+_ = request.headers.auth(token: "abcdef", options: ["foo": "bar"])
+```
+
+and the request headers will include:
+
+```text
+Authorization: Token token=abcdef,foo=bar
+```
+
+It works for connections as well as individual requests.
+
+### Chunked Responses
+
+The URL session adapter handles chunked responses. This is where the server
+sends multiple responses for the same request. Underneath, the HTTP
+request-response cycle is just a temporary TCP-stream connection. For chunked
+responses however, the server holds the connection open and delivers multiple
+responses. For each response chunk, the server sends the length of the chunk and
+the chunk itself.
+
+For chunked transfers, you set up and use a Faraday connection as normal, only
+the response completes multiple times for each chunk. See the heartbeat tests
+for a detailed example of chunked transfers.
+
+# Swift Versus Ruby
 
 There are some important differences between Swift Faraday and Ruby Faraday.
 For one thing, Swift only handles asynchronous responses. Requests become

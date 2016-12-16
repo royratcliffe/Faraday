@@ -35,8 +35,11 @@ import Foundation
 /// URL and headers.
 public class Connection {
 
+  /// Initialises a new connection. New connections initially have no base URL,
+  /// no default header fields and an empty middleware stack.
   public init() {}
 
+  /// Base URL for the connection.
   public var url: URL?
 
   public var headers = Headers()
@@ -49,6 +52,10 @@ public class Connection {
   /// an adapter of some kind that knows how to interpret the request in some
   /// platform-dependent way and asynchronously finish the response at some
   /// later time. Responses start off unfinished.
+  ///
+  /// Use this method to build the middleware stack. Middleware handles requests
+  /// from first to last, and responses from last to first. The adapter appears
+  /// last, at the bottom of the middleware stack.
   public func use(handler: RackHandler) {
     builder.use(handler: handler)
   }
