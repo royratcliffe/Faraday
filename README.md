@@ -58,7 +58,7 @@ connection.use(URLSession.Handler())
 
 The URL's trailing slash is very important. Without it, merging URLs will
 replace the entire path rather than just append the path. This is a 'feature'
-associated with Apple's `NSURL` class.
+associated with Apple's `URL` class.
 
 ## Swift Versus Ruby
 
