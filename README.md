@@ -131,6 +131,55 @@ URL only, but it will add parameters to the URL, i.e. literally `?hello=world`
 will appear at the end of the request URL. The request permits multiple values
 for the same name, hence set query _values_.
 
+### Authorisation
+
+You can use request handlers to set up request authorisation. Faraday has the
+two commonly-used authorisation methods baked in: basic and token
+authorisation. The following configures one particular request with basic
+authorisation, a login and a password.
+
+```swift
+let response = connection.get { request in
+  request.path = "path/to/resource"
+  request.body = ["ping": "pong"]
+  _ = request.headers.auth(login: "login", pass: "pass")
+  // The headers for this request will now include the following basic authorisation.
+  // Authorization: Basic bG9naW46cGFzcw==
+}
+```
+
+You can set up the connection itself with authorisation, so that all requests
+carry the authorisation header. Access the connection headers using
+`connection.headers`; these become the default headers for all
+requests. Individual request headers merge with and override the defaults.
+
+Token authorisation works similarly, only the arguments differ, i.e.
+
+```swift
+_ = request.headers.auth(token: "abcdef", options: ["foo": "bar"])
+```
+
+and the request headers will include:
+
+```text
+Authorization: Token token=abcdef,foo=bar
+```
+
+It works for connections as well as individual requests.
+
+### Chunked Responses
+
+The URL session adapter handles chunked responses. This is where the server
+sends multiple responses for the same request. Underneath, the HTTP
+request-response cycle is just a temporary TCP-stream connection. For chunked
+responses however, the server holds the connection open and delivers multiple
+responses. For each response chunk, the server sends the length of the chunk and
+the chunk itself.
+
+For chunked transfers, you set up and use a Faraday connection as normal, only
+the response completes multiple times for each chunk. See the heartbeat tests
+for a detailed example of chunked transfers.
+
 # Swift Versus Ruby
 
 There are some important differences between Swift Faraday and Ruby Faraday.
