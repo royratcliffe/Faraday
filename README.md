@@ -43,6 +43,11 @@ adopting the concept of Rack middle-ware when processing the HTTP
 request-response cycle.  When you build a connection, you build a stack of
 middleware elements for processing the requests and responses.
 
+The following describes how to use a basic connection, but you can add your own
+middleware to customise your connections. See
+[Faraday HAL](https://github.com/royratcliffe/FaradayHAL) for example. It
+includes additional middleware handlers for using Hypertext Application Language
+(HAL) over your HTTP connections.
 
 ### Setting Up a Connection
 
