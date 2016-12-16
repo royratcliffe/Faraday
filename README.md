@@ -78,6 +78,13 @@ response body from JSON to a dictionary. Finally, the encoder sees the response
 and does nothing because it only cares about the request. The outcome arrives
 with the `Response` object, asynchronously.
 
+Handling requests and responses using middleware mimicks the typical way that
+server-side software handles requests and responses. It helps to decompose the
+complicated affair. Different elements of the stack focus on their own
+particular aspect of the interaction. The "Rack stack" is a useful software
+decomposition tool for handling the request-response cycle, server side _and_
+client side.
+
 # Swift Versus Ruby
 
 There are some important differences between Swift Faraday and Ruby Faraday.
