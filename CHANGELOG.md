@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.5.3](https://github.com/royratcliffe/faraday/tree/0.5.3)
+
+- Merge branch 'feature/chunked_response' into develop
+- Fixed chunked-response handling
+- Removed negative error expectation from heartbeat test
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.5.2...0.5.3).
+
 ## [0.5.2](https://github.com/royratcliffe/faraday/tree/0.5.2)
 
 - FIX: `Env.saveResponse` does not finish the response
