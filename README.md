@@ -105,6 +105,32 @@ URL. Note that the completion capture runs asynchronously in another thread, the
 one allocated by iOS for the associated URL session data task. Bounce it to
 another dispatch queue if necessary.
 
+### Query Values
+
+Requests often include parameters, or query values. Set up any parameters needed
+for the request by supplying a request handler to the run-request method, as
+follows.
+
+```swift
+let response = connection.post { request in
+  request.setQuery(values: ["world"], forName: "hello")
+  // Do other things to configure the request, e.g. adjust headers, add
+  // authentication.
+}
+// We have the response, but the response is not yet complete. It exists as a
+// placeholder until completion. The request runs asynchronously, as does its
+// corresponding response.
+_ = response.onComplete { env in
+  guard let response = env.response else { return }
+  let body = response.body as? NSDictionary
+}
+```
+
+In this case, the post request has no addition path provided. It uses the base
+URL only, but it will add parameters to the URL, i.e. literally `?hello=world`
+will appear at the end of the request URL. The request permits multiple values
+for the same name, hence set query _values_.
+
 # Swift Versus Ruby
 
 There are some important differences between Swift Faraday and Ruby Faraday.
