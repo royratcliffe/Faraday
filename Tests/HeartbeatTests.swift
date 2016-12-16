@@ -80,7 +80,6 @@ class HeartbeatTests: XCTestCase {
   func testLimit() {
     // given
     let limitExpectation = expectation(description: "Limit")
-    let errorExpectation = expectation(description: "Error")
 
     // when
     _ = connection.get { request in
@@ -93,7 +92,6 @@ class HeartbeatTests: XCTestCase {
           XCTAssertTrue(error.isURLCancelled)
         }
         XCTAssertNil(env.response?.body)
-        errorExpectation.fulfill()
         return
       }
       guard let response = env.response else {
