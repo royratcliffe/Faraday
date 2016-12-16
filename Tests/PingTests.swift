@@ -36,6 +36,8 @@ class PingTests: ConnectionTests {
       guard let response = env.response else {
         return
       }
+      // Handle the unwrapped response. It contains the response status,
+      // response headers and response body.
       let body = response.body as? NSDictionary
       XCTAssertNotNil(env.response)
       XCTAssertNotNil(response.body)
