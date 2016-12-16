@@ -49,7 +49,7 @@ middleware to customise your connections. See
 includes additional middleware handlers for using Hypertext Application Language
 (HAL) over your HTTP connections.
 
-### Setting Up a Connection
+## Setting Up a Connection
 
 ```swift
 let connection = Connection()
@@ -78,7 +78,7 @@ response body from JSON to a dictionary. Finally, the encoder sees the response
 and does nothing because it only cares about the request. The outcome arrives
 with the `Response` object, asynchronously.
 
-## Swift Versus Ruby
+# Swift Versus Ruby
 
 There are some important differences between Swift Faraday and Ruby Faraday.
 For one thing, Swift only handles asynchronous responses. Requests become
