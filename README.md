@@ -43,7 +43,6 @@ adopting the concept of Rack middle-ware when processing the HTTP
 request-response cycle.  When you build a connection, you build a stack of
 middleware elements for processing the requests and responses.
 
-## Usage
 
 ### Setting Up a Connection
 
