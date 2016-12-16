@@ -85,6 +85,26 @@ particular aspect of the interaction. The "Rack stack" is a useful software
 decomposition tool for handling the request-response cycle, server side _and_
 client side.
 
+## Using a Connection
+
+Once you set up a connection with a base URL and middleware, you can use it to
+run requests: gets, heads, deletes, posts, puts, patches, or any other method.
+
+For example, you can run a `GET` request using the connection as follows:
+
+```swift
+_ = connection.get(path: "path/to/resource").onComplete { env in
+  guard let response = env.response else { return }
+  // Handle the unwrapped response. It contains the response status,
+  // response headers and response body.
+}
+```
+
+This runs an asynchronous `GET` request by adding `path/to/resource` to the base
+URL. Note that the completion capture runs asynchronously in another thread, the
+one allocated by iOS for the associated URL session data task. Bounce it to
+another dispatch queue if necessary.
+
 # Swift Versus Ruby
 
 There are some important differences between Swift Faraday and Ruby Faraday.
