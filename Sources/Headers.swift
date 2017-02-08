@@ -48,7 +48,7 @@ public struct Headers: Sequence {
 
   // MARK: - Sequence Type
 
-  public func makeIterator() -> Dictionary<String, String>.Generator {
+  public func makeIterator() -> Dictionary<String, String>.Iterator {
     return headerFields.makeIterator()
   }
 
