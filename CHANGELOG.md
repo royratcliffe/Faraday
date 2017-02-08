@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.6.1](https://github.com/royratcliffe/faraday/tree/0.6.1)
+
+Support for Swift Package Manager.
+
+- Merge branch 'feature/swift_package' into develop
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.6.0...0.6.1).
+
 ## [0.6.0](https://github.com/royratcliffe/faraday/tree/0.6.0)
 
 Changes for Apple Swift version 3.0.2, amongst other minor adjustments.
