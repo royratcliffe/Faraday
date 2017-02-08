@@ -177,8 +177,10 @@ responses. For each response chunk, the server sends the length of the chunk and
 the chunk itself.
 
 For chunked transfers, you set up and use a Faraday connection as normal, only
-the response completes multiple times for each chunk. See the heartbeat tests
+the response completes multiple times for each chunk. See the [heartbeat tests](HeartbeatTests)
 for a detailed example of chunked transfers.
+
+[HeartbeatTests]:blob/master/Tests/HeartbeatTests.swift
 
 # Swift Versus Ruby
 

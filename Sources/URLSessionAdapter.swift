@@ -116,7 +116,7 @@ open class URLSessionAdapter: Adapter {
         return
       }
       env.error = error
-      _ = response.finish(env: env)
+      response.finish(env: env)
     }
 
     // MARK: - URL Session Data Delegate
@@ -161,7 +161,7 @@ open class URLSessionAdapter: Adapter {
       }
       if let body = env.response?.body as? Data, body.count != 0 {
         if let range = (data as NSData).byteRanges.first, range.location == 0 {
-          _ = env.response?.finish(env: env)
+          env.response?.finish(env: env)
         }
       }
       env.saveResponse(status: status, body: data, headers: headers)

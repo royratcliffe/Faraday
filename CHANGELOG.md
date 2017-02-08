@@ -1,5 +1,17 @@
 # Change Log
 
+## [0.6.0](https://github.com/royratcliffe/faraday/tree/0.6.0)
+
+Changes for Apple Swift version 3.0.2, amongst other minor adjustments.
+
+- Merge branch 'feature/swift_3_0_2' into develop
+- Replace conditional downcast to bridging conversion
+- Swift 3.0.2 renames `Generator` to `Iterator`
+- Added link to heartbeat tests
+- Mark completion and authorisation methods as ‘discardable result’
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.5.4...0.6.0).
+
 ## [0.5.4](https://github.com/royratcliffe/faraday/tree/0.5.4)
 
 - Added READ ME section on authorisation and chunked responses
