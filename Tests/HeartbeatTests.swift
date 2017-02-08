@@ -86,7 +86,7 @@ class HeartbeatTests: XCTestCase {
       request.setQuery(values: ["10"], forName: "limit")
     }.onComplete { env in
       guard env.error == nil else {
-        if let error = env.error as? NSError {
+        if let error = env.error as NSError? {
           XCTAssertEqual(error.domain, NSURLErrorDomain)
           XCTAssertEqual(error.code, NSURLErrorCancelled)
           XCTAssertTrue(error.isURLCancelled)
