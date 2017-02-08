@@ -76,6 +76,7 @@ public class Response {
 
   public var onCompleteCallbacks = [OnCompleteCallback]()
 
+  @discardableResult
   public func onComplete(callback: @escaping OnCompleteCallback) -> Response {
     onCompleteCallbacks.append(callback)
     return self
@@ -98,6 +99,7 @@ public class Response {
   /// environment signifies completion.
   /// - parameters env: completed Rack environment.
   /// - returns: This response.
+  @discardableResult
   func finish(env: Env) -> Response {
     self.env = env
     for callback in onCompleteCallbacks {

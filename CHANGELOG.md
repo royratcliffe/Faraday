@@ -1,5 +1,47 @@
 # Change Log
 
+## [0.6.0](https://github.com/royratcliffe/faraday/tree/0.6.0)
+
+Changes for Apple Swift version 3.0.2, amongst other minor adjustments.
+
+- Merge branch 'feature/swift_3_0_2' into develop
+- Replace conditional downcast to bridging conversion
+- Swift 3.0.2 renames `Generator` to `Iterator`
+- Added link to heartbeat tests
+- Mark completion and authorisation methods as ‘discardable result’
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.5.4...0.6.0).
+
+## [0.5.4](https://github.com/royratcliffe/faraday/tree/0.5.4)
+
+- Added READ ME section on authorisation and chunked responses
+- Added subsection on query values
+- Added Using a Connection section
+- Comment added to ping tests
+- Use `setQuery(values:forName:)` to set query values
+- Section about Rack stack
+- Promote sub-sections
+- Added READ-ME paragraph about customisation
+- Removed Usage section
+- Description of middleware stack building added
+- Fix connection set-up example for Swift 3
+- Fix outdated `NSURL` reference; Swift 3 uses `URL`
+- More comments for `Connection` class
+- Jazzy now uses `author` instead of `author_name`
+- Disable code signing
+- Xcode enables new warnings
+- Upgrade checks by Xcode 8.2 (8C38)
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.5.3...0.5.4).
+
+## [0.5.3](https://github.com/royratcliffe/faraday/tree/0.5.3)
+
+- Merge branch 'feature/chunked_response' into develop
+- Fixed chunked-response handling
+- Removed negative error expectation from heartbeat test
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.5.2...0.5.3).
+
 ## [0.5.2](https://github.com/royratcliffe/faraday/tree/0.5.2)
 
 - FIX: `Env.saveResponse` does not finish the response

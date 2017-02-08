@@ -32,10 +32,12 @@ class PingTests: ConnectionTests {
     let expectation = self.expectation(description: "GET ping")
 
     // when
-    _ = connection.get(path: "ping").onComplete { env in
+    connection.get(path: "ping").onComplete { env in
       guard let response = env.response else {
         return
       }
+      // Handle the unwrapped response. It contains the response status,
+      // response headers and response body.
       let body = response.body as? NSDictionary
       XCTAssertNotNil(env.response)
       XCTAssertNotNil(response.body)
@@ -68,7 +70,7 @@ class PingTests: ConnectionTests {
     }
 
     func ping() {
-      _ = self.connection.get(path: "ping").onComplete { env in
+      self.connection.get(path: "ping").onComplete { env in
         self.pong()
       }
     }
@@ -113,11 +115,9 @@ class PingTests: ConnectionTests {
     let response = connection.post { request in
       request.path = "ping"
       request.body = ["ping": "pong"]
-      var urlComponents = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)
-      urlComponents?.setQuery(values: ["world"], forName: "hello")
-      request.url = urlComponents?.url(relativeTo: request.url?.baseURL)
+      request.setQuery(values: ["world"], forName: "hello")
     }
-    _ = response.onComplete { env in
+    response.onComplete { env in
       let body = response.body as? NSDictionary
       XCTAssertNotNil(env.response)
       XCTAssertNotNil(response.body)

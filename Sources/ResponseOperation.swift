@@ -64,7 +64,7 @@ public class ResponseOperation: Operation {
 
     // Wait for the response to complete, successfully or otherwise.
     let semaphore = DispatchSemaphore(value: 0)
-    _ = response.onComplete { (env) in
+    response.onComplete { (env) in
       semaphore.signal()
     }
     if let timeoutInterval = timeoutInterval {

@@ -84,7 +84,7 @@ class HeadersTests: XCTestCase {
     // given
     var headers = Headers()
     // when
-    _ = headers.auth(login: "login", pass: "pass")
+    headers.auth(login: "login", pass: "pass")
     // then
     XCTAssertEqual(headers.authorization, "Basic bG9naW46cGFzcw==")
   }

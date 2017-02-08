@@ -44,7 +44,7 @@ class HeartbeatTests: XCTestCase {
     let expectation = self.expectation(description: "Interval")
 
     // when
-    _ = connection.get(path: ".") { request in
+    connection.get(path: ".") { request in
       request.setQuery(values: ["1.1"], forName: "interval")
     }.onComplete { env in
       guard let response = env.response else {
@@ -80,20 +80,18 @@ class HeartbeatTests: XCTestCase {
   func testLimit() {
     // given
     let limitExpectation = expectation(description: "Limit")
-    let errorExpectation = expectation(description: "Error")
 
     // when
-    _ = connection.get { request in
+    connection.get { request in
       request.setQuery(values: ["10"], forName: "limit")
     }.onComplete { env in
       guard env.error == nil else {
-        if let error = env.error as? NSError {
+        if let error = env.error as NSError? {
           XCTAssertEqual(error.domain, NSURLErrorDomain)
           XCTAssertEqual(error.code, NSURLErrorCancelled)
           XCTAssertTrue(error.isURLCancelled)
         }
         XCTAssertNil(env.response?.body)
-        errorExpectation.fulfill()
         return
       }
       guard let response = env.response else {

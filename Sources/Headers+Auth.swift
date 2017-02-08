@@ -41,6 +41,7 @@ extension Headers {
   /// connection-wide request headers, for authorised access.
   /// - returns: The new authorisation header value, or `nil` if the given
   ///   log-in user name and password fails to encode as UTF-8.
+  @discardableResult
   public mutating func auth(login: String, pass: String) -> String? {
     guard let data = "\(login):\(pass)".data(using: String.Encoding.utf8) else {
       return nil
