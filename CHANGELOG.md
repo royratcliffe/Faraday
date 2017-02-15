@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.6.2](https://github.com/royratcliffe/faraday/tree/0.6.2)
+
+- Response success or failure completion has discardable result
+- Fix link to heartbeat tests
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.6.1...0.6.2).
+
 ## [0.6.1](https://github.com/royratcliffe/faraday/tree/0.6.1)
 
 Support for Swift Package Manager.
