@@ -171,6 +171,15 @@
 		780356A91BC3C521000B9578 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				782A2E451E54A62300BDA0EB /* FaradayTests */,
+				780356AC1BC3C521000B9578 /* Info.plist */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		782A2E451E54A62300BDA0EB /* FaradayTests */ = {
+			isa = PBXGroup;
+			children = (
 				780356AA1BC3C521000B9578 /* FaradayTests.swift */,
 				783870A31C55DFD00063C296 /* HeadersTests.swift */,
 				78A2837C1BDCE41C0043C9AA /* RequestTests.swift */,
@@ -180,10 +189,8 @@
 				78F244911CD66BE100B80CAB /* HeartbeatTests.swift */,
 				78A46A441BEA419000870B39 /* JSONTests.swift */,
 				78D9BDBE1CE2518D00EED7EB /* OperationTests.swift */,
-				780356AC1BC3C521000B9578 /* Info.plist */,
 			);
-			name = Tests;
-			path = Tests/FaradayTests;
+			path = FaradayTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
