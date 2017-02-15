@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.6.3](https://github.com/royratcliffe/faraday/tree/0.6.3)
+
+- Tell Travis CI *not* to code-sign
+- Fixed tests sub-folder references
+
+See [Full Change Log](https://github.com/royratcliffe/faraday/compare/0.6.2...0.6.3).
+
 ## [0.6.2](https://github.com/royratcliffe/faraday/tree/0.6.2)
 
 - Response success or failure completion has discardable result
