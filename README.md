@@ -180,7 +180,7 @@ For chunked transfers, you set up and use a Faraday connection as normal, only
 the response completes multiple times for each chunk. See the [heartbeat tests](HeartbeatTests)
 for a detailed example of chunked transfers.
 
-[HeartbeatTests]:blob/master/Tests/HeartbeatTests.swift
+[HeartbeatTests]:blob/master/Tests/FaradayTests/HeartbeatTests.swift
 
 # Swift Versus Ruby
 
